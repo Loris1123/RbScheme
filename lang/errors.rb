@@ -13,3 +13,9 @@ class WrongInputError < SchemeError
     super("Input was no UserInput. Got #{input.class}")
   end
 end
+
+class SchemeArgumentError < SchemeError
+  def initialize(need, got)
+    super("Wrong argument. Need #{need}. Got #{got}")
+  end
+end

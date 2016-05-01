@@ -14,9 +14,7 @@ class UserInput
     if @index < @input.size
       @index+=1
     end
-    ret = @input[@index]
-    return ret
-
+    @input[@index]
   end
 
   def previous_char
@@ -29,12 +27,14 @@ class UserInput
     if @index == -1
       return nil
     end
-
-    ret = @input[@index]
-    return ret
+    @input[@index]
   end
 
   def get_input
     return @input
+  end
+
+  def get_current_char
+    return @input[@index]
   end
 end
