@@ -3,7 +3,7 @@ require_relative "../lang/errors"
 class UserInput
 
   def initialize(input)
-    @index = 0
+    @index = -1
     @input = input.strip
   end
 
@@ -11,24 +11,26 @@ class UserInput
     """
     Returns the next char in  input. Nil if not available
     """
-    if @index == @input.size
-      return nil
+    if @index < @input.size
+      @index+=1
     end
-
     ret = @input[@index]
-    @index+=1
     return ret
+
   end
 
   def previous_char
     """
     Returns the previous char. Nil if not available
     """
-    if @index == 0
+    if @index > -1
+      @index -= 1
+    end
+    if @index == -1
       return nil
     end
+
     ret = @input[@index]
-    @index -= 1
     return ret
   end
 
