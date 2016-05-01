@@ -1,3 +1,5 @@
+require_relative "../lang/errors"
+
 class UserInput
 
   def initialize(input)
@@ -33,5 +35,4 @@ class UserInput
   def get_input
     return @input
   end
-
 end
