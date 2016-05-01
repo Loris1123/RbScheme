@@ -23,3 +23,17 @@ class SchemeInteger < SchemeObject
     end
   end
 end
+
+class SchemeString < SchemeObject
+  def initialize(value)
+    @value = String(value)
+  end
+
+  def get_value
+    @value
+  end
+
+  def set_value(value)
+    @value = String(value)
+  end
+end

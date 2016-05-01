@@ -11,10 +11,9 @@ module Reader
 
     if is_digit c
       read_number input
+    elsif c == "\""
+      read_string input
     end
-
-
-
   end
 
   def self.read_number(input)
@@ -27,6 +26,21 @@ module Reader
       input.next_char
     end
     SchemeInteger.new(number)
+  end
+
+  def self.read_string(input)
+    input.next_char  # Skip "
+    string = ""
+    while input.get_current_char != "\"" && input.get_current_char != nil
+     string += input.get_current_char
+     input.next_char
+    end
+
+    if input.get_current_char != "\""
+     raise UnterminatedStringError, string
+    end
+    return SchemeString.new(string)
+
   end
 
   def self.is_digit(x)
