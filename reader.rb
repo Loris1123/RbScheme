@@ -6,6 +6,18 @@ module Reader
     if input.class != UserInput
       raise WrongInputError, input
     end
-    return input
+    input
+  end
+
+  def self.read_number(input)
+    nil
+  end
+
+  def self.is_digit(x)
+    # Small helper to check if the given parameter is a number
+    if x.class == Fixnum
+      return TRUE
+    end
+    FALSE
   end
 end
