@@ -2,6 +2,8 @@ class SchemeObject; end
 
 class SchemeVoid < SchemeObject; end
 
+class SchemeNil < SchemeObject; end
+
 class SchemeTrue < SchemeObject; end
 
 class SchemeFalse < SchemeObject; end

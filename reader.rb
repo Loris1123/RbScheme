@@ -10,10 +10,23 @@ module Reader
     c = input.next_char
 
     if is_digit c
-      read_number input
+      return read_number input
     elsif c == "\""
-      read_string input
+      return read_string input
+    elsif c == "("
+      return read_list input
     end
+    return read_symbol
+  end
+
+  def read_list(input)
+    """
+    Reads a list and returns Cons
+    """
+    raise "Unimplemented: read_list"
+  end
+
+  def read_symbol(input)
   end
 
   def self.read_number(input)
@@ -29,6 +42,9 @@ module Reader
   end
 
   def self.read_string(input)
+    """
+    Reads a string and returns SchemeString
+    """
     input.next_char  # Skip "
     string = ""
     while input.get_current_char != "\"" && input.get_current_char != nil
@@ -40,11 +56,12 @@ module Reader
      raise UnterminatedStringError, string
     end
     return SchemeString.new(string)
-
   end
 
   def self.is_digit(x)
-    # Small helper to check if the given parameter is a number
+    """
+    Small helper to check if the given parameter is a number
+    """
     begin
       Integer(x)
       return TRUE
