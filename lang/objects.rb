@@ -14,7 +14,7 @@ class SchemeInteger < SchemeObject
   end
 
   def get_value
-    @value
+    Integer(@value)
   end
 
   def set_value(value)
@@ -38,4 +38,14 @@ class SchemeString < SchemeObject
   def set_value(value)
     @value = String(value)
   end
+end
+
+class SchemeCons < SchemeObject
+  def initialize(car, cdr)
+    @car = car
+    @cdr = cdr
+  end
+
+  def get_car; @car; end
+  def get_cdr; @cdr; end
 end

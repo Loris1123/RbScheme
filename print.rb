@@ -4,16 +4,29 @@ module SchemePrinter
   def self.scheme_print(scheme_expression)
     case scheme_expression
     when SchemeString
-      print "\"#{scheme_expression.get_value}\""
+      return "\"#{scheme_expression.get_value}\""
     when SchemeTrue
-      print "\#t"
+      return "\#t"
     when SchemeFalse
-      print "\#f"
+      return "\#f"
     when SchemeInteger
-      print scheme_expression.get_value
+      return scheme_expression.get_value
+    when SchemeNil
+      return "nil"
+    when SchemeCons
+      return scheme_print_list scheme_expression
     else
-      print "Unimplemented print: #{scheme_expression.class}"
+      return "Unimplemented print: #{scheme_expression.class}"
     end
-    print("\n")
+  end
+
+  def self.scheme_print_list(cons)
+    ret = "(#{scheme_print cons.get_car}"
+    if cons.get_cdr.class == SchemeNil
+      return ret+")"
+    end
+    ret += scheme_print_list cons.get_cdr
+    #puts "CAR: #{cons.get_car}"
+    #puts "CDR: #{cons.get_cdr}"
   end
 end

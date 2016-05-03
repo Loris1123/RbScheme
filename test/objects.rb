@@ -26,4 +26,8 @@ module ObjectsTest
     s = SchemeString.new("")
     raise "Value should be \"\", is \"#{s.get_value}\"" unless s.get_value == ""
   end
+
+    cons = SchemeCons.new(SchemeInteger.new(42), SchemeString.new("Foobar"))
+    raise "CAR should be 42, is \"#{cons.get_cdr.get_value}\"" unless cons.get_car.get_value == 42
+    raise "CDR should be \"Foobar\", is \"#{cons.get_cdr.get_value}\"" unless cons.get_cdr.get_value == "Foobar"
 end
