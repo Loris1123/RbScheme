@@ -1,4 +1,4 @@
-require_relative '../util/linked_list'
+require_relative '../util/linkedlist'
 
 module LinkedListTest
     def self.test
