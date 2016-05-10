@@ -1,19 +1,24 @@
 require_relative "reader"
 require_relative "userinput"
 require_relative "objects"
+require_relative "linked_list"
 
 module Test
   def self.test
     puts "Running Tests"
-    puts "\tReadertest"
-    ReaderTest.test
-    puts "\tSuccess"
-
-    puts "\tUserinputtest"
+    puts "\tUserinput"
     UserInputTest.test
     puts "\tSuccess"
 
-    puts "\tObjecttest"
+    puts "\tLinkedlist"
+    LinkedListTest.test
+    puts "\tSuccess"
+
+    puts "\tReader"
+    ReaderTest.test
+    puts "\tSuccess"
+
+    puts "\tObject"
     ObjectsTest.test
     puts "\tSuccess"
 
