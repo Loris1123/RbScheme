@@ -1,9 +1,13 @@
 require_relative '../lang/errors'
 
 class LinkedList
-  def initialize()
+  def initialize(first = nil)
     @size = 0
     @first = nil
+
+    # If there is already a first value
+    @first = ListItem.new(first) if first != nil
+    @size = 1 if first != nil
   end
 
   def append(value)

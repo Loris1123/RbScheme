@@ -2,6 +2,7 @@ require_relative "reader"
 require_relative "userinput"
 require_relative "objects"
 require_relative "linkedlist"
+require_relative "hashtable"
 
 module Test
   def self.test
@@ -12,6 +13,10 @@ module Test
 
     puts "\tLinkedlist"
     LinkedListTest.test
+    puts "\tSuccess"
+
+    puts "\tHashTable"
+    HashtableTest.test
     puts "\tSuccess"
 
     puts "\tReader"

@@ -13,5 +13,10 @@ module LinkedListTest
       list.append(23)
       raise "Size should be 3, is #{list.size}" unless list.size == 3
       raise "Third should be 23, is #{list.first.value}" unless list.first.next.next.value == 23
+
+      list2 = LinkedList.new(123)
+      raise "Size should be 1, is #{list2.size}" unless list2.size == 1
+      raise "First should be 123, is #{list2.first.value}" unless list2.first.value == 123
+      raise "Second should be nil, is #{list2.first.next}" unless list2.first.next == nil
     end
 end
