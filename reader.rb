@@ -3,19 +3,17 @@ require_relative "lang/errors"
 require_relative "lang/objects"
 
 module Reader
+
   def self.read_input(input)
     if input.class != UserInput
       raise WrongInputError, input
     end
-    skip_spaces(input)
-    c = input.read_char
-    puts "C: #{c}"
 
-    if is_digit c
+    if is_digit input.current
       return read_number input
-    elsif c == "\""
+    elsif input.current == "\""
       return read_string input
-    elsif c == "("
+    elsif input.current == "("
       return read_list input
     else
       return read_symbol input
@@ -26,8 +24,11 @@ module Reader
     """
     Reads a list and returns Cons
     """
-    raise "Unimplemented: read_list"
-
+    if input.current == ")" # Skip (
+      return SchemeNil.new
+    end
+    input.next
+    SchemeCons.new(read_input(input),read_list(input))
   end
 
   def self.read_symbol(input)
@@ -35,13 +36,14 @@ module Reader
     Reads a symbol and returns the corresponding value from environment.
     """
     symbol = ""
-    while input.get_current_char != "(" &&
-      input.get_current_char != ")" &&
-      input.get_current_char != " " &&
-      input.get_current_char != nil
-      symbol += input.get_current_char
-      input.read_char
+    while input.current != "(" &&
+      input.current != ")" &&
+      input.current != " " &&
+      input.current != nil
+      symbol += input.current
+      input.next
     end
+    puts symbol
     # Well known symbols
     case symbol
     when "nil"
@@ -59,16 +61,15 @@ module Reader
     """
     Reads a Number and returns SchemeInteger
     """
-    number = input.get_current_char
-    while is_digit input.get_current_char
-      number += input.read_char
+    number = ""
+    while is_digit input.current
+      number += input.current
+      input.next
     end
-
-    if input.get_current_char != " " and input.get_current_char != nil
-      # There must be a space or EOF now
-      raise SchemeSyntaxError, input.get_input
+    if input.current != " " && input.current != nil && input.current != ")"
+      # There must be a space, end of cons or EOF now
+      raise SchemeSyntaxError, input.input
     end
-
     SchemeInteger.new(number)
   end
 
@@ -76,21 +77,17 @@ module Reader
     """
     Reads a string and returns SchemeString
     """
-    string = input.read_char
-    while input.get_current_char != "\"" && input.get_current_char != nil
-      string += input.read_char
+    input.next # Skip "
+    string = ""
+    while input.current != "\"" && input.current != nil
+      string += input.current
+      input.next
     end
 
-    if string[-1] != "\""
-      raise UnterminatedStringError.new(input.get_input)
+    if input.current != "\""
+      raise UnterminatedStringError.new(input.input)
     end
-    SchemeString.new(string[0..-2]) # Cut the last read "
-  end
-
-  def self.skip_spaces(input)
-    while input.get_current_char == " "
-      input.read_char
-    end
+    SchemeString.new(string)
   end
 
   def self.is_digit(x)
@@ -99,9 +96,9 @@ module Reader
     """
     begin
       Integer(x)
-      return TRUE
+      return true
     rescue ArgumentError, TypeError
-      return FALSE
+      return false
     end
   end
 end

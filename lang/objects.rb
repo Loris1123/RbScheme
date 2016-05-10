@@ -10,7 +10,7 @@ class SchemeFalse < SchemeObject; end
 
 class SchemeInteger < SchemeObject
   def initialize(value)
-    @value = value
+    set_value(value)
   end
 
   def get_value
