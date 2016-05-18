@@ -11,10 +11,13 @@ module HashtableTest
     rescue SchemeIntenalError
     end
 
-    Hashtable.hash("HelloWorld")
+    first = Hashtable.hash("HelloWorld")
+    second = Hashtable.hash("HelloWorld")
+    raise "Hashes should be identical. First: #{first}, Second: #{second}" unless first==second
 
     table.put("Foo", "Bar")
     raise "Value should be 'Bar', is #{table.get("Foo")}" unless table.get("Foo") == "Bar"
+    table.put("Foo", "Bar")
 
   end
 end

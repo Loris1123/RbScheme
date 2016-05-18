@@ -43,7 +43,7 @@ module Reader
       symbol += input.current
       input.next
     end
-    puts symbol
+
     # Well known symbols
     case symbol
     when "nil"
@@ -53,8 +53,7 @@ module Reader
     when "\#f"
       return SchemeFalse.new
     end
-    # TODO Implement Env and get value from Env
-      return SchemeString.new("Env Not Implemented")
+      return symbol.to_sym
   end
 
   def self.read_number(input)

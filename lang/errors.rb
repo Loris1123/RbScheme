@@ -44,6 +44,12 @@ class UnterminatedConsError < SchemeUserError
   end
 end
 
+class UndefinedSymbolError < SchemeUserError
+  def initialize(symbolname)
+    super("Undefined Symbol: #{symbolname}")
+  end
+end
+
 class SchemeSyntaxError < SchemeUserError
   def initialize(wrong_syntax)
     super("Invalid Syntax: #{wrong_syntax}")

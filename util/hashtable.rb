@@ -3,6 +3,9 @@ require_relative "linkedlist"
 
 class Hashtable
 
+  # TODO if there is time in the end.
+  # Use normal hashes until now.
+
   def initialize(tablesize=521)
     @table = Array.new(tablesize)
     @tablesize = tablesize
@@ -14,18 +17,26 @@ class Hashtable
     Put the value in the hashtable
     """
     index = Hashtable.hash(key) % @tablesize
-    puts "Index Put for #{key}: #{index}"
     if @table[index] == nil
       puts "Is Empty!"
-      @table[index] = LinkedList.new(value)
+      #@table[index] = LinkedList.new({value})
     else
-      puts "Collision!!"
+      # Collision. Ovewrite value or add new one?
+      item = @table[index].first
+      while item != nil
+        if item.value == value
+          # TODO!
+          puts "FOUND!"
+          break
+        end
+        item = item.next
+      end
+
     end
   end
 
   def get(key)
     index = Hashtable.hash(key) % @tablesize
-    puts "index Get for #{key}: #{index}"
     return @table[index].first.value
   end
 

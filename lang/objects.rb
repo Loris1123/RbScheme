@@ -8,6 +8,16 @@ class SchemeTrue < SchemeObject; end
 
 class SchemeFalse < SchemeObject; end
 
+#class SchemeSymbol < SchemeObject
+#  def initialize(value)
+#    @value = value
+#  end
+#
+#  def value
+#    @value
+#  end
+#end
+
 class SchemeInteger < SchemeObject
   def initialize(value)
     set_value(value)

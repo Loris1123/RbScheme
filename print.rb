@@ -15,6 +15,8 @@ module SchemePrinter
       return "nil"
     when SchemeCons
       return scheme_print_list scheme_expression
+    when BuiltinFunction
+      return "<Builtin-Function: \##{scheme_expression.name}>"
     else
       return "Unimplemented print: #{scheme_expression.class}"
     end

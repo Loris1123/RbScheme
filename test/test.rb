@@ -15,9 +15,9 @@ module Test
     LinkedListTest.test
     puts "\tSuccess"
 
-    puts "\tHashTable"
-    HashtableTest.test
-    puts "\tSuccess"
+    #puts "\tHashTable"
+    #HashtableTest.test
+    #puts "\tSuccess"
 
     puts "\tReader"
     ReaderTest.test
