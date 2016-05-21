@@ -28,7 +28,5 @@ module SchemePrinter
       return ret+")"
     end
     ret += scheme_print_list cons.get_cdr
-    #puts "CAR: #{cons.get_car}"
-    #puts "CDR: #{cons.get_cdr}"
   end
 end

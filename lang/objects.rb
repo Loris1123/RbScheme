@@ -8,6 +8,7 @@ class SchemeTrue < SchemeObject; end
 
 class SchemeFalse < SchemeObject; end
 
+# Using Ruby-Symbols at the moment instead of SchemeSymbol
 #class SchemeSymbol < SchemeObject
 #  def initialize(value)
 #    @value = value
@@ -25,6 +26,17 @@ class SchemeInteger < SchemeObject
 
   def get_value
     Integer(@value)
+  end
+
+  def +(x)
+    case x
+    when SchemeInteger
+      return @value+x.get_value
+    when Fixnum
+      return @value+x
+    else
+      raise "Can't add #{x.class} to SchemeInteger"
+    end
   end
 
   def set_value(value)

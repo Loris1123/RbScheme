@@ -13,8 +13,9 @@ require_relative "test/test"
 Test.test
 
 global_env = Environment.new()
-global_env.put(:+, BuiltinFunction.new("SchemePlus", Proc.new{Functions.scheme_plus}))
-global_env.put(:a, SchemeInteger.new(123))
+global_env.put(:+, BuiltinFunction.new("SchemePlus", Functions.scheme_plus))
+global_env.put(:a, SchemeInteger.new(10))
+global_env.put(:b, SchemeInteger.new(20))
 
 puts "Welcome to RbScheme"
 while TRUE
@@ -22,9 +23,9 @@ while TRUE
     print "> "
     input = UserInput.new(gets)
     read = Reader.read_input(input)
-    eval = Eval.eval(read, global_env)
-    print = SchemePrinter.scheme_print(eval)
-    puts print
+    evaled = Eval.eval(read, global_env)
+    printed = SchemePrinter.scheme_print(evaled)
+    puts printed
   rescue SchemeUserError => err
     puts err.message
   end

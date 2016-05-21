@@ -6,20 +6,20 @@ class BuiltinFunction
     @job = job
   end
 
-  def work
-    @job.call
+  def work(x,y)
+    @job.call(x,y)
   end
 
   def name
     @name
   end
-  
+
 end
 
 module Functions
 
-  def scheme_plus
-    return SchemeInteger(666)
+  def self.scheme_plus
+    return Proc.new{|x,y| SchemeInteger.new(x+y) }
   end
 
 end
