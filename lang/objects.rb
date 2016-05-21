@@ -50,6 +50,17 @@ class SchemeInteger < SchemeObject
     end
   end
 
+  def /(x)
+    case x
+    when SchemeInteger
+      return @value/x.get_value
+    when Fixnum
+      return @value/x
+    else
+      raise "Can't divide #{x.class} through SchemeInteger"
+    end
+  end
+
   def -(x)
     case x
     when SchemeInteger

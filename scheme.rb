@@ -16,6 +16,7 @@ global_env = Environment.new()
 global_env.put(:+, BuiltinFunction.new("SchemePlus", Functions.scheme_plus))
 global_env.put(:*, BuiltinFunction.new("SchemeTimes", Functions.scheme_times))
 global_env.put(:-, BuiltinFunction.new("SchemeSubstract", Functions.scheme_substract))
+global_env.put(:/, BuiltinFunction.new("SchemeDivide", Functions.scheme_divide))
 global_env.put(:a, SchemeInteger.new(10))
 global_env.put(:b, SchemeInteger.new(20))
 

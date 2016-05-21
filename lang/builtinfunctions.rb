@@ -29,4 +29,9 @@ module Functions
   def self.scheme_substract
     return Proc.new{|x,y| SchemeInteger.new(x-y) }
   end
+
+  def self.scheme_divide
+    return Proc.new{|x,y| SchemeInteger.new(x/y) }
+  end
+  
 end
