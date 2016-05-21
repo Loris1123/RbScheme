@@ -50,6 +50,17 @@ class SchemeInteger < SchemeObject
     end
   end
 
+  def -(x)
+    case x
+    when SchemeInteger
+      return @value-x.get_value
+    when Fixnum
+      return @value-x
+    else
+      raise "Can't substract #{x.class} from SchemeInteger"
+    end
+  end
+
   def set_value(value)
     begin
       @value = Integer(value)
