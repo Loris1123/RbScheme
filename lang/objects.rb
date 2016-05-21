@@ -28,6 +28,17 @@ class SchemeInteger < SchemeObject
     Integer(@value)
   end
 
+  def *(x)
+    case x
+    when SchemeInteger
+      return @value*x.get_value
+    when Fixnum
+      return @value*x
+    else
+      raise "Can't do multiples of #{x.class} to SchemeInteger"
+    end
+  end
+
   def +(x)
     case x
     when SchemeInteger

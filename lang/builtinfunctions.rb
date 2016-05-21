@@ -22,4 +22,9 @@ module Functions
     return Proc.new{|x,y| SchemeInteger.new(x+y) }
   end
 
+  def self.scheme_times
+    return Proc.new{|x,y| SchemeInteger.new(x*y) }
+  end
+
+
 end
