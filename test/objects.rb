@@ -14,6 +14,14 @@ module ObjectsTest
     rescue SchemeArgumentError
     end
 
+    six = SchemeInteger.new(6)
+    three = SchemeInteger.new(3)
+    raise "Result should be 9, is #{six+three}" unless (six+three).get_value == 9
+    raise "Result should be 3, is #{six-three}" unless (six-three).get_value == 3
+    raise "Result should be 18, is #{six*three}" unless (six*three).get_value == 18
+    raise "Result should be 2, is #{six/three}" unless (six/three).get_value == 2
+
+
     s = SchemeString.new("Foobar")
     raise "Value should be Foobar, is \"#{s.get_value}\"" unless s.get_value == "Foobar"
 

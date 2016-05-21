@@ -19,19 +19,19 @@ end
 module Functions
 
   def self.scheme_plus
-    return Proc.new{|args| SchemeInteger.new(args[0]+args[1]) }
+    return Proc.new{|args| args[0]+args[1] }
   end
 
   def self.scheme_times
-    return Proc.new{|x,y| SchemeInteger.new(args[0]*args[1]) }
+    return Proc.new{|x,y| args[0]*args[1] }
   end
 
   def self.scheme_substract
-    return Proc.new{|x,y| SchemeInteger.new(args[0]-args[1]) }
+    return Proc.new{|x,y| args[0]-args[1] }
   end
 
   def self.scheme_divide
-    return Proc.new{|x,y| SchemeInteger.new(args[0]/args[1]) }
+    return Proc.new{|x,y| args[0]/args[1] }
   end
 
 end

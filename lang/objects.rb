@@ -31,9 +31,9 @@ class SchemeInteger < SchemeObject
   def *(x)
     case x
     when SchemeInteger
-      return @value*x.get_value
+      return SchemeInteger.new(@value*x.get_value)
     when Fixnum
-      return @value*x
+      return SchemeInteger.new(@value*xx)
     else
       raise "Can't do multiples of #{x.class} to SchemeInteger"
     end
@@ -42,9 +42,9 @@ class SchemeInteger < SchemeObject
   def +(x)
     case x
     when SchemeInteger
-      return @value+x.get_value
+      return SchemeInteger.new(@value+x.get_value)
     when Fixnum
-      return @value+x
+      return SchemeInteger.new(@value+x)
     else
       raise "Can't add #{x.class} to SchemeInteger"
     end
@@ -53,9 +53,9 @@ class SchemeInteger < SchemeObject
   def /(x)
     case x
     when SchemeInteger
-      return @value/x.get_value
+      return SchemeInteger.new(@value/x.get_value)
     when Fixnum
-      return @value/x
+      return SchemeInteger.new(@value/x)
     else
       raise "Can't divide #{x.class} through SchemeInteger"
     end
@@ -64,9 +64,9 @@ class SchemeInteger < SchemeObject
   def -(x)
     case x
     when SchemeInteger
-      return @value-x.get_value
+      return SchemeInteger.new(@value-x.get_value)
     when Fixnum
-      return @value-x
+      return SchemeInteger.new(@value-x)
     else
       raise "Can't substract #{x.class} from SchemeInteger"
     end
@@ -78,6 +78,10 @@ class SchemeInteger < SchemeObject
     rescue ArgumentError, TypeError
       raise SchemeArgumentError.new(Fixnum, value.class)
     end
+  end
+
+  def to_str
+    "SchemeInteger: #{@value}"
   end
 end
 
