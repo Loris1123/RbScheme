@@ -17,8 +17,8 @@ module Eval
   def self.eval_cons(cons, environment)
     function = self.eval(cons.get_car, environment)
     function_arguments = cons.get_cdr
-    arg1 = function_arguments.get_car
-    arg2 = function_arguments.get_cdr.get_car
+    arg1 = self.eval(function_arguments.get_car, environment)
+    arg2 = self.eval(function_arguments.get_cdr.get_car, environment)
     return function.work(arg1, arg2)
   end
 end
