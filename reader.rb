@@ -24,11 +24,18 @@ module Reader
     """
     Reads a list and returns Cons
     """
-    if input.current == ")" # Skip (
+    if input.current == nil
+      raise UnterminatedConsError.new(input.input)
+    end
+    if input.current == ")"
+      input.next # Recursion will always return SchemeNil, if we do not do this.
       return SchemeNil.new
     end
     input.next
-    SchemeCons.new(read_input(input),read_list(input))
+    skip_spaces(input)
+    car = read_input(input)
+    cdr = read_list(input)
+    SchemeCons.new(car, cdr)
   end
 
   def self.read_symbol(input)
@@ -98,6 +105,12 @@ module Reader
       return true
     rescue ArgumentError, TypeError
       return false
+    end
+  end
+
+  def self.skip_spaces(input)
+    while input.current == " "
+      input.next
     end
   end
 end

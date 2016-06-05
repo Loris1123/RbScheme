@@ -23,15 +23,15 @@ module Functions
   end
 
   def self.scheme_times
-    Proc.new{|x,y| args[0]*args[1] }
+    Proc.new{|args| args[0]*args[1] }
   end
 
   def self.scheme_substract
-    Proc.new{|x,y| args[0]-args[1] }
+    Proc.new{|args| args[0]-args[1] }
   end
 
   def self.scheme_divide
-    Proc.new{|x,y| args[0]/args[1] }
+    Proc.new{|args| args[0]/args[1] }
   end
 
 end
