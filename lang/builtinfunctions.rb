@@ -6,8 +6,8 @@ class BuiltinFunction
     @job = job
   end
 
-  def work(*args)
-    @job.call(args)
+  def work(environment, *args)
+    @job.call(environment, args)
   end
 
   def name
@@ -19,23 +19,23 @@ end
 module Functions
 
   def self.scheme_plus
-    Proc.new{|args| args[0]+args[1] }
+    Proc.new{|environment, args| args[0]+args[1] }
   end
 
   def self.scheme_times
-    Proc.new{|args| args[0]*args[1] }
+    Proc.new{|environment, args| args[0]*args[1] }
   end
 
   def self.scheme_substract
-    Proc.new{|args| args[0]-args[1] }
+    Proc.new{|environment, args| args[0]-args[1] }
   end
 
   def self.scheme_divide
-    Proc.new{|args| args[0]/args[1] }
+    Proc.new{|environment, args| args[0]/args[1] }
   end
 
   def self.scheme_equals
-    Proc.new{|args| 
+    Proc.new{|environment, args| 
       if args[0] == args[1]
         SchemeTrue.new
       else
@@ -43,5 +43,13 @@ module Functions
       end
     }
   end
+
+  def self.scheme_define
+    Proc.new{|environment, args| 
+      raise "Not yet implemented"
+    }
+  end
+
+
 
 end

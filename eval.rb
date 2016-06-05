@@ -29,6 +29,6 @@ module Eval
 
     arg1 = self.eval(function_arguments.get_car, environment)
     arg2 = self.eval(function_arguments.get_cdr.get_car, environment)
-    return function.work(arg1, arg2)
+    return function.work(environment, arg1, arg2)
   end
 end

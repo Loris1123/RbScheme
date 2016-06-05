@@ -19,6 +19,7 @@ global_env.put(SchemeSymbol.new("*"), BuiltinFunction.new("SchemeTimes", Functio
 global_env.put(SchemeSymbol.new("-"), BuiltinFunction.new("SchemeSubstract", Functions.scheme_substract))
 global_env.put(SchemeSymbol.new("/"), BuiltinFunction.new("SchemeDivide", Functions.scheme_divide))
 global_env.put(SchemeSymbol.new("eq?"), BuiltinFunction.new("SchemeEquals", Functions.scheme_equals))
+global_env.put(SchemeSymbol.new("define"), BuiltinFunction.new("SchemeDefine", Functions.scheme_define))
 global_env.put(SchemeSymbol.new("a"), SchemeInteger.new(10))
 global_env.put(SchemeSymbol.new("b"), SchemeInteger.new(20))
 
