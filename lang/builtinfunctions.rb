@@ -34,4 +34,14 @@ module Functions
     Proc.new{|args| args[0]/args[1] }
   end
 
+  def self.scheme_equals
+    Proc.new{|args| 
+      if args[0] == args[1]
+        SchemeTrue.new
+      else
+        SchemeFalse.new
+      end
+    }
+  end
+
 end

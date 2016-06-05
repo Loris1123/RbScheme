@@ -11,12 +11,12 @@ module ReaderTest
     u = UserInput.new("1234")
     r = Reader.read_input u
     raise "Read input should be SchemeInteger, is #{r.class}" unless r.class == SchemeInteger
-    raise "Read number should be 1234, is #{r.get_value}" unless r.get_value == 1234
+    raise "Read number should be 1234, is #{r.get_value}" unless r.value == 1234
 
     u = UserInput.new("\"abcd\"")
     r = Reader.read_input u
     raise "Read input should be SchemeString, is #{r.class}" unless r.class == SchemeString
-    raise "Read string should be \"abcd\", is #{r.get_value}" unless r.get_value == "abcd"
+    raise "Read string should be \"abcd\", is #{r.get_value}" unless r.value == "abcd"
 
 
     u = UserInput.new("\"abcd")

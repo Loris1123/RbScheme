@@ -1,12 +1,28 @@
 class SchemeObject; end
 
-class SchemeVoid < SchemeObject; end
+class SchemeVoid < SchemeObject
+  def ==(x)
+    return x.class == SchemeVoid
+  end
+end
 
-class SchemeNil < SchemeObject; end
+class SchemeNil < SchemeObject
+  def ==(x)
+    return x.class == SchemeNil
+  end
+end
 
-class SchemeTrue < SchemeObject; end
+class SchemeTrue < SchemeObject
+  def ==(x)
+    return x.class == SchemeTrue
+  end
+end
 
-class SchemeFalse < SchemeObject; end
+class SchemeFalse < SchemeObject
+  def ==(x)
+    return x.class == SchemeFalse
+  end
+end
 
 class SchemeSymbol < SchemeObject
   def initialize(value)
@@ -23,14 +39,18 @@ class SchemeInteger < SchemeObject
     set_value(value)
   end
 
-  def get_value
+  def value
     Integer(@value)
+  end
+
+  def ==(x)
+    return x.value==@value
   end
 
   def *(x)
     case x
     when SchemeInteger
-      return SchemeInteger.new(@value*x.get_value)
+      return SchemeInteger.new(@value*x.value)
     when Fixnum
       return SchemeInteger.new(@value*xx)
     else
@@ -41,7 +61,7 @@ class SchemeInteger < SchemeObject
   def +(x)
     case x
     when SchemeInteger
-      return SchemeInteger.new(@value+x.get_value)
+      return SchemeInteger.new(@value+x.value)
     when Fixnum
       return SchemeInteger.new(@value+x)
     else
@@ -52,7 +72,7 @@ class SchemeInteger < SchemeObject
   def /(x)
     case x
     when SchemeInteger
-      return SchemeInteger.new(@value/x.get_value)
+      return SchemeInteger.new(@value/x.value)
     when Fixnum
       return SchemeInteger.new(@value/x)
     else
@@ -63,7 +83,7 @@ class SchemeInteger < SchemeObject
   def -(x)
     case x
     when SchemeInteger
-      return SchemeInteger.new(@value-x.get_value)
+      return SchemeInteger.new(@value-x.value)
     when Fixnum
       return SchemeInteger.new(@value-x)
     else
@@ -89,12 +109,16 @@ class SchemeString < SchemeObject
     @value = String(value)
   end
 
-  def get_value
+  def value
     @value
   end
 
   def set_value(value)
     @value = String(value)
+  end
+
+  def ==(x)
+    return @value==x.value
   end
 end
 
