@@ -1,5 +1,5 @@
 require_relative "../reader"
-require_relative "../util/userinput"
+require_relative "../lang/userinput"
 
 module ReaderTest
   def self.test

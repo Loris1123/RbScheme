@@ -1,6 +1,6 @@
 class SchemeError < StandardError; end
 
-class SchemeIntenalError < StandardError
+class SchemeInternalError < StandardError
   def initialize(message)
     super "\n\n==============================================\n\n"+
           "Internal Scheme Error. Please report a bug at https://github.com/Loris1123/RbScheme\n\n"+
@@ -10,13 +10,13 @@ class SchemeIntenalError < StandardError
   end
 end
 
-class WrongInputError < SchemeIntenalError
+class WrongInputError < SchemeInternalError
   def initialize(input)
     super("Input was no UserInput. Got #{input.class}")
   end
 end
 
-class SchemeArgumentError < SchemeIntenalError
+class SchemeArgumentError < SchemeInternalError
   def initialize(need, got)
     super("Wrong argument. Need #{need}. Got #{got}")
   end

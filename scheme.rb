@@ -1,13 +1,14 @@
 #!/usr/bin/ruby
 
 require_relative "reader"
-require_relative "util/userinput"
+require_relative "lang/userinput"
 require_relative "print"
 require_relative "lang/errors"
 require_relative "eval"
 require_relative "lang/environment"
 require_relative "lang/builtinfunctions"
 require_relative "lang/objects"
+
 # Start tests
 require_relative "test/test"
 Test.test
@@ -25,6 +26,7 @@ while TRUE
   begin
     print "> "
     input = UserInput.new(gets)
+    #input = UserInput.new("(+ (* 2 4) (* 1 6))")
     read = Reader.read_input(input)
     evaled = Eval.eval(read, global_env)
     printed = SchemePrinter.scheme_print(evaled)

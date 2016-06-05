@@ -12,6 +12,8 @@ module Eval
       return self.eval_cons(input, environment)
     when SchemeNil
       return nil
+    #else
+    #  raise SchemeInternalError.new("Unimplemented eval: #{input.class}")
     end
     return input
   end
@@ -24,7 +26,6 @@ module Eval
     end
 
     function_arguments = cons.get_cdr
-
 
     arg1 = self.eval(function_arguments.get_car, environment)
     arg2 = self.eval(function_arguments.get_cdr.get_car, environment)
