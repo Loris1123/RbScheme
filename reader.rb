@@ -60,7 +60,7 @@ module Reader
     when "\#f"
       return SchemeFalse.new
     end
-      return symbol.to_sym
+    return SchemeSymbol.new(symbol)
   end
 
   def self.read_number(input)

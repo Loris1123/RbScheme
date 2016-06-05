@@ -8,16 +8,15 @@ class SchemeTrue < SchemeObject; end
 
 class SchemeFalse < SchemeObject; end
 
-# Using Ruby-Symbols at the moment instead of SchemeSymbol
-#class SchemeSymbol < SchemeObject
-#  def initialize(value)
-#    @value = value
-#  end
-#
-#  def value
-#    @value
-#  end
-#end
+class SchemeSymbol < SchemeObject
+  def initialize(value)
+    @value = value
+  end
+
+  def value
+    @value
+  end
+end
 
 class SchemeInteger < SchemeObject
   def initialize(value)

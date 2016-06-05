@@ -1,15 +1,16 @@
 require_relative "builtinfunctions"
 
+# Normal hashtable for now...will implement my own later
 class Environment
   def initialize
     @environment = Hash.new
   end
 
-  def get(key)
-    @environment[key]
+  def get(symbol)
+    @environment[symbol.value]
   end
 
-  def put(key, value)
-    @environment[key] = value
+  def put(symbol, value)
+    @environment[symbol.value] = value
   end
 end

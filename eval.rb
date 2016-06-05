@@ -4,7 +4,7 @@ module Eval
 
   def self.eval(input, environment)
     case input
-    when Symbol
+    when SchemeSymbol
       symbol = environment.get(input)
       raise UndefinedSymbolError.new(input) unless symbol != nil
       return symbol

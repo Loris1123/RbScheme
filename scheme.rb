@@ -14,12 +14,12 @@ require_relative "test/test"
 Test.test
 
 global_env = Environment.new()
-global_env.put(:+, BuiltinFunction.new("SchemePlus", Functions.scheme_plus))
-global_env.put(:*, BuiltinFunction.new("SchemeTimes", Functions.scheme_times))
-global_env.put(:-, BuiltinFunction.new("SchemeSubstract", Functions.scheme_substract))
-global_env.put(:/, BuiltinFunction.new("SchemeDivide", Functions.scheme_divide))
-global_env.put(:a, SchemeInteger.new(10))
-global_env.put(:b, SchemeInteger.new(20))
+global_env.put(SchemeSymbol.new("+"), BuiltinFunction.new("SchemePlus", Functions.scheme_plus))
+global_env.put(SchemeSymbol.new("*"), BuiltinFunction.new("SchemeTimes", Functions.scheme_times))
+global_env.put(SchemeSymbol.new("-"), BuiltinFunction.new("SchemeSubstract", Functions.scheme_substract))
+global_env.put(SchemeSymbol.new("/"), BuiltinFunction.new("SchemeDivide", Functions.scheme_divide))
+global_env.put(SchemeSymbol.new("a"), SchemeInteger.new(10))
+global_env.put(SchemeSymbol.new("b"), SchemeInteger.new(20))
 
 puts "Welcome to RbScheme"
 while TRUE
