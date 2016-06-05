@@ -29,6 +29,13 @@ class SchemeSymbol < SchemeObject
     @value = value
   end
 
+  def ==(x)
+    if x.class==SchemeSymbol
+      return @value == x.value
+    end
+    return false
+  end
+
   def value
     @value
   end

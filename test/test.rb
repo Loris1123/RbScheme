@@ -3,6 +3,7 @@ require_relative "userinput"
 require_relative "objects"
 require_relative "linkedlist"
 require_relative "hashtable"
+require_relative "symboltable"
 
 module Test
   def self.test
@@ -11,9 +12,13 @@ module Test
     UserInputTest.test
     puts "\tSuccess"
 
-    puts "\tLinkedlist"
-    LinkedListTest.test
+    puts "\tSymboltable"
+    SymboltableTest.test
     puts "\tSuccess"
+
+    #puts "\tLinkedlist"
+    #LinkedListTest.test
+    #puts "\tSuccess"
 
     #puts "\tHashTable"
     #HashtableTest.test

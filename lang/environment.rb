@@ -1,5 +1,3 @@
-require_relative "builtinfunctions"
-
 # Normal hashtable for now...will implement my own later
 class Environment
   def initialize

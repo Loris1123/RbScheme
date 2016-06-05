@@ -1,6 +1,7 @@
 require_relative "lang/userinput"
 require_relative "lang/errors"
 require_relative "lang/objects"
+require_relative "lang/symboltable"
 
 module Reader
 
@@ -60,7 +61,7 @@ module Reader
     when "\#f"
       return SchemeFalse.new
     end
-    return SchemeSymbol.new(symbol)
+    return Syboltable.get_or_add(symbol)
   end
 
   def self.read_number(input)
