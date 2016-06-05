@@ -10,13 +10,17 @@ class UserInput
     @input
   end
 
+  def to_str
+    "Userinput: #{@input}"
+  end
+
   def index
     @index
   end
 
   def next
     # Do not skip spaces here!
-    # Arguments will be moved together! (45 456) -> (45456)
+    # Arguments will be moved together! (+ 1 2) -> (+12)
     @index = @index.next
     @input[@index]
   end
