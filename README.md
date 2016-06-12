@@ -20,3 +20,16 @@ You can also do multiple calculations at once with nested lists:
 You can define some symbols in the code. Symbol-definition will follow!
 For now there are two symbols predefined. `a => 10` and `b => 20`  
 You can use them in your calculations aswell. 
+
+
+### Builtin-functions
+#### eq?
+Compare objects. 
+Returns #t if they are the same. #f if not
+
+    (eq? 1 1)  
+      => #t  
+    (eq? 1 2)  
+      => #f  
+    (eq? "foo" "foo")  
+      => #t  
