@@ -23,6 +23,7 @@ module SchemePrinter
   end
 
   def self.scheme_print_list(cons)
+    ret = "(#{scheme_print cons.car}"
     if cons.cdr.class == SchemeNil
       return ret+")"
     end

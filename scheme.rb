@@ -19,7 +19,7 @@ global_env.put(SchemeSymbol.new("*"), BuiltinFunction.new("SchemeTimes", Functio
 global_env.put(SchemeSymbol.new("-"), BuiltinFunction.new("SchemeSubstract", Functions.scheme_substract))
 global_env.put(SchemeSymbol.new("/"), BuiltinFunction.new("SchemeDivide", Functions.scheme_divide))
 global_env.put(SchemeSymbol.new("eq?"), BuiltinFunction.new("SchemeEquals", Functions.scheme_equals))
-global_env.put(SchemeSymbol.new("define"), BuiltinFunction.new("SchemeDefine", Functions.scheme_define))
+#global_env.put(SchemeSymbol.new("define"), BuiltinFunction.new("SchemeDefine", Functions.scheme_define))
 global_env.put(SchemeSymbol.new("cons"), BuiltinFunction.new("SchemeCons", Functions.scheme_cons))
 global_env.put(SchemeSymbol.new("a"), SchemeInteger.new(10))
 global_env.put(SchemeSymbol.new("b"), SchemeInteger.new(20))
@@ -29,9 +29,9 @@ while TRUE
   begin
     print "> "
     input = UserInput.new(gets)
-    #input = UserInput.new("(+ (* 2 4) (* 1 6))")
+    #input = UserInput.new("(/ 4 2)")
     read = Reader.read_input(input)
-    evaled = Eval.eval(read, global_env)
+    evaled = Eval.eval(global_env, read)
     printed = SchemePrinter.scheme_print(evaled)
     puts printed
   rescue SchemeUserError => err
