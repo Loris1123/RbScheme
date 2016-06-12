@@ -29,7 +29,7 @@ while TRUE
   begin
     print "> "
     input = UserInput.new(gets)
-    #input = UserInput.new("(/ 4 2)")
+    #input = UserInput.new("(cons 1 4)")
     read = Reader.read_input(input)
     evaled = Eval.eval(global_env, read)
     printed = SchemePrinter.scheme_print(evaled)

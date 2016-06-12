@@ -46,7 +46,10 @@ module Functions
 
   def self.scheme_cons
     Proc.new{|environment, args|
-      SchemeCons.new(args[0], args[1])
+      # Call reader like you'd call it when entered to get a correct cons?
+      # require_relative '../reader'
+      # Reader.read_input(UserInput.new("(#{args[0]} #{args[1]})"))
+      SchemeCons.new(args[0], SchemeCons.new(args[1], SchemeNil.new))
     }
   end
 
