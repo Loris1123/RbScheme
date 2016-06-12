@@ -39,6 +39,10 @@ class SchemeSymbol < SchemeObject
   def value
     @value
   end
+
+  def to_str
+    "SchemeSymbol: #{@value}"
+  end
 end
 
 class SchemeInteger < SchemeObject
@@ -106,8 +110,8 @@ class SchemeInteger < SchemeObject
     end
   end
 
-  def to_str
-    "SchemeInteger: #{@value}"
+  def to_s
+    @value.to_s
   end
 end
 
@@ -135,6 +139,6 @@ class SchemeCons < SchemeObject
     @cdr = cdr
   end
 
-  def get_car; @car; end
-  def get_cdr; @cdr; end
+  def car; @car; end
+  def cdr; @cdr; end
 end

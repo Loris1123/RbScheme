@@ -44,9 +44,9 @@ class UnterminatedConsError < SchemeUserError
   end
 end
 
-class UndefinedSymbolError < SchemeUserError
+class UndefinedVariableError < SchemeUserError
   def initialize(symbolname)
-    super("Undefined Symbol: #{symbolname}")
+    super("Undefined variable: #{symbolname}")
   end
 end
 

@@ -61,7 +61,7 @@ module Reader
     when "\#f"
       return SchemeFalse.new
     end
-    return Syboltable.get_or_add(symbol)
+    return Symboltable.get_or_add(symbol)
   end
 
   def self.read_number(input)

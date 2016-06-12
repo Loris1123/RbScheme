@@ -44,9 +44,23 @@ module Functions
     }
   end
 
+  def self.scheme_cons
+    Proc.new{|environment, args|
+      SchemeCons.new(args[0], args[1])
+    }
+  end
+
+  def self.scheme_car
+
+  end
+
+  def self.scheme_cdr
+
+  end
+
   def self.scheme_define
     Proc.new{|environment, args| 
-      raise "Not yet implemented"
+      environment.put(args[0], args[1])
     }
   end
 

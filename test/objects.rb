@@ -3,9 +3,9 @@ require_relative "../lang/objects"
 module ObjectsTest
   def self.test
     i = SchemeInteger.new(42)
-    raise "Value should be 42, is #{i.get_value}" unless i.value == 42
+    raise "Value should be 42, is #{i.value}" unless i.value == 42
     i.set_value(23)
-    raise "Value should be 23, is #{i.get_value}" unless i.value == 23
+    raise "Value should be 23, is #{i.value}" unless i.value == 23
 
     begin
       i.set_value("")
@@ -36,6 +36,6 @@ module ObjectsTest
   end
 
     cons = SchemeCons.new(SchemeInteger.new(42), SchemeString.new("Foobar"))
-    raise "CAR should be 42, is \"#{cons.get_cdr.value}\"" unless cons.get_car.value == 42
-    raise "CDR should be \"Foobar\", is \"#{cons.get_cdr.value}\"" unless cons.get_cdr.value == "Foobar"
+    raise "CAR should be 42, is \"#{cons.cdr.value}\"" unless cons.car.value == 42
+    raise "CDR should be \"Foobar\", is \"#{cons.cdr.value}\"" unless cons.cdr.value == "Foobar"
 end

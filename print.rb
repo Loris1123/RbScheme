@@ -4,13 +4,13 @@ module SchemePrinter
   def self.scheme_print(scheme_expression)
     case scheme_expression
     when SchemeString
-      return "\"#{scheme_expression.get_value}\""
+      return "\"#{scheme_expression.value}\""
     when SchemeTrue
       return "\#t"
     when SchemeFalse
       return "\#f"
     when SchemeInteger
-      return scheme_expression.get_value
+      return scheme_expression.value
     when SchemeNil
       return "nil"
     when SchemeCons
@@ -23,10 +23,9 @@ module SchemePrinter
   end
 
   def self.scheme_print_list(cons)
-    ret = "(#{scheme_print cons.get_car}"
-    if cons.get_cdr.class == SchemeNil
+    if cons.cdr.class == SchemeNil
       return ret+")"
     end
-    ret += scheme_print_list cons.get_cdr
+    ret += scheme_print(cons.cdr).to_s
   end
 end
