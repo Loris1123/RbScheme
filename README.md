@@ -23,6 +23,12 @@ You can use them in your calculations aswell.
 
 
 ### Builtin-functions
+#### cons
+Create a cons
+
+    (cons (1 2))
+      => (1 . 2)
+
 #### eq?
 Compare objects. 
 Returns #t if they are the same. #f if not
