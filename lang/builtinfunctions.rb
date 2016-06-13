@@ -1,17 +1,22 @@
 require_relative "objects"
 
 class BuiltinFunction
-  def initialize(name, job)
+  def initialize(name, job, number_of_arguments)
     @name = name
     @job = job
+    @number_of_arguments = number_of_arguments
   end
 
-  def work(environment, *args)
+  def work(environment, args)
     @job.call(environment, args)
   end
 
   def name
     @name
+  end
+
+  def number_of_arguments
+    @number_of_arguments
   end
 
 end
@@ -54,11 +59,17 @@ module Functions
   end
 
   def self.scheme_car
-
+    Proc.new{|environment, args|
+      # TODO: Error Detection
+      args[0].car
+    }
   end
 
   def self.scheme_cdr
-
+    Proc.new{|environment, args|
+      # TODO: Error Detection
+      args[0].cdr
+    }
   end
 
   def self.scheme_define

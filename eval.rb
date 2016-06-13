@@ -1,5 +1,5 @@
-require_relative "lang/errors"
-require_relative "lang/builtinfunctions"
+require_relative 'lang/errors'
+require_relative 'lang/builtinfunctions'
 module Eval
 
   def self.eval(environment, userinput)
@@ -26,9 +26,14 @@ module Eval
     end
 
     function_arguments = cons.cdr
-    # TODO: Can't do define. arguments will be evaluated, so it will find an undefine variable
-    arg1 = self.eval(environment, function_arguments.car)
-    arg2 = self.eval(environment, function_arguments.cdr.car)
-    return function.work(environment, arg1, arg2)
+    args = []
+    while args.size < function.number_of_arguments
+      args << self.eval(environment, function_arguments.car)
+      function_arguments = function_arguments.cdr
+    end
+
+
+    ## TODO: Can't do define. arguments will be evaluated, so it will find an undefine variable
+    return function.work(environment, args)
   end
 end

@@ -8,11 +8,11 @@ module SchemePrinter
     when SchemeTrue
       return "\#t"
     when SchemeFalse
-      return "\#f"
+      return '\#f'
     when SchemeInteger
       return scheme_expression.value
     when SchemeNil
-      return "nil"
+      return 'nil'
     when SchemeCons
       return scheme_print_list scheme_expression
     when BuiltinFunction
