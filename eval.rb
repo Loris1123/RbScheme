@@ -22,10 +22,23 @@ module Eval
     function = self.eval(environment, cons.car)
 
     if function.class != BuiltinFunction
+      # Todo: or BuiltinSyntax, UserFunction, UserSyntax
       raise SchemeSyntaxError.new("#{function} is not a function")
     end
 
     function_arguments = cons.cdr
+
+    if function.class == BuiltinFunction
+      return self.eval_builtin_functon(environment, function, function_arguments)
+    end
+
+  end
+
+  def self.eval_builtin_syntax(environment, function, args)
+    raise Exception.new('Not yet implemented')
+  end
+
+  def self.eval_builtin_functon(environment, function, function_arguments)
     args = []
     loop do
       args << function_arguments.car
@@ -35,5 +48,13 @@ module Eval
 
     ## TODO: Can't do define. arguments will be evaluated, so it will find an undefine variable
     return function.work(environment, args)
+  end
+
+  def self.eval_user_syntax(environment, function, args)
+    raise Exception.new('Not yet implemented')
+  end
+
+  def self.eval_user_function(environment, function, args)
+    raise Exception.new('Not yet implemented')
   end
 end
