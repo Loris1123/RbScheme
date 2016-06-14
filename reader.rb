@@ -30,7 +30,7 @@ module Reader
     end
     if input.current == ")"
       input.next # Recursion will always return SchemeNil, if we do not do this.
-      return nil
+      return SchemeNil.new
     end
     input.next
     skip_spaces(input)

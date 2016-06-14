@@ -1,6 +1,8 @@
-require_relative "objects"
+require_relative 'objects'
+require_relative 'errors'
 
 class BuiltinFunction
+
   def initialize(name, job, number_of_arguments)
     @name = name
     @job = job
@@ -8,6 +10,7 @@ class BuiltinFunction
   end
 
   def work(environment, args)
+    check_number_of_arguments args
     @job.call(environment, args)
   end
 
@@ -17,6 +20,16 @@ class BuiltinFunction
 
   def number_of_arguments
     @number_of_arguments
+  end
+
+  private
+
+  # Check if the number of given arguments
+  # machtes the number of neede darguments
+  def check_number_of_arguments(args)
+    if args.length != @number_of_arguments
+      raise SchemeArgumentNumberError.new(@name, @number_of_arguments, args.length)
+    end
   end
 
 end

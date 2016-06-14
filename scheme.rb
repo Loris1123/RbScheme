@@ -30,8 +30,8 @@ puts 'Welcome to RbScheme'
 while TRUE
   begin
     print '> '
-    #input = UserInput.new(gets)
-    input = UserInput.new("(cdr (cons 1 4))")
+    input = UserInput.new(gets)
+    #input = UserInput.new("(cons 1 2 3)")
     read = Reader.read_input(input)
     evaled = Eval.eval(global_env, read)
     printed = SchemePrinter.scheme_print(evaled)

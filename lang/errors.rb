@@ -32,6 +32,12 @@ class SchemeUserError < SchemeError
   end
 end
 
+class SchemeArgumentNumberError < SchemeUserError
+  def initialize(functionname, need, got)
+    super("Wrong number of arguments for function #{functionname}: Need: #{need}. Got #{got}")
+  end
+end
+
 class UnterminatedStringError < SchemeUserError
   def initialize(unterminated_string)
     super("Unterminated string: #{unterminated_string}")

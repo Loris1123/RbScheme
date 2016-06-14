@@ -27,11 +27,11 @@ module Eval
 
     function_arguments = cons.cdr
     args = []
-    while args.size < function.number_of_arguments
-      args << self.eval(environment, function_arguments.car)
+    loop do
+      args << function_arguments.car
+      break if function_arguments.cdr.class == SchemeNil
       function_arguments = function_arguments.cdr
     end
-
 
     ## TODO: Can't do define. arguments will be evaluated, so it will find an undefine variable
     return function.work(environment, args)
