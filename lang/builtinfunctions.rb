@@ -1,7 +1,7 @@
 require_relative 'objects'
 require_relative 'errors'
 
-class BuiltinFunction
+class SchemeBuiltin
 
   def initialize(name, job, number_of_arguments)
     @name = name
@@ -31,6 +31,13 @@ class BuiltinFunction
       raise SchemeArgumentNumberError.new(@name, @number_of_arguments, args.length)
     end
   end
+end
+
+class BuiltinFunction < SchemeBuiltin
+
+end
+
+class BuiltinSyntax < SchemeBuiltin
 
 end
 

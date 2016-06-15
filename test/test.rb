@@ -2,7 +2,7 @@ require_relative "reader"
 require_relative "userinput"
 require_relative "objects"
 require_relative "linkedlist"
-require_relative "hashtable"
+require_relative "environment"
 require_relative "symboltable"
 
 module Test
@@ -20,9 +20,9 @@ module Test
     #LinkedListTest.test
     #puts "\tSuccess"
 
-    #puts "\tHashTable"
-    #HashtableTest.test
-    #puts "\tSuccess"
+    puts "\tEnvironment"
+    EnvironmentTest.test
+    puts "\tSuccess"
 
     puts "\tReader"
     ReaderTest.test

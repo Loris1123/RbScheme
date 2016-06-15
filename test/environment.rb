@@ -1,23 +1,14 @@
-require_relative '../util/hashtable'
+require_relative '../lang/environment'
+require_relative '../lang/objects'
 
-module HashtableTest
+module EnvironmentTest
   def self.test
-    table = Hashtable.new
+    env = Environment.new
+    raise 'Environment should be empty' unless env.get_environment.size == 0
 
-    begin
-      # Allow only strings
-      Hashtable.hash(1234)
-      raise "Should raise an internal Error"
-    rescue SchemeIntenalError
-    end
-
-    first = Hashtable.hash("HelloWorld")
-    second = Hashtable.hash("HelloWorld")
-    raise "Hashes should be identical. First: #{first}, Second: #{second}" unless first==second
-
-    table.put("Foo", "Bar")
-    raise "Value should be 'Bar', is #{table.get("Foo")}" unless table.get("Foo") == "Bar"
-    table.put("Foo", "Bar")
-
+    sym = SchemeSymbol.new('a')
+    env.put(sym, 666)
+    raise 'Length of Environment should be 1' unless env.get_environment.size == 1
+    raise 'A should have the value 666' unless env.get(sym) == 666
   end
 end

@@ -11,4 +11,8 @@ class Environment
   def put(symbol, value)
     @environment[symbol.value] = value
   end
+
+  def get_environment
+    @environment
+  end
 end

@@ -19,10 +19,10 @@ global_env.put(SchemeSymbol.new('*'), BuiltinFunction.new('SchemeTimes', Functio
 global_env.put(SchemeSymbol.new('-'), BuiltinFunction.new('SchemeSubstract', Functions.scheme_substract , 2))
 global_env.put(SchemeSymbol.new('/'), BuiltinFunction.new('SchemeDivide', Functions.scheme_divide , 2))
 global_env.put(SchemeSymbol.new('eq?'), BuiltinFunction.new('SchemeEquals', Functions.scheme_equals , 2))
-#global_env.put(SchemeSymbol.new("define"), BuiltinFunction.new("SchemeDefine", Functions.scheme_define))
 global_env.put(SchemeSymbol.new('cons'), BuiltinFunction.new('SchemeCons', Functions.scheme_cons , 2))
 global_env.put(SchemeSymbol.new('car'), BuiltinFunction.new('SchemeCar', Functions.scheme_car, 1))
 global_env.put(SchemeSymbol.new('cdr'), BuiltinFunction.new('SchemeCdr', Functions.scheme_cdr, 1))
+global_env.put(SchemeSymbol.new('define'), BuiltinSyntax.new('SchemeDefine', Functions.scheme_define, 2))
 global_env.put(SchemeSymbol.new('a'), SchemeInteger.new(10))
 global_env.put(SchemeSymbol.new('b'), SchemeInteger.new(20))
 
@@ -31,7 +31,7 @@ while TRUE
   begin
     print '> '
     input = UserInput.new(gets)
-    #input = UserInput.new("(cons 1 2 3)")
+    #input = UserInput.new("(define x 666)")
     read = Reader.read_input(input)
     evaled = Eval.eval(global_env, read)
     printed = SchemePrinter.scheme_print(evaled)

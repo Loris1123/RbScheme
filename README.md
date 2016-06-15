@@ -18,12 +18,15 @@ You can also do multiple calculations at once with nested lists:
 
     (+ (* 13 37) (- 4 2))
 
-### Symbols
-You can define some symbols in the code. Symbol-definition will follow!  
-For now there are two symbols predefined. `a => 10` and `b => 20`  
-You can use them in your calculations aswell. 
-
 ### Builtin-functions
+
+#### define
+Define a symbol and assign a value to it
+
+    (define x 123)
+    x
+      => 123
+
 #### car
 Get the first element of a cons(list)
 
