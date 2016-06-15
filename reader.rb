@@ -10,6 +10,8 @@ module Reader
       raise WrongInputError, input
     end
 
+
+
     if is_digit input.current
       return read_number input
     elsif input.current == "\""
@@ -25,15 +27,14 @@ module Reader
     """
     Reads a list and returns Cons
     """
-    if input.current == nil
-      raise UnterminatedConsError.new(input.input)
-    end
     if input.current == ")"
       input.next # Recursion will always return SchemeNil, if we do not do this.
       return SchemeNil.new
     end
-    input.next
     skip_spaces(input)
+    if input.current == nil
+      raise UnterminatedConsError.new(input.input)
+    end
     car = read_input(input)
     cdr = read_list(input)
     SchemeCons.new(car, cdr)
@@ -110,8 +111,9 @@ module Reader
   end
 
   def self.skip_spaces(input)
-    while input.current == " "
+    loop do
       input.next
+      break if input.current != ' '
     end
   end
 end
