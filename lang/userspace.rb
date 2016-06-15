@@ -1,26 +1,36 @@
 require_relative '../eval'
 
-class UserSpaceFunctions
+class UserspaceFunction
 
-  def initialize(name, function)
+  def initialize(name, function, parameter)
     @name = name
     @function = function
+    @parameter = parameter
+    @number_of_arguments = parameter.size
   end
 
   def name
-    @name
+    @name.value
+  end
+
+  def parameter
+    @parameter
   end
 
   def function
     @function
   end
+
+  def number_of_arguments
+    @number_of_arguments
+  end
 end
 
-class UserdefinedFunction < UserSpaceFuctions
+class UserdefinedFunction < UserspaceFunction
 
 end
 
-class UserdefinedSyntax < UserSpaceFuctions
+class UserdefinedSyntax < UserspaceFunction
 
 end
 

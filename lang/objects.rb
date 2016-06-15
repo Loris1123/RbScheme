@@ -1,3 +1,5 @@
+require_relative '../lang/errors'
+
 class SchemeObject; end
 
 class SchemeVoid < SchemeObject
@@ -89,9 +91,11 @@ class SchemeInteger < SchemeObject
   def /(x)
     case x
     when SchemeInteger
+      raise SchemeUserError.new('Division by zero!') unless x.value != 0
       return SchemeInteger.new(@value/x.value)
-    when Fixnum
-      return SchemeInteger.new(@value/x)
+      when Fixnum
+        raise SchemeUserError.new('Division by zero!') unless x != 0
+        return SchemeInteger.new(@value/x)
     else
       raise "Can't divide #{x.class} through SchemeInteger"
     end

@@ -1,5 +1,6 @@
 require_relative 'objects'
 require_relative 'errors'
+require_relative '../lang/userspace'
 
 class SchemeBuiltin
 
@@ -100,7 +101,6 @@ module Functions
           # Define a new symbol and assign a value
           environment.put(args[0], args[1])
         when SchemeCons
-          raise SchemeUserError.new("Not yet implemented")
           # Userdefined Function
 
           lambda_header = args[0]
@@ -108,22 +108,21 @@ module Functions
           raise SchemeSyntaxError.new("Wrong define-Syntax. Need a cons as functionbody. Got #{lambda_body.class}") unless lambda_body.class == SchemeCons
 
           lambda_name = lambda_header.car
-          raise SchemeSyntaxError.new("Wrong define-Syntax. Need a Symbol as function identifier. Go #{lambda_name.class}") unless lambda_name.class == SchemeSymbol
+          raise SchemeSyntaxError.new("Wrong define-Syntax. Need a Symbol as function identifier. Got #{lambda_name.class}") unless lambda_name.class == SchemeSymbol
 
           # Create the parameter-list
           parameter_list = lambda_header.cdr
           parameter = []
           loop do
+            raise SchemeSyntaxError.new("Wrong define-Syntax. Need a Symbol as parameter. Got #{parameter_list.car.class}") unless parameter_list.car.class == SchemeSymbol
             parameter << parameter_list.car
             break if parameter_list.cdr.class == SchemeNil
             parameter_list = parameter_list.cdr
           end
 
-
-
-
-      else
-        raise SchemeSyntaxError.new("Wrong define-Syntax. Only Symbols or Cons are allowed as identifier. Got #{args[0].class}")
+          environment.put(lambda_name, UserdefinedFunction.new(lambda_name, lambda_body, parameter ))
+        else
+          raise SchemeSyntaxError.new("Wrong define-Syntax. Only Symbols or Cons are allowed as identifier. Got #{args[0].class}")
       end
     }
   end
