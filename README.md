@@ -3,7 +3,17 @@
 A Scheme implementation in Ruby.  
 This is a project for my university.  
 
-Start RbScheme with `ruby scheme.rb`
+Start RbScheme with `ruby scheme.rb`  
+This will bring you to the interactive mode.
+
+You can also pass schemecode as a commandline argument
+
+    ruby scheme.rb "(define a 10)"
+    
+If you want to skip the tests you can use "skiptest" as the second argument. This is only available for non-interactive-mode. It is usefull for debugging the code.
+
+    ruby scheme.rb "(define a 10)" skiptest
+    
 
 ## What it can do (so far)
 ### Calculation
@@ -49,17 +59,25 @@ You can also access outside variables inside  a function.
     (myfunc 10)
       => 20
 
+#### cons
+Create a cons(list)
+
+    (cons (1 2))
+      => (1 . 2)
+
+
 #### car
 Get the first element of a cons(list)
 
     (car (cons 1 2))
       => 1
 
-#### cons
-Create a cons(list)
+#### cdr
+Get the last element of a cons
+(Warning: Still has a bug. See #1)
 
-    (cons (1 2))
-      => (1 . 2)
+    (cdr (cons 1 2))
+      => 2
 
 #### eq?
 Compare objects.   
