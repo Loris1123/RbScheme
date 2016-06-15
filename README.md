@@ -31,7 +31,7 @@ Define a function and call it with parameters
 
     (define (myfunc a b c) (+ a (+ b c)))
     (myfunc 1 2 3)
-      => 5
+      => 6
       
 Each function has its own enviroment. So you can use a parameter in a function with a name you already define outside. 
 
