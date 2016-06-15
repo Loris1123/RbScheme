@@ -55,7 +55,13 @@ class SchemeInteger < SchemeObject
   end
 
   def ==(x)
-    return x.value==@value
+    if x.class == Fixnum
+      return x==@value
+    elsif x.class == SchemeInteger
+      return x.value == @value
+    else
+      return false
+    end
   end
 
   def *(x)
