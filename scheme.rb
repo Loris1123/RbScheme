@@ -9,9 +9,11 @@ require_relative 'lang/environment'
 require_relative 'lang/builtinfunctions'
 require_relative 'lang/objects'
 
-# Start tests
-require_relative 'test/test'
-Test.test
+if ARGV[1] != "skiptest"
+  # Start tests
+  require_relative 'test/test'
+  Test.test
+end
 
 global_env = Environment.new()
 global_env.put(SchemeSymbol.new('+'), BuiltinFunction.new('SchemePlus', Functions.scheme_plus , 2))
@@ -26,17 +28,25 @@ global_env.put(SchemeSymbol.new('define'), BuiltinSyntax.new('SchemeDefine', Fun
 global_env.put(SchemeSymbol.new('a'), SchemeInteger.new(10))
 global_env.put(SchemeSymbol.new('b'), SchemeInteger.new(20))
 
-puts 'Welcome to RbScheme'
-while TRUE
-  begin
-    print '> '
-    input = UserInput.new(gets)
-    #input = UserInput.new("(define (x a b c) (+ a(+ b c)))")
-    read = Reader.read_input(input)
-    evaled = Eval.eval(global_env, read)
-    printed = SchemePrinter.scheme_print(evaled)
-    puts printed
-  rescue SchemeUserError => err
-    puts err.message
+
+input = ARGV[0]
+if input != nil
+  # Parse commandline argument
+  puts SchemePrinter.scheme_print(Eval.eval(global_env, Reader.read_input(UserInput.new(input))))
+else
+  puts 'Welcome to RbScheme'
+  # Interactive mode
+  while TRUE
+    begin
+      print '> '
+      input = UserInput.new(gets)
+      read = Reader.read_input(input)
+      evaled = Eval.eval(global_env, read)
+      printed = SchemePrinter.scheme_print(evaled)
+      puts printed
+      #input = UserInput.new("(x 1 2 3)")
+    rescue SchemeUserError => err
+      puts err.message
+    end
   end
 end
