@@ -31,7 +31,7 @@ while TRUE
   begin
     print '> '
     input = UserInput.new(gets)
-    #input = UserInput.new("(define x 666)")
+    #input = UserInput.new("(define (x a b c) (+ a(+ b c)))")
     read = Reader.read_input(input)
     evaled = Eval.eval(global_env, read)
     printed = SchemePrinter.scheme_print(evaled)
