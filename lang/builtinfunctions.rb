@@ -67,6 +67,12 @@ module Functions
     }
   end
 
+  def self.scheme_abs
+    Proc.new{|environment, args|
+      SchemeInteger.new(args[0].value.abs)
+    }
+  end
+
   def self.scheme_equals
     Proc.new{|environment, args| 
       if args[0] == args[1]

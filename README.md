@@ -38,6 +38,8 @@ You can to simple calculatins in the known scheme-syntax.
       => 8
     (modulo 6 4)
       => 2
+    (abs -6)     # Warning. See #5
+      => 6
       
 You can also do multiple calculations at once with nested lists:  
 

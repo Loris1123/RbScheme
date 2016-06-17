@@ -22,6 +22,7 @@ global_env.put(SchemeSymbol.new('-'), BuiltinFunction.new('SchemeSubstract', Fun
 global_env.put(SchemeSymbol.new('/'), BuiltinFunction.new('SchemeDivide', Functions.scheme_divide , 2))
 global_env.put(SchemeSymbol.new('eq?'), BuiltinFunction.new('SchemeEquals', Functions.scheme_equals , 2))
 global_env.put(SchemeSymbol.new('modulo'), BuiltinFunction.new('SchemeModulo', Functions.scheme_modulo , 2))
+global_env.put(SchemeSymbol.new('abs'), BuiltinFunction.new('SchemeAbs', Functions.scheme_abs , 1))
 global_env.put(SchemeSymbol.new('cons'), BuiltinFunction.new('SchemeCons', Functions.scheme_cons , 2))
 global_env.put(SchemeSymbol.new('cons?'), BuiltinFunction.new('SchemeCons?', Functions.scheme_cons? , 1))
 global_env.put(SchemeSymbol.new('car'), BuiltinFunction.new('SchemeCar', Functions.scheme_car, 1))
