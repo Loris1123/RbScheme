@@ -79,6 +79,17 @@ module Functions
     }
   end
 
+  # Return true if the argument is a cons
+  def self.scheme_cons?
+    Proc.new{|environment, args|
+      if args[0].class == SchemeCons
+        SchemeTrue.new
+      else
+        SchemeFalse.new
+      end
+    }
+  end
+
   def self.scheme_car
     Proc.new{|environment, args|
       # TODO: Error Detection

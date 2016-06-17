@@ -6,9 +6,9 @@ module SchemePrinter
     when SchemeString
       return "\"#{scheme_expression.value}\""
     when SchemeTrue
-      return "\#t"
+      return '#t'
     when SchemeFalse
-      return '\#f'
+      return '#f'
     when SchemeInteger
       return scheme_expression.value
     when SchemeNil
