@@ -1,8 +1,12 @@
 # RbScheme
 
-A Scheme implementation in Ruby.  
-This is a project for my university.  
+A Scheme implementation written in Ruby.  
+This is a project for my university in a lecture called "Implementation of advanced programming languages."  
+Obviously it's not usable for production (yet?), but when implementing it, I learned a lot about how 
+programming languages work.  
+Feel free to submit bugs or recommendations for improvements.
 
+## How to use
 Start RbScheme with `ruby scheme.rb`  
 This will bring you to the interactive mode.
 
@@ -16,14 +20,20 @@ If you want to skip the tests you can use "skiptest" as the second argument. Thi
     
 
 ## What it can do (so far)
-### Calculation
-For now only simple calculations  in the known scheme-syntax are possible.  
+### Arithmeix
+You can to simple calculatins in the known scheme-syntax.  
     
-    (+ 13 37)
-    (- 13 37)
-    (/ 13 37)
-    (* 13 37)  
-
+    (+ 2 4)
+      => 6
+    (- 2 4)
+      => -2
+    (/ 4 2)
+      => 2
+    (* 2 4)
+      => 8
+    (modulo 6 4)
+      => 2
+      
 You can also do multiple calculations at once with nested lists:  
 
     (+ (* 13 37) (- 4 2))
