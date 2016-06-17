@@ -23,7 +23,6 @@ If you want to skip the tests you can use "skiptest" as the second argument. Thi
 
     ruby scheme.rb "(define a 10)" skiptest
     
-
 ## What it can do (so far)
 ### Arithmetics
 You can to simple calculatins in the known scheme-syntax.  
@@ -97,7 +96,7 @@ Get the first element of a cons(list)
       => 1
 
 #### cdr
-Get the last element of a cons
+Get the last element of a cons  
 (Warning: Still has a bug. See #1)
 
     (cdr (cons 1 2))

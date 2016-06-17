@@ -105,14 +105,14 @@ module Functions
 
   def self.scheme_car
     Proc.new{|environment, args|
-      # TODO: Error Detection
+      raise SchemeSyntaxError.new("Wrong argument for car. Need a cons as argument. Got #{args[0].class}") unless args[0].class == SchemeCons
       args[0].car
     }
   end
 
   def self.scheme_cdr
     Proc.new{|environment, args|
-      # TODO: Error Detection
+      raise SchemeSyntaxError.new("Wrong argument for cdr. Need a cons as argument. Got #{args[0].class}") unless args[0].class == SchemeCons
       args[0].cdr
     }
   end

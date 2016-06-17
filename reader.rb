@@ -10,8 +10,6 @@ module Reader
       raise WrongInputError, input
     end
 
-
-
     if is_digit input.current
       return read_number input
     elsif input.current == "\""
