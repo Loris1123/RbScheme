@@ -25,7 +25,7 @@ If you want to skip the tests you can use "skiptest" as the second argument. Thi
     
 
 ## What it can do (so far)
-### Arithmeix
+### Arithmetics
 You can to simple calculatins in the known scheme-syntax.  
     
     (+ 2 4)
