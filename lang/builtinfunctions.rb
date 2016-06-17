@@ -1,6 +1,7 @@
 require_relative 'objects'
 require_relative 'errors'
 require_relative '../lang/userspace'
+require_relative '../eval'
 
 class SchemeBuiltin
 
@@ -110,7 +111,15 @@ module Functions
       case args[0]
         when SchemeSymbol
           # Define a new symbol and assign a value
-          environment.put(args[0], args[1])
+          if args[1].class == SchemeCons
+            # Eval the argument if it is a cons.
+            # If there are undefined symbols in the cons,
+            # an error will be raised. This is okay and the expected behaviour (compare to racket)
+            environment.put(args[0], Eval.eval(environment,args[1]))
+          else
+            # If it is something other (integer, string, t, f), just assing it to the symbol
+            environment.put(args[0], args[1])
+          end
         when SchemeCons
           # Userdefined Function
 
