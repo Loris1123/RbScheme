@@ -6,6 +6,11 @@ Obviously it's not usable for production (yet?), but when implementing it, I lea
 programming languages work.  
 Feel free to submit bugs or recommendations for improvements.
 
+## Dependencies
+
+This is written in plain ruby. So it does not have any dependencies, beside the ruby language.  
+I tested it with Ruby 2.3.1. If you use another version, please tell me wether it works or not.
+
 ## How to use
 Start RbScheme with `ruby scheme.rb`  
 This will bring you to the interactive mode.
