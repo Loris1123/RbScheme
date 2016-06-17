@@ -61,6 +61,12 @@ module Functions
     Proc.new{|environment, args| args[0]/args[1] }
   end
 
+  def self.scheme_modulo
+    Proc.new{|environment, args|
+      SchemeInteger.new(args[0].value % args[1].value)
+    }
+  end
+
   def self.scheme_equals
     Proc.new{|environment, args| 
       if args[0] == args[1]
