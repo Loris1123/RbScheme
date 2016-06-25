@@ -4,6 +4,7 @@ require_relative "objects"
 require_relative "linkedlist"
 require_relative "environment"
 require_relative "symboltable"
+require_relative "hashtable"
 
 module Test
   def self.test
@@ -16,9 +17,9 @@ module Test
     SymboltableTest.test
     puts "\tSuccess"
 
-    #puts "\tLinkedlist"
-    #LinkedListTest.test
-    #puts "\tSuccess"
+    puts "\tHashtable"
+    HashtableTest.test
+    puts "\tSuccess"
 
     puts "\tEnvironment"
     EnvironmentTest.test
