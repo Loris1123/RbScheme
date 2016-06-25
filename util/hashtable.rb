@@ -12,7 +12,7 @@ class Hashtable
 
   def initialize(tablesize=521)
     @log = Logger.new(STDOUT)
-    @log.level = Logger::DEBUG
+    @log.level = Logger::INFO
 
     @tablesize = tablesize
     @table = Array.new(@tablesize)
