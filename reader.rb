@@ -10,7 +10,7 @@ module Reader
       raise WrongInputError, input
     end
 
-    if is_digit input.current
+    if is_digit input.current or input.current == '+' or input.current=='-'
       return read_number input
     elsif input.current == "\""
       return read_string input
@@ -21,10 +21,8 @@ module Reader
     end
   end
 
+  # Reads a list and returns Cons
   def self.read_list(input)
-    """
-    Reads a list and returns Cons
-    """
     if input.current == ")"
       input.next # Recursion will always return SchemeNil, if we do not do this.
       return SchemeNil.new
@@ -38,10 +36,8 @@ module Reader
     SchemeCons.new(car, cdr)
   end
 
+  # Reads a symbol and returns the corresponding value from environment.
   def self.read_symbol(input)
-    """
-    Reads a symbol and returns the corresponding value from environment.
-    """
     symbol = ""
     while input.current != "(" &&
       input.current != ")" &&
@@ -63,10 +59,17 @@ module Reader
     return Symboltable.get_or_add(symbol)
   end
 
+  # Reads a Number and returns SchemeInteger
   def self.read_number(input)
-    """
-    Reads a Number and returns SchemeInteger
-    """
+    is_negative = false
+    if input.current == '-'
+      is_negative = true
+      input.next
+    end
+    if input.current == '+'
+      input.next
+    end
+
     number = ""
     while is_digit input.current
       number += input.current
@@ -76,13 +79,15 @@ module Reader
       # There must be a space, end of cons or EOF now
       raise SchemeSyntaxError, input.input
     end
-    SchemeInteger.new(number)
+    if is_negative
+      return SchemeInteger.new(number.to_i * -1)
+    else
+      return SchemeInteger.new(number.to_i)
+    end
   end
 
+  # Reads a string and returns SchemeString
   def self.read_string(input)
-    """
-    Reads a string and returns SchemeString
-    """
     input.next # Skip "
     string = ""
     while input.current != "\"" && input.current != nil
@@ -96,10 +101,8 @@ module Reader
     SchemeString.new(string)
   end
 
+  # Small helper to check if the given parameter is a number
   def self.is_digit(x)
-    """
-    Small helper to check if the given parameter is a number
-    """
     begin
       Integer(x)
       return true
