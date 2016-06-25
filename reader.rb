@@ -9,9 +9,11 @@ module Reader
     if input.class != UserInput
       raise WrongInputError, input
     end
-
-    if is_digit input.current or input.current == '+' or input.current=='-'
+    if is_digit input.current
       return read_number input
+    #elsif (input.current == '+' or input.current=='-') and input.next != ' '
+    #  input.previous
+    #  return read_number input   # Negative numbers or numbers that start with +. Check the Space! Builtinfunctions +/-
     elsif input.current == "\""
       return read_string input
     elsif input.current == "("

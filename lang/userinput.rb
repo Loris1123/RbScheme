@@ -25,6 +25,11 @@ class UserInput
     @input[@index]
   end
 
+  def previous
+    @index -= 1
+    @input[index]
+  end
+
   def current
     @input[@index]
   end

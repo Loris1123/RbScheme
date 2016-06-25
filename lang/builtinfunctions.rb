@@ -5,10 +5,11 @@ require_relative '../eval'
 
 class SchemeBuiltin
 
-  def initialize(name, job, number_of_arguments)
+  def initialize(name, job, min_arguments, max_arguments)
     @name = name
     @job = job
-    @number_of_arguments = number_of_arguments
+    @min_arguments = min_arguments
+    @max_arguments = max_arguments
   end
 
   def work(environment, args)
@@ -29,8 +30,12 @@ class SchemeBuiltin
   # Check if the number of given arguments
   # machtes the number of neede darguments
   def check_number_of_arguments(args)
-    if args.length != @number_of_arguments
-      raise SchemeArgumentNumberError.new(@name, @number_of_arguments, args.length)
+    if args.length < @min_arguments
+      raise SchemeUserError.new("Invalid number of arguments for #{@name}. Need between #{@min_arguments} and #{@max_arguments}. Got #{args.length}")
+    end
+
+    if args.length > @max_arguments and @max_arguments != -1
+      raise SchemeUserError.new("Invalid number of arguments for #{@name}. Need between #{@min_arguments} and #{@max_arguments}. Got #{args.length}")
     end
   end
 end
@@ -46,19 +51,36 @@ end
 module Functions
 
   def self.scheme_plus
-    Proc.new{|environment, args| args[0]+args[1] }
+    Proc.new{|environment, args|
+      res = SchemeInteger.new(0)
+      args.each do |a|
+        res += a
+      end
+      res }
   end
 
   def self.scheme_times
-    Proc.new{|environment, args| args[0]*args[1] }
+    Proc.new{|environment, args|
+      res = args[0]
+      args = args.drop(1)
+      args.each do |a|
+        res *= a
+      end
+      res }
   end
 
   def self.scheme_substract
-    Proc.new{|environment, args| args[0]-args[1] }
+    Proc.new{|environment, args|
+      res = args[0]
+      args = args.drop(1)
+      args.each do |a|
+        res -= a
+      end
+      res }
   end
 
   def self.scheme_divide
-    Proc.new{|environment, args| args[0]/args[1] }
+    Proc.new{|environment, args| args[0] / args[1]}
   end
 
   def self.scheme_modulo
