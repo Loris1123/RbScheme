@@ -4,7 +4,7 @@ module SchemeHash
 
   # Change here the algorithm you want to use
   def self.hash(x)
-    return self.fnv1 x
+    return self.fnv1a x
   end
 
   private

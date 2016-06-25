@@ -70,14 +70,12 @@ class Hashtable
     end
 
     # Do we have to rehash?
-      puts(@tablesize * 3/4)
-      puts(@fill_level)
-      puts @tablesize
     if @fill_level > @tablesize * 3/4
       rehash
     end
   end
 
+  # Returns the value of the given key form the table. Nil of the value is not in the table
   def get(key)
     key = key.to_s
     hash = SchemeHash.hash(key)
@@ -88,6 +86,7 @@ class Hashtable
 
     start_index = index
     while @table[index] == nil or @table[index].key != key
+      @log.debug("Not found at #{index}. Try next")
       index += 1
       if index == @tablesize
         # Reached the end of table. Start from beginning
@@ -95,10 +94,41 @@ class Hashtable
       end
       if start_index == index
         # Searched in whole table. Value is not stored.
+        @log.debug("#{key} is not in the table")
         return nil
       end
     end
     return @table[index].value
+  end
+
+  # Removes and returns the value from the table of the given key. Nil if the value is not in the table
+  def get_and_remove(key)
+    @log.progname = "Hashtable get"
+    key = key.to_s
+    hash = SchemeHash.hash(key)
+    index = hash % @tablesize
+    ret_val = nil
+    @log.debug("Hash: #{hash}")
+    @log.debug("Index: #{index}")
+
+    start_index = index
+    while @table[index] == nil or @table[index].key != key
+      @log.debug("Not found at #{index}. Try next")
+      index += 1
+      if index == @tablesize
+        # Reached the end of table. Start from beginning
+        index = 0
+      end
+      if start_index == index
+        # Searched in whole table. Value is not stored.
+        @log.debug("#{key} is not in the table")
+        return ret_val
+      end
+    end
+    ret_val = @table[index].value
+    @table[index] = nil
+    @fill_level -= 1
+    return ret_val
   end
 
   def fill_level
@@ -110,15 +140,12 @@ class Hashtable
     @log.debug("Rehashing started")
 
     old_table = @table
-    old_table_size = @tablesize
-
 
     @tablesize = (@tablesize * 2) - 1   # Odd number
     @table = Array.new(@tablesize)
-
+    @fill_level = 0  # Will be settet again by put
     old_table.each do |entry|
-      break if entry == nil
-
+      next if entry == nil
       put(entry.key, entry.value)
     end
 
