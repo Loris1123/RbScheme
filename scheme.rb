@@ -45,7 +45,7 @@ else
       input = UserInput.new(gets)
       read = Reader.read_input(input)
       evaled = Eval.eval(global_env, read)
-      SchemePrinter.scheme_print(evaled)
+      puts SchemePrinter.scheme_print(evaled)
     rescue SchemeUserError => err
       puts err.message
     end

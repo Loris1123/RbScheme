@@ -4,24 +4,24 @@ module SchemePrinter
   def self.scheme_print(scheme_expression)
     case scheme_expression
       when SchemeString
-        puts "\"#{scheme_expression.value}\""
+        return "\"#{scheme_expression.value}\""
       when SchemeTrue
-        puts  '#t'
+        return  '#t'
       when SchemeFalse
-        puts '#f'
+        return '#f'
       when SchemeInteger
-        puts  scheme_expression.value
+        return  scheme_expression.value
       when SchemeNil
-        puts 'nil'
+        return 'nil'
       when SchemeCons
-        puts scheme_print_list scheme_expression
+        return scheme_print_list scheme_expression
       when BuiltinFunction
-        puts "<Builtin-Function: \##{scheme_expression.name}>"
+        return "<Builtin-Function: \##{scheme_expression.name}>"
       when NilClass
         # When an input returns nothing. Like define
         return
       else
-        puts "Unimplemented print: #{scheme_expression.class}"
+        return "Unimplemented print: #{scheme_expression.class}"
     end
   end
 

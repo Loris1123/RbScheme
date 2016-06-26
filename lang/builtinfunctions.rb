@@ -135,7 +135,11 @@ module Functions
   def self.scheme_cdr
     Proc.new{|environment, args|
       raise SchemeSyntaxError.new("Wrong argument for cdr. Need a cons as argument. Got #{args[0].class}") unless args[0].class == SchemeCons
-      args[0].cdr
+      if args[0].cdr.cdr.class == SchemeNil
+        args[0].cdr.car
+      else
+        args[0].cdr
+      end
     }
   end
 
