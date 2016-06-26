@@ -11,9 +11,9 @@ module Reader
     end
     if is_digit input.current
       return read_number input
-    #elsif (input.current == '+' or input.current=='-') and input.next != ' '
-    #  input.previous
-    #  return read_number input   # Negative numbers or numbers that start with +. Check the Space! Builtinfunctions +/-
+    elsif (input.current == '+' or input.current=='-') and is_digit(input.get_next)
+      # Negative numbers or numbers that start with +. Check the Space! Builtinfunctions +/-
+      return read_number input
     elsif input.current == "\""
       return read_string input
     elsif input.current == "("

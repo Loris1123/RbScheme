@@ -25,9 +25,9 @@ class UserInput
     @input[@index]
   end
 
-  def previous
-    @index -= 1
-    @input[index]
+  # Gets the next character without changing the index
+  def get_next
+    @input[index+1]
   end
 
   def current

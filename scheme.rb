@@ -31,7 +31,6 @@ global_env.put(SchemeSymbol.new('define'), BuiltinSyntax.new('SchemeDefine', Fun
 global_env.put(SchemeSymbol.new('a'), SchemeInteger.new(10))
 global_env.put(SchemeSymbol.new('b'), SchemeInteger.new(20))
 
-
 input = ARGV[0]
 if input != nil
   # Parse commandline argument
@@ -40,6 +39,7 @@ else
   puts 'Welcome to RbScheme'
   # Interactive mode
   while TRUE
+
     begin
       print '> '
       input = UserInput.new(gets)
