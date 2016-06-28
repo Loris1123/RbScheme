@@ -81,14 +81,6 @@ Create a cons(list)
     (cons (1 2))
       => (1 . 2)
 
-#### cons?
-Returns true if the argument is a cons. False otherwise.
-
-    (cons? (cons 1 2))
-      => #t
-    (cons? 1)
-      => #f
-
 #### car
 Get the first element of a cons(list)
 
@@ -119,6 +111,7 @@ Returns #t if the given argument is instance of the asked type.
  - integer?
  - symbol?
  - string? 
+ - cons?
  - builtin-function?
  - builtin-syntax?
 
@@ -128,5 +121,7 @@ Example:
       => #t
     (integer? "foo)
       => #f
+    (cons? (cons 1 2))
+      => #t
 
       
