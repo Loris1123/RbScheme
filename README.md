@@ -112,3 +112,21 @@ Returns #t if they are the same. #f if not
       => #f  
     (eq? "foo" "foo")  
       => #t  
+
+#### Is type of x?
+Returns #t if the given argument is instance of the asked type.
+
+ - integer?
+ - symbol?
+ - string? 
+ - builtin-function?
+ - builtin-syntax?
+
+Example:
+
+    (integer? 1)
+      => #t
+    (integer? "foo)
+      => #f
+
+      

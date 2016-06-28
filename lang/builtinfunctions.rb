@@ -134,6 +134,30 @@ module Functions
     }
   end
 
+  def self.symbol?
+    Proc.new{|environment, args|
+      args[0].class == SchemeSymbol ? SchemeTrue.new : SchemeFalse.new
+    }
+  end
+
+  def self.string?
+    Proc.new{|environment, args|
+      args[0].class == SchemeString ? SchemeTrue.new : SchemeFalse.new
+    }
+  end
+
+  def self.builtin_function?
+    Proc.new{|environment, args|
+      args[0].class == BuiltinFunction ? SchemeTrue.new : SchemeFalse.new
+    }
+  end
+
+  def self.builtin_syntax?
+  Proc.new{|environment, args|
+    args[0].class == BuiltinSyntax ? SchemeTrue.new : SchemeFalse.new
+  }
+  end
+
   def self.scheme_car
     Proc.new{|environment, args|
       raise SchemeSyntaxError.new("Wrong argument for car. Need a cons as argument. Got #{args[0].class}") unless args[0].class == SchemeCons

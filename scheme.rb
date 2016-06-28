@@ -25,6 +25,12 @@ global_env.put(SchemeSymbol.new('abs'), BuiltinFunction.new('SchemeAbs', Functio
 
 global_env.put(SchemeSymbol.new('eq?'), BuiltinFunction.new('SchemeEquals', Functions.scheme_equals ,2, 2))
 global_env.put(SchemeSymbol.new('integer?'), BuiltinFunction.new('SchemeInteger?', Functions.integer? ,1, 1))
+global_env.put(SchemeSymbol.new('symbol?'), BuiltinFunction.new('SchemeSymbol?', Functions.symbol? ,1, 1))
+global_env.put(SchemeSymbol.new('string?'), BuiltinFunction.new('SchemeString?', Functions.string? ,1, 1))
+#global_env.put(SchemeSymbol.new('function?'), BuiltinFunction.new('SchemeFunction?', Functions.function? ,1, 1))
+global_env.put(SchemeSymbol.new('builtin-function?'), BuiltinFunction.new('SchemeBuiltinFunction?', Functions.builtin_function? ,1, 1))
+#global_env.put(SchemeSymbol.new('syntax?'), BuiltinFunction.new('SchemeSyntax?', Functions.syntax? ,1, 1))
+global_env.put(SchemeSymbol.new('builtin-syntax?'), BuiltinFunction.new('SchemeBuiltinSyntax?', Functions.builtin_syntax? ,1, 1))
 
 global_env.put(SchemeSymbol.new('cons'), BuiltinFunction.new('SchemeCons', Functions.scheme_cons, 2, 2))
 global_env.put(SchemeSymbol.new('cons?'), BuiltinFunction.new('SchemeCons?', Functions.scheme_cons?, 1, 1))
