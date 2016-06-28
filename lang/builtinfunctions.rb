@@ -128,6 +128,12 @@ module Functions
     }
   end
 
+  def self.integer?
+    Proc.new{|environment, args|
+      args[0].class == SchemeInteger ? SchemeTrue.new : SchemeFalse.new
+    }
+  end
+
   def self.scheme_car
     Proc.new{|environment, args|
       raise SchemeSyntaxError.new("Wrong argument for car. Need a cons as argument. Got #{args[0].class}") unless args[0].class == SchemeCons
