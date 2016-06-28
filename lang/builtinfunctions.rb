@@ -158,6 +158,19 @@ module Functions
   }
   end
 
+  def self.function?
+    Proc.new{|environment, args|
+      (args[0].class == BuiltinFunction) || args[0].class == UserdefinedFunction ? SchemeTrue.new : SchemeFalse.new
+    }
+  end
+
+  def self.syntax?
+    Proc.new{|environment, args|
+      (args[0].class == BuiltinSyntax) || args[0].class == UserdefinedSyntax ? SchemeTrue.new : SchemeFalse.new
+    }
+  end
+
+
   def self.scheme_car
     Proc.new{|environment, args|
       raise SchemeSyntaxError.new("Wrong argument for car. Need a cons as argument. Got #{args[0].class}") unless args[0].class == SchemeCons
