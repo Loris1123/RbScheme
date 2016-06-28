@@ -20,6 +20,8 @@ global_env.put(SchemeSymbol.new('+'), BuiltinFunction.new('SchemePlus', Function
 global_env.put(SchemeSymbol.new('*'), BuiltinFunction.new('SchemeTimes', Functions.scheme_times , 2, -1))
 global_env.put(SchemeSymbol.new('-'), BuiltinFunction.new('SchemeSubstract', Functions.scheme_substract ,2, -1))
 global_env.put(SchemeSymbol.new('/'), BuiltinFunction.new('SchemeDivide', Functions.scheme_divide ,2, 2))
+global_env.put(SchemeSymbol.new('<'), BuiltinFunction.new('SchemeLowerThan', Functions.lower_than,2, 2))
+global_env.put(SchemeSymbol.new('>'), BuiltinFunction.new('SchemeGreaterThan', Functions.greater_than ,2, 2))
 global_env.put(SchemeSymbol.new('modulo'), BuiltinFunction.new('SchemeModulo', Functions.scheme_modulo , 2, 2))
 global_env.put(SchemeSymbol.new('abs'), BuiltinFunction.new('SchemeAbs', Functions.scheme_abs , 1, 1))
 

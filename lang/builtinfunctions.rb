@@ -89,6 +89,24 @@ module Functions
     }
   end
 
+  def self.greater_than
+    Proc.new{|environment, args|
+      raise SchemeUserError.new("Invalid argument for >. Need SchemeInteger . Got #{args[0].class}") unless args[0].class == SchemeInteger
+      raise SchemeUserError.new("Invalid argument for >. Need SchemeInteger . Got #{args[1].class}") unless args[1].class == SchemeInteger
+
+      args[0].value > args[1].value ? SchemeTrue.new : SchemeFalse.new
+    }
+  end
+
+  def self.lower_than
+    Proc.new{|environment, args|
+      raise SchemeUserError.new("Invalid argument for <. Need SchemeInteger . Got #{args[0].class}") unless args[0].class == SchemeInteger
+      raise SchemeUserError.new("Invalid argument for <. Need SchemeInteger . Got #{args[1].class}") unless args[1].class == SchemeInteger
+
+      args[0].value < args[1].value ? SchemeTrue.new : SchemeFalse.new
+    }
+  end
+
   def self.scheme_abs
     Proc.new{|environment, args|
       if args[0].class != SchemeInteger
