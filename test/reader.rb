@@ -1,5 +1,6 @@
-require_relative "../reader"
-require_relative "../lang/userinput"
+require_relative '../reader'
+require_relative '../lang/userinput'
+require_relative '../lang/builtinfunctions'
 
 module ReaderTest
   def self.test
@@ -18,7 +19,6 @@ module ReaderTest
     raise "Read input should be SchemeString, is #{r.class}" unless r.class == SchemeString
     raise "Read string should be \"abcd\", is #{r.get_value}" unless r.value == "abcd"
 
-
     u = UserInput.new("\"abcd")
     begin
       r = Reader.read_input u
@@ -26,5 +26,15 @@ module ReaderTest
     rescue UnterminatedStringError
     end
 
+    u = UserInput.new("(cons 1 4)")
+    r = Reader.read_input u
+    raise "Reader should read a cons, is #{r.class}" unless r.class == SchemeCons
+    raise "Car should be SchemeSymbol, is #{r.car.class}" unless r.car.class == SchemeSymbol
+    raise "Cdr should be cons, is #{r.cdr.class}" unless r.cdr.class == SchemeCons
+    raise "Cdr.car should be Integer, is #{r.cdr.car.class}" unless r.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr should be cons, is #{r.cdr.cdr.class}" unless r.cdr.cdr.class == SchemeCons
+    raise "Cdr.cdr.car should be Integer, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
+    
   end
 end
