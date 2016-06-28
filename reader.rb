@@ -100,6 +100,7 @@ module Reader
     if input.current != "\""
       raise UnterminatedStringError.new(input.input)
     end
+    input.next
     SchemeString.new(string)
   end
 
