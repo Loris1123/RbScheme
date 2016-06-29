@@ -27,7 +27,7 @@ module Reader
   def self.read_list(input)
     if input.current == ")"
       input.next # Recursion will always return SchemeNil, if we do not do this.
-      return SchemeNil.new
+      return SchemeNil.instance
     end
     skip_spaces(input)
     if input.current == nil
@@ -52,11 +52,11 @@ module Reader
     # Well known symbols
     case symbol
     when "nil"
-      return SchemeNil.new
+      return SchemeNil.instance
     when "\#t"
-      return SchemeTrue.new
+      return SchemeTrue.instance
     when "\#f"
-      return SchemeFalse.new
+      return SchemeFalse.instance
     end
     return Symboltable.get_or_add(symbol)
   end

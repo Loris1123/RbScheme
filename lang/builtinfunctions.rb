@@ -91,7 +91,7 @@ module Functions
       raise SchemeUserError.new("Invalid argument for >. Need SchemeInteger . Got #{args[0].class}") unless args[0].class == SchemeInteger
       raise SchemeUserError.new("Invalid argument for >. Need SchemeInteger . Got #{args[1].class}") unless args[1].class == SchemeInteger
 
-      args[0].value > args[1].value ? SchemeTrue.new : SchemeFalse.new
+      args[0].value > args[1].value ? SchemeTrue.instance : SchemeFalse.instance
     }
   end
 
@@ -100,7 +100,7 @@ module Functions
       raise SchemeUserError.new("Invalid argument for <. Need SchemeInteger . Got #{args[0].class}") unless args[0].class == SchemeInteger
       raise SchemeUserError.new("Invalid argument for <. Need SchemeInteger . Got #{args[1].class}") unless args[1].class == SchemeInteger
 
-      args[0].value < args[1].value ? SchemeTrue.new : SchemeFalse.new
+      args[0].value < args[1].value ? SchemeTrue.instance : SchemeFalse.instance
     }
   end
 
@@ -114,12 +114,8 @@ module Functions
   end
 
   def self.scheme_equals
-    Proc.new{|environment, args| 
-      if args[0] == args[1]
-        SchemeTrue.new
-      else
-        SchemeFalse.new
-      end
+    Proc.new{|environment, args|
+      args[0] == args[1] ? SchemeTrue.instance : SchemeFalse.instance
     }
   end
 
@@ -128,60 +124,56 @@ module Functions
       # Call reader like you'd call it when entered to get a correct cons?
       # require_relative '../reader'
       # Reader.read_input(UserInput.new("(#{args[0]} #{args[1]})"))
-      SchemeCons.new(args[0], SchemeCons.new(args[1], SchemeNil.new))
+      SchemeCons.new(args[0], SchemeCons.new(args[1], SchemeNil.instance))
     }
   end
 
   # Return true if the argument is a cons
   def self.scheme_cons?
     Proc.new{|environment, args|
-      if args[0].class == SchemeCons
-        SchemeTrue.new
-      else
-        SchemeFalse.new
-      end
+      args[0].class == SchemeCons ? SchemeTrue.instance : SchemeFalse.instance
     }
   end
 
   def self.integer?
     Proc.new{|environment, args|
-      args[0].class == SchemeInteger ? SchemeTrue.new : SchemeFalse.new
+      args[0].class == SchemeInteger ? SchemeTrue.instance : SchemeFalse.instance
     }
   end
 
   def self.symbol?
     Proc.new{|environment, args|
-      args[0].class == SchemeSymbol ? SchemeTrue.new : SchemeFalse.new
+      args[0].class == SchemeSymbol ? SchemeTrue.instance : SchemeFalse.instance
     }
   end
 
   def self.string?
     Proc.new{|environment, args|
-      args[0].class == SchemeString ? SchemeTrue.new : SchemeFalse.new
+      args[0].class == SchemeString ? SchemeTrue.instance : SchemeFalse.instance
     }
   end
 
   def self.builtin_function?
     Proc.new{|environment, args|
-      args[0].class == BuiltinFunction ? SchemeTrue.new : SchemeFalse.new
+      args[0].class == BuiltinFunction ? SchemeTrue.instance : SchemeFalse.instance
     }
   end
 
   def self.builtin_syntax?
   Proc.new{|environment, args|
-    args[0].class == BuiltinSyntax ? SchemeTrue.new : SchemeFalse.new
+    args[0].class == BuiltinSyntax ? SchemeTrue.instance : SchemeFalse.instance
   }
   end
 
   def self.function?
     Proc.new{|environment, args|
-      (args[0].class == BuiltinFunction) || args[0].class == UserdefinedFunction ? SchemeTrue.new : SchemeFalse.new
+      (args[0].class == BuiltinFunction) || args[0].class == UserdefinedFunction ? SchemeTrue.instance : SchemeFalse.instance
     }
   end
 
   def self.syntax?
     Proc.new{|environment, args|
-      (args[0].class == BuiltinSyntax) || args[0].class == UserdefinedSyntax ? SchemeTrue.new : SchemeFalse.new
+      (args[0].class == BuiltinSyntax) || args[0].class == UserdefinedSyntax ? SchemeTrue.instance : SchemeFalse.instance
     }
   end
 

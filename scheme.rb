@@ -17,8 +17,7 @@ if ARGV[1] != "skiptest"
   Test.test
 end
 
-global_env = GlobalEnvironment.get
-
+global_env = GlobalEnvironment
 input = ARGV[0]
 if input != nil
   # Parse commandline argument

@@ -1,10 +1,12 @@
 require_relative '../lang/errors'
-
+require 'singleton'
 # Baseclass of all objects
 class SchemeObject; end
 
 # Objects, that can exist only one time.
-class SchemeSingletonObject < SchemeObject; end
+class SchemeSingletonObject < SchemeObject
+  include Singleton
+end
 
 # All other objects. Can exist multiple times and contain data.. Numbers, Strings, etc..
 class SchemeDataObject < SchemeObject
