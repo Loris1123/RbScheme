@@ -103,6 +103,30 @@ module EvalTest
     res = eval_input('bar')
     raise "Result should be 12. Is #{res}" unless res == 12
 
+    eval_input('(define (a b c) (+ b c))')
+    res = eval_input('(a 3 4)')
+    raise "Result should be 7 Is #{res}" unless res == 7
+
+    res = eval_input('(if 1 "foo" "bar")')
+    raise "Result should be \"foo\" Is #{res.value}" unless res == "foo"
+
+    res = eval_input('(if (eq? 1 2) "foo" "bar")')
+    raise "Result should be \"bar\" Is #{res.value}" unless res == "bar"
+
+    res = eval_input('(if (eq? 1 1) "foo" "bar")')
+    raise "Result should be \"foo\" Is #{res.value}" unless res == "foo"
+
+    res = eval_input('(if (eq? 1 2) (+ 3 2) (- 5 2))')
+    raise "Result should be 3 Is #{res.value}" unless res == 3
+
+    res = eval_input('(if #t "true" "false")')
+    raise "Result should be true Is #{res.value}" unless res == "true"
+
+    res = eval_input('(if #f "true" "false")')
+    raise "Result should be false Is #{res.value}" unless res == "false"
+
+
+
   end
 
   private

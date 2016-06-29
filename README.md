@@ -75,6 +75,21 @@ You can also access outside variables inside  a function.
     (myfunc 10)
       => 20
 
+#### if
+    (if expression true false)
+    
+If expression returns something other then #f, then the true-expression is
+evaluated. Else the false expression
+
+    (if #t "true" "false")
+      => true
+    (if 1 "true" "false")
+      => true
+    (if #f "true" "false")
+      => false
+    (if (eq? 1 2) (cons 1 2) (+ 1 2))
+      => 3
+      
 #### cons
 Create a cons(list)
 
