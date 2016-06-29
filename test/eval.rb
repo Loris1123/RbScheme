@@ -125,7 +125,21 @@ module EvalTest
     res = eval_input('(if #f "true" "false")')
     raise "Result should be false Is #{res.value}" unless res == "false"
 
+    eval_input('(define test "test")')
+    eval_input('(set! test "success")')
+    res = eval_input('test')
+    raise "Test should be \"success\" Is #{res.value}" unless res == "success"
 
+    eval_input('(set! test 1337)')
+    res = eval_input('test')
+    raise "Test should be 1337 Is #{res.value}" unless res == 1337
+
+    begin
+      eval_input('(set! notdefined 12)')
+      raise 'set! should raise an UndefinedVariableError'
+    rescue UndefinedVariableError
+
+    end
 
   end
 

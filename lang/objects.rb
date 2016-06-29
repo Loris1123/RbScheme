@@ -1,32 +1,41 @@
 require_relative '../lang/errors'
 
+# Baseclass of all objects
 class SchemeObject; end
 
-class SchemeVoid < SchemeObject
+# Objects, that can exist only one time.
+class SchemeSingletonObject < SchemeObject; end
+
+# All other objects. Can exist multiple times and contain data.. Numbers, Strings, etc..
+class SchemeDataObject < SchemeObject
+  attr_accessor :value
+end
+
+class SchemeVoid < SchemeSingletonObject
   def ==(x)
     return x.class == SchemeVoid
   end
 end
 
-class SchemeNil < SchemeObject
+class SchemeNil < SchemeSingletonObject
   def ==(x)
     return x.class == SchemeNil
   end
 end
 
-class SchemeTrue < SchemeObject
+class SchemeTrue < SchemeSingletonObject
   def ==(x)
     return x.class == SchemeTrue
   end
 end
 
-class SchemeFalse < SchemeObject
+class SchemeFalse < SchemeSingletonObject
   def ==(x)
     return x.class == SchemeFalse
   end
 end
 
-class SchemeSymbol < SchemeObject
+class SchemeSymbol < SchemeDataObject
   def initialize(value)
     @value = value
   end
@@ -38,22 +47,22 @@ class SchemeSymbol < SchemeObject
     return false
   end
 
-  def value
-    @value
-  end
-
   def to_str
     "SchemeSymbol: #{@value}"
   end
 end
 
-class SchemeInteger < SchemeObject
+class SchemeInteger < SchemeDataObject
   def initialize(value)
-    set_value(value)
+    @value = value
   end
 
-  def value
-    Integer(@value)
+  def value=(val)
+    begin
+      @value = Integer(val)
+    rescue ArgumentError, TypeError
+      raise SchemeArgumentError.new(Fixnum, val.class)
+    end
   end
 
   def ==(x)
@@ -112,29 +121,14 @@ class SchemeInteger < SchemeObject
     end
   end
 
-  def set_value(value)
-    begin
-      @value = Integer(value)
-    rescue ArgumentError, TypeError
-      raise SchemeArgumentError.new(Fixnum, value.class)
-    end
-  end
-
   def to_s
     @value.to_s
   end
 end
 
-class SchemeString < SchemeObject
+class SchemeString < SchemeDataObject
+
   def initialize(value)
-    @value = String(value)
-  end
-
-  def value
-    @value
-  end
-
-  def set_value(value)
     @value = String(value)
   end
 
@@ -149,11 +143,20 @@ class SchemeString < SchemeObject
   end
 end
 
-class SchemeCons < SchemeObject
+class SchemeCons < SchemeDataObject
   attr_accessor :car
   attr_accessor :cdr
   def initialize(car, cdr)
     @car = car
     @cdr = cdr
+  end
+
+  def value=(val)
+    if val.class == SchemeCons
+      @car = val.car
+      @cdr = val.cdr
+    else
+      raise SchemeError("Only cons are allowrd for value= in cons. Got #{val.class}")
+    end
   end
 end

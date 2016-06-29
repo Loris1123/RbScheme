@@ -8,26 +8,13 @@ module Syntaxes
 
     def self.scheme_if
       Proc.new{|environment, args|
-        if args[0].class == SchemeCons
-          condition = Eval.eval(environment, args[0])
-        else
-          condition = args[0]
-        end
+        condition = Eval.eval(environment, args[0])
 
         if condition.class == SchemeFalse
-          if args[2].class == SchemeCons
-            result = Eval.eval(environment, args[2])
-          else
-            result = args[2]
-          end
+          Eval.eval(environment, args[2])
         else
-          if args[1].class == SchemeCons
-            result = Eval.eval(environment, args[1])
-          else
-            result = args[1]
-          end
+          Eval.eval(environment, args[1])
         end
-        result
       }
     end
 
@@ -72,5 +59,13 @@ module Syntaxes
       end
     }
     end
+
+    def self.set!
+      Proc.new{|environment, args|
+        raise UndefinedVariableError.new(args[0].value) unless environment.get(args[0]) != nil
+        environment.put(args[0], Eval.eval(environment, args[1]))
+      }
+    end
+
 
 end

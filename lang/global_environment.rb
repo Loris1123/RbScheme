@@ -28,6 +28,7 @@ module GlobalEnvironment
     global_env.put(Symboltable.get_or_add('cdr'), BuiltinFunction.new('SchemeCdr', Functions.scheme_cdr, 1, 1))
 
     global_env.put(Symboltable.get_or_add('define'), BuiltinSyntax.new('SchemeDefine', Syntaxes.scheme_define, 2, 2))
+    global_env.put(Symboltable.get_or_add('set!'), BuiltinSyntax.new('SchemeSet!', Syntaxes.set!, 2, 2))
     global_env.put(Symboltable.get_or_add('if'), BuiltinSyntax.new('SchemeIf', Syntaxes.scheme_if, 3, 3))
     return global_env
   end
