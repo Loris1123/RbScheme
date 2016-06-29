@@ -139,16 +139,21 @@ class SchemeString < SchemeObject
   end
 
   def ==(x)
-    return @value==x.value
+    if x.class == SchemeString
+      @value==x.value
+    elsif x.class == String
+      @value==x
+    else
+      super.==(x)
+    end
   end
 end
 
 class SchemeCons < SchemeObject
+  attr_accessor :car
+  attr_accessor :cdr
   def initialize(car, cdr)
     @car = car
     @cdr = cdr
   end
-
-  def car; @car; end
-  def cdr; @cdr; end
 end
