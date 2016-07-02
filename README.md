@@ -104,7 +104,6 @@ Get the first element of a cons(list)
 
 #### cdr
 Get the last element of a cons  
-(Warning: Still has a bug. See #1)
 
     (cdr (cons 1 2))
       => 2
