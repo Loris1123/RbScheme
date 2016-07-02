@@ -195,4 +195,20 @@ module Functions
       end
     }
   end
+
+  def self.set_car!
+    Proc.new{|environment, args|
+      raise SchemeSyntaxError.new("Wrong argument for cdr. Need a cons as argument. Got #{args[0].class}") unless args[0].class == SchemeCons
+      args[0].car = Eval.eval(environment, args[1])
+      args[0]
+    }
+  end
+
+  def self.set_cdr!
+    Proc.new{|environment, args|
+      raise SchemeSyntaxError.new("Wrong argument for cdr. Need a cons as argument. Got #{args[0].class}") unless args[0].class == SchemeCons
+      args[0].cdr = SchemeCons.new(Eval.eval(environment, args[1]), SchemeNil.instance)
+      args[0]
+    }
+  end
 end

@@ -26,12 +26,20 @@ class SchemeNil < SchemeSingletonObject
 end
 
 class SchemeTrue < SchemeSingletonObject
+  def value
+    '#t'
+  end
+
   def ==(x)
     return x.class == SchemeTrue
   end
 end
 
 class SchemeFalse < SchemeSingletonObject
+  def value
+    '#f'
+  end
+
   def ==(x)
     return x.class == SchemeFalse
   end

@@ -141,6 +141,29 @@ module EvalTest
 
     end
 
+    eval_input('(define a (cons 1 2))')
+    res = eval_input('a')
+    raise "result should be cons. is #{res.class}" unless res.class == SchemeCons
+    raise "Car should be 1. is #{res.car.value}" unless res.car == 1
+    raise "Cdr should be cons. is #{res.cdr.class}" unless res.class == SchemeCons
+    raise "Cdr.Car should be 2. is #{res.cdr.car.value}" unless res.cdr.car == 2
+    raise "Cdr.cdr should be SchemeNil. is #{res.cdr.cdr}" unless res.cdr.cdr.class == SchemeNil
+
+    #eval_input('(set-car! a (cons 6 2))')    # -> ( (6 . 2) . 2)  -> ( ( 6 . ( 2 . Nil)) . (2 . Nil))
+    #res = eval_input('a')
+    #raise "result should be cons. is #{res.class}" unless res.class == SchemeCons
+    #raise "Car should be cons. is #{res.car.class}" unless res.car.class == SchemeCons
+    #raise "Car should be 1. is #{res.car.value}" unless res.car == 1
+    #raise "Cdr should be cons. is #{res.cdr.class}" unless res.class == SchemeCons
+    #raise "Cdr.Car should be 2. is #{res.cdr.car.value}" unless res.cdr.car == 2
+    #raise "Cdr.cdr should be SchemeNil. is #{res.cdr.cdr}" unless res.cdr.cdr.class == SchemeNil
+
+    # Test Recursion
+    eval_input('(define (counter x) (if (eq? x 1) 1 (counter (- x 1))))')
+    res = eval_input('(counter 5)')
+    raise "Result should be 1, is  #{res}" unless res == 1
+
+
   end
 
   private
