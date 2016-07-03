@@ -17,24 +17,30 @@ if ARGV[1] != "skiptest"
   Test.test
 end
 
-global_env = GlobalEnvironment.get
-input = ARGV[0]
-if input != nil
-  # Parse commandline argument
-  puts SchemePrinter.scheme_print(Eval.eval(global_env, Reader.read_input(UserInput.new(input))))
-else
+def repl
   puts 'Welcome to RbScheme'
-  # Interactive mode
   while TRUE
 
     begin
       print '> '
       input = UserInput.new(gets)
       read = Reader.read_input(input)
-      evaled = Eval.eval(global_env, read)
+      evaled = Eval.eval(GlobalEnvironment.get, read)
       puts SchemePrinter.scheme_print(evaled)
     rescue SchemeUserError => err
       puts err.message
     end
   end
+end
+
+## Entrypoint
+
+input = ARGV[0]
+if input != nil
+  # Parse commandline argument
+  puts SchemePrinter.scheme_print(Eval.eval(GlobalEnvironment.get, Reader.read_input(UserInput.new(input))))
+else
+  # Interactive mode
+  repl
+
 end
