@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 require_relative 'reader'
 require_relative 'lang/userinput'
@@ -36,11 +36,15 @@ end
 ## Entrypoint
 
 input = ARGV[0]
-if input != nil
+if input != nil and input != "--gui"
   # Parse commandline argument
   puts SchemePrinter.scheme_print(Eval.eval(GlobalEnvironment.get, Reader.read_input(UserInput.new(input))))
 else
   # Interactive mode
-  repl
-
+  if input == "--gui"
+    require_relative 'view/mainwindow'
+    SchemeGui.launch()
+  else
+    repl
+  end
 end
