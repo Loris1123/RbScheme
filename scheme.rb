@@ -11,12 +11,17 @@ require_relative 'lang/objects'
 require_relative 'lang/symboltable'
 require_relative 'lang/global_environment'
 
+
+
 if ARGV[1] != "skiptest"
   # Start tests
   require_relative 'test/test'
   Test.test
 end
 
+
+
+$global_env = GlobalEnvironment.get
 def repl
   puts 'Welcome to RbScheme'
   while TRUE
@@ -25,7 +30,7 @@ def repl
       print '> '
       input = UserInput.new(gets)
       read = Reader.read_input(input)
-      evaled = Eval.eval(GlobalEnvironment.get, read)
+      evaled = Eval.eval($global_env, read)
       puts SchemePrinter.scheme_print(evaled)
     rescue SchemeUserError => err
       puts err.message
@@ -33,18 +38,4 @@ def repl
   end
 end
 
-## Entrypoint
-
-input = ARGV[0]
-if input != nil and input != "--gui"
-  # Parse commandline argument
-  puts SchemePrinter.scheme_print(Eval.eval(GlobalEnvironment.get, Reader.read_input(UserInput.new(input))))
-else
-  # Interactive mode
-  if input == "--gui"
-    require_relative 'view/mainwindow'
-    SchemeGui.launch()
-  else
-    repl
-  end
-end
+repl

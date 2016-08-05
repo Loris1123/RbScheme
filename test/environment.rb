@@ -4,11 +4,11 @@ require_relative '../lang/objects'
 module EnvironmentTest
   def self.test
     env = Environment.new
-    raise "Environment should be empty. Filllevel is #{env.get_environment.fill_level}" unless env.get_environment.fill_level == 0
+    raise "Environment should be empty. Filllevel is #{env.get_environment.fill_level}" unless env.environment.fill_level == 0
 
     sym = SchemeSymbol.new('a')
     env.put(sym, 666)
-    raise "Length of Environment should be 1. Is #{env.get_environment.fill_level}" unless env.get_environment.fill_level == 1
+    raise "Length of Environment should be 1. Is #{env.get_environment.fill_level}" unless env.environment.fill_level == 1
     res = env.get(sym)
     raise "A should have the value 666. Is #{res}" unless res == 666
 
