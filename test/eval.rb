@@ -6,40 +6,40 @@ module EvalTest
     @@env = GlobalEnvironment.get
 
     res = eval_input('(+ 1 2)')
-    raise "Result should be 3. Is #{res}" unless res == 3
+    raise "Result should be 3. Is #{res}" unless res == SchemeInteger.new(3)
 
     res = eval_input('(- 1 2)')
-    raise "Result should be -1. Is #{res}" unless res == -1
+    raise "Result should be -1. Is #{res}" unless res == SchemeInteger.new(-1)
 
     res = eval_input('(* 2 2)')
-    raise "Result should be 4. Is #{res}" unless res == 4
+    raise "Result should be 4. Is #{res}" unless res == SchemeInteger.new(4)
 
     res = eval_input('(* 2 2 5)')
-    raise "Result should be 20. Is #{res}" unless res == 20
+    raise "Result should be 20. Is #{res}" unless res == SchemeInteger.new(20)
 
     res = eval_input('(/ 6 3)')
-    raise "Result should be 2. Is #{res}" unless res == 2
+    raise "Result should be 2. Is #{res}" unless res == SchemeInteger.new(2)
 
     res = eval_input('(+ 1 2 3)')
-    raise "Result should be 6. Is #{res}" unless res == 6
+    raise "Result should be 6. Is #{res}" unless res == SchemeInteger.new(6)
 
     res = eval_input('(- 5 2 7)')
-    raise "Result should be -4. Is #{res}" unless res == -4
+    raise "Result should be -4. Is #{res}" unless res == SchemeInteger.new(-4)
 
     res = eval_input('(+ (* 3 4) 2)')
-    raise "Result should be 14. Is #{res}" unless res == 14
+    raise "Result should be 14. Is #{res}" unless res == SchemeInteger.new(14)
 
     res = eval_input('(+ 1 (* 3 2))')
-    raise "Result should be 7. Is #{res}" unless res == 7
+    raise "Result should be 7. Is #{res}" unless res == SchemeInteger.new(7)
 
     res = eval_input('(/ (* 3 4) (/ 4 2))')
-    raise "Result should be 6. Is #{res}" unless res == 6
+    raise "Result should be 6. Is #{res}" unless res == SchemeInteger.new(6)
 
     res = eval_input('(abs (- 5 2 7))')
-    raise "Result should be 4. Is #{res}" unless res == 4
+    raise "Result should be 4. Is #{res}" unless res == SchemeInteger.new(4)
 
     res = eval_input('(modulo 12 7)')
-    raise "Result should be 5. Is #{res}" unless res == 5
+    raise "Result should be 5. Is #{res}" unless res == SchemeInteger.new(5)
 
     res = eval_input('(eq? 1 1)')
     raise "Result should be True. Is #{res}" unless res.class == SchemeTrue
@@ -94,18 +94,18 @@ module EvalTest
 
     res = eval_input('(cons 3 "bar")')
     raise "Result should be cons. Is #{res.class}" unless res.class == SchemeCons
-    raise "Cons.car should be 3. Is #{res.car}" unless res.car == 3
+    raise "Cons.car should be 3. Is #{res.car}" unless res.car == SchemeInteger.new(3)
     raise "Cons.cdr should be cons. Is #{res.cdr.class}" unless res.cdr.class == SchemeCons
     raise "Cons.cdr.car should be \"bar\". Is #{res.cdr.car}" unless res.cdr.car == "bar"
     raise "Cons.cdr.cdr should be SchemeNil. Is #{res.cdr.cdr.class}" unless res.cdr.cdr.class == SchemeNil
 
     eval_input('(define bar 12)')
     res = eval_input('bar')
-    raise "Result should be 12. Is #{res}" unless res == 12
+    raise "Result should be 12. Is #{res}" unless res == SchemeInteger.new(12)
 
     eval_input('(define (a b c) (+ b c))')
     res = eval_input('(a 3 4)')
-    raise "Result should be 7 Is #{res}" unless res == 7
+    raise "Result should be 7 Is #{res}" unless res == SchemeInteger.new(7)
 
     res = eval_input('(if 1 "foo" "bar")')
     raise "Result should be \"foo\" Is #{res.value}" unless res == "foo"
@@ -117,7 +117,7 @@ module EvalTest
     raise "Result should be \"foo\" Is #{res.value}" unless res == "foo"
 
     res = eval_input('(if (eq? 1 2) (+ 3 2) (- 5 2))')
-    raise "Result should be 3 Is #{res.value}" unless res == 3
+    raise "Result should be 3 Is #{res.value}" unless res == SchemeInteger.new(3)
 
     res = eval_input('(if #t "true" "false")')
     raise "Result should be true Is #{res.value}" unless res == "true"
@@ -132,7 +132,7 @@ module EvalTest
 
     eval_input('(set! test 1337)')
     res = eval_input('test')
-    raise "Test should be 1337 Is #{res.value}" unless res == 1337
+    raise "Test should be 1337 Is #{res.value}" unless res == SchemeInteger.new(1337)
 
     begin
       eval_input('(set! notdefined 12)')
@@ -144,9 +144,9 @@ module EvalTest
     eval_input('(define a (cons 1 2))')
     res = eval_input('a')
     raise "result should be cons. is #{res.class}" unless res.class == SchemeCons
-    raise "Car should be 1. is #{res.car.value}" unless res.car == 1
+    raise "Car should be 1. is #{res.car.value}" unless res.car == SchemeInteger.new(1)
     raise "Cdr should be cons. is #{res.cdr.class}" unless res.class == SchemeCons
-    raise "Cdr.Car should be 2. is #{res.cdr.car.value}" unless res.cdr.car == 2
+    raise "Cdr.Car should be 2. is #{res.cdr.car.value}" unless res.cdr.car == SchemeInteger.new(2)
     raise "Cdr.cdr should be SchemeNil. is #{res.cdr.cdr}" unless res.cdr.cdr.class == SchemeNil
 
     #eval_input('(set-car! a (cons 6 2))')    # -> ( (6 . 2) . 2)  -> ( ( 6 . ( 2 . Nil)) . (2 . Nil))
@@ -161,7 +161,7 @@ module EvalTest
     # Test Recursion
     eval_input('(define (counter x) (if (eq? x 1) 1 (counter (- x 1))))')
     res = eval_input('(counter 5)')
-    raise "Result should be 1, is  #{res}" unless res == 1
+    raise "Result should be 1, is  #{res}" unless res == SchemeInteger.new(1)
 
 
   end

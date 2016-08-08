@@ -1,5 +1,7 @@
 require_relative '../lang/errors'
 require 'singleton'
+require 'pry'
+
 # Baseclass of all objects
 class SchemeObject; end
 
@@ -63,22 +65,21 @@ class SchemeSymbol < SchemeDataObject
 end
 
 class SchemeInteger < SchemeDataObject
+  attr_reader :value
   def initialize(value)
     @value = value
   end
-
-  def value=(val)
-    begin
-      @value = Integer(val)
-    rescue ArgumentError, TypeError
-      raise SchemeArgumentError.new(Fixnum, val.class)
-    end
-  end
+#
+#  def value=(val)
+#    begin
+#      @value = Integer(val)
+#    rescue ArgumentError, TypeError
+#      raise SchemeArgumentError.new(Fixnum, val.class)
+#    end
+#  end
 
   def ==(x)
-    if x.class == Fixnum
-      return x==@value
-    elsif x.class == SchemeInteger
+    if x.class == SchemeInteger
       return x.value == @value
     else
       return false
@@ -89,8 +90,6 @@ class SchemeInteger < SchemeDataObject
     case x
     when SchemeInteger
       return SchemeInteger.new(@value*x.value)
-    when Fixnum
-      return SchemeInteger.new(@value*xx)
     else
       raise "Can't do multiples of #{x.class} to SchemeInteger"
     end
@@ -100,8 +99,6 @@ class SchemeInteger < SchemeDataObject
     case x
     when SchemeInteger
       return SchemeInteger.new(@value+x.value)
-    when Fixnum
-      return SchemeInteger.new(@value+x)
     else
       raise "Can't add #{x.class} to SchemeInteger"
     end
@@ -112,9 +109,6 @@ class SchemeInteger < SchemeDataObject
     when SchemeInteger
       raise SchemeUserError.new('Division by zero!') unless x.value != 0
       return SchemeInteger.new(@value/x.value)
-      when Fixnum
-        raise SchemeUserError.new('Division by zero!') unless x != 0
-        return SchemeInteger.new(@value/x)
     else
       raise "Can't divide #{x.class} through SchemeInteger"
     end
@@ -124,8 +118,6 @@ class SchemeInteger < SchemeDataObject
     case x
     when SchemeInteger
       return SchemeInteger.new(@value-x.value)
-    when Fixnum
-      return SchemeInteger.new(@value-x)
     else
       raise "Can't substract #{x.class} from SchemeInteger"
     end
