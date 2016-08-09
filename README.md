@@ -2,7 +2,7 @@
 
 A Scheme implementation written in Ruby.  
 This is a project for my university in a lecture called "Implementation of advanced programming languages."  
-Obviously it's not usable for production (yet?), but when implementing it, I learned a lot about how 
+Obviously it's not usable for production (yet?), but when implementing it, I learned a lot about how
 programming languages work.  
 Feel free to submit bugs or recommendations for improvements.
 
@@ -18,15 +18,54 @@ This will bring you to the interactive mode.
 You can also pass schemecode as a commandline argument
 
     ruby scheme.rb "(define a 10)"
-    
+
 If you want to skip the tests you can use "skiptest" as the second argument. This is only available for non-interactive-mode. It is usefull for debugging the code.
 
     ruby scheme.rb "(define a 10)" skiptest
-    
+
 ## What it can do (so far)
+
+### Types
+These are the currently available types for RbScheme.
+Given examples show how to get an instance of the type.
+
+#### True
+
+    #t
+
+#### False
+
+    #f
+
+#### Nil
+No Type. Won't print anything
+
+    nil
+
+#### Integer
+Integer numbers
+
+    1
+
+#### Float
+Floating numbers
+
+    1.2
+    1.
+
+#### String
+Character Strings
+
+    "Foobar"
+
+#### Cons
+Scheme-typical Lists.
+
+    (cons 1 2)
+
 ### Arithmetics
 You can to simple calculatins in the known scheme-syntax.  
-    
+
     (+ 2 4)
       => 6
     (- 2 4)
@@ -39,7 +78,7 @@ You can to simple calculatins in the known scheme-syntax.
       => 2
     (abs -6)     # Warning. See #5
       => 6
-      
+
 You can also do multiple calculations at once with nested lists:  
 
     (+ (* 13 37) (- 4 2))
@@ -52,14 +91,14 @@ Define a symbol and assign a value to it
     (define x 123)
     x
       => 123
-      
+
 Define a function and call it with parameters
 
     (define (myfunc a b c) (+ a (+ b c)))
     (myfunc 1 2 3)
       => 6
-      
-Each function has its own enviroment. So you can use a parameter in a function with a name you already define outside. 
+
+Each function has its own enviroment. So you can use a parameter in a function with a name you already define outside.
 
     (define a 10)
     (define (myfunc a) (+ a a))
@@ -67,7 +106,7 @@ Each function has its own enviroment. So you can use a parameter in a function w
       => 4
     a
       => 10
-      
+
 You can also access outside variables inside  a function.
 
     (define a 10)
@@ -77,7 +116,7 @@ You can also access outside variables inside  a function.
 
 #### if
     (if expression true false)
-    
+
 If expression returns something other then #f, then the true-expression is
 evaluated. Else the false expression
 
@@ -89,7 +128,7 @@ evaluated. Else the false expression
       => false
     (if (eq? 1 2) (cons 1 2) (+ 1 2))
       => 3
-      
+
 #### cons
 Create a cons(list)
 
@@ -124,7 +163,7 @@ Returns #t if the given argument is instance of the asked type.
 
  - integer?
  - symbol?
- - string? 
+ - string?
  - cons?
  - builtin-function?
  - builtin-syntax?
@@ -137,5 +176,3 @@ Example:
       => #f
     (cons? (cons 1 2))
       => #t
-
-      
