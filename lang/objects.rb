@@ -2,7 +2,6 @@
 
 require_relative 'objects/objects'
 require_relative 'objects/cons'
-require_relative 'objects/integer'
+require_relative 'objects/numbers'
 require_relative 'objects/string'
 require_relative 'objects/symbol'
-require_relative 'objects/float'
