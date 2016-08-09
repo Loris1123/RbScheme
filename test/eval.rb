@@ -5,6 +5,7 @@ module EvalTest
   def self.test
     @@env = GlobalEnvironment.get
 
+    # Calculate with integers
     res = eval_input('(+ 1 2)')
     raise "Result should be 3. Is #{res}" unless res == SchemeInteger.new(3)
 
@@ -41,6 +42,41 @@ module EvalTest
     res = eval_input('(modulo 12 7)')
     raise "Result should be 5. Is #{res}" unless res == SchemeInteger.new(5)
 
+    # Calculate with floats
+    res = eval_input('(+ 1.1 2.5)')
+    raise "Result should be 3.6. Is #{res}" unless res == SchemeFloat.new(3.6)
+
+    res = eval_input('(- 1.0 2.0)')
+    raise "Result should be -1.0. Is #{res}" unless res == SchemeFloat.new(-1.0)
+
+    res = eval_input('(* 2.1 2.0)')
+    raise "Result should be 4.2. Is #{res}" unless res == SchemeFloat.new(4.2)
+
+    res = eval_input('(* 2.0 2.0 5.5)')
+    raise "Result should be 22.0. Is #{res}" unless res == SchemeFloat.new(22.0)
+
+    res = eval_input('(/ 6.2 3.1)')
+    raise "Result should be 2.0. Is #{res}" unless res == SchemeFloat.new(2.0)
+
+    res = eval_input('(+ 1.1 2.2 3.3)')
+    raise "Result should be 6.6. Is #{res}" unless res == SchemeFloat.new(6.6)
+
+    res = eval_input('(- 5.0 2.2 7.0)')
+    raise "Result should be -4.2. Is #{res}" unless res == SchemeFloat.new(-4.2)
+
+    res = eval_input('(+ (* 3.2 4.5) 2.0)')
+    raise "Result should be 16.4. Is #{res}" unless res == SchemeFloat.new(16.4)
+
+    res = eval_input('(+ 1.0 (* 3.1 2.5))')
+    raise "Result should be 8.75. Is #{res}" unless res == SchemeFloat.new(8.75)
+
+    res = eval_input('(/ (* 3.2 4.2) (/ 4.0 2.5))')
+    raise "Result should be 8.4. Is #{res}" unless res == SchemeFloat.new(8.4)
+
+    res = eval_input('(abs (- 5.3 2.1 7.1))')
+    raise "Result should be 3.9. Is #{res}" unless res == SchemeFloat.new(3.9)
+
+    # Builtin functions
     res = eval_input('(eq? 1 1)')
     raise "Result should be True. Is #{res}" unless res.class == SchemeTrue
 
