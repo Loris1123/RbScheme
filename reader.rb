@@ -2,6 +2,7 @@ require_relative "lang/userinput"
 require_relative "lang/errors"
 require_relative "lang/objects"
 require_relative "lang/symboltable"
+require 'pry'
 
 module Reader
 
@@ -10,7 +11,19 @@ module Reader
       raise WrongInputError, input
     end
     if is_digit input.current
-      return read_number input
+      integer_part = read_number input
+      if input.current == "."
+        # read a float. Next must be a number again.
+        input.next
+        float_part = read_number input
+        if input.current != " " && input.current != nil && input.current != ")"
+          # There must be a space, end of cons, or EOF now
+          raise SchemeSyntaxError, input.input
+        end
+        return SchemeFloat.new("#{integer_part.value}.#{float_part.value}")
+      else
+        return integer_part
+      end
     elsif (input.current == '+' or input.current=='-') and is_digit(input.get_next)
       # Negative numbers or numbers that start with +. Check the Space! Builtinfunctions +/-
       return read_number input
@@ -77,8 +90,8 @@ module Reader
       number += input.current
       input.next
     end
-    if input.current != " " && input.current != nil && input.current != ")"
-      # There must be a space, end of cons or EOF now
+    if input.current != " " && input.current != nil && input.current != ")" && input.current != "."
+      # There must be a space, end of cons, dot (for floats), or EOF now
       raise SchemeSyntaxError, input.input
     end
     if is_negative

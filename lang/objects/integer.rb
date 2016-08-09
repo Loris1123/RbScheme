@@ -1,7 +1,7 @@
 class SchemeInteger < SchemeDataObject
   attr_reader :value
   def initialize(value)
-    @value = value
+    @value = Integer(value)
   end
 
   def ==(x)
