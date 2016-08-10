@@ -57,7 +57,15 @@ class UndefinedVariableError < SchemeUserError
 end
 
 class SchemeSyntaxError < SchemeUserError
-  def initialize(wrong_syntax)
-    super("Invalid Syntax: #{wrong_syntax}")
+  def initialize(error_message, userinput=nil)
+    if userinput==nil
+      super("Invalid Syntax: #{error_message}")
+    else
+      # Calculate spaces
+      # 16 = lenth of "Invalid Syntax: "
+      error_marker = "_"*(16 + userinput.index)
+      error_marker += "^"
+      super("Invalid Syntax: #{userinput.input}\n#{error_marker}\n\n#{error_message}")
+    end
   end
 end

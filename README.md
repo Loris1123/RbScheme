@@ -70,7 +70,7 @@ Scheme-typical Lists.
     (cons 1 2)
 
 ### Arithmetics
-You can to simple calculatins in the known scheme-syntax.  
+You can to simple calculations in the known scheme-syntax.  
 
     (+ 2 4)
       => 6

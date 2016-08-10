@@ -19,7 +19,7 @@ module Reader
         float_part = read_number input
         if input.current != " " && input.current != nil && input.current != ")"
           # There must be a space, end of cons, or EOF now
-          raise SchemeSyntaxError, input.input
+          raise SchemeSyntaxError.new("Expected Space, ) or EOF. Got #{input.current}", input)
         end
         return SchemeFloat.new("#{number.value}.#{float_part.value}")
 
@@ -29,7 +29,7 @@ module Reader
         denominator = read_number input
         if input.current != " " && input.current != nil && input.current != ")"
           # There must be a space, end of cons, or EOF now
-          raise SchemeSyntaxError, input.input
+          raise SchemeSyntaxError.new("Expected Space, ) or EOF. Got #{input.current}", input)
         end
         return SchemeRational.new(number.value ,denominator.value)
 
@@ -102,7 +102,7 @@ module Reader
     end
     if input.current != ' ' && input.current != nil && input.current != ')' && input.current != '.' && input.current != '/'
       # There must be a space, end of cons, dot (for floats), slash(for reationals), or EOF now
-      raise SchemeSyntaxError, input.input
+      raise SchemeSyntaxError.new("Expected Space, ), dot, slash or EOF. Got #{input.current}", input)
     end
     if is_negative
       return SchemeInteger.new(number.to_i * -1)
