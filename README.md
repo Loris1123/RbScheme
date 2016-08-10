@@ -180,6 +180,8 @@ Returns #t if they are the same. #f if not
 Returns #t if the given argument is instance of the asked type.
 
  - integer?
+ - float?
+ - rational?
  - symbol?
  - string?
  - cons?
