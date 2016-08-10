@@ -76,6 +76,46 @@ module EvalTest
     res = eval_input('(abs (- 5.3 2.1 7.1))')
     raise "Result should be 3.9. Is #{res}" unless res == SchemeFloat.new(3.9)
 
+    # Calculate with Rationals
+    res = eval_input('(+ 1/2  1/2)')
+    raise "Result should be 1. Is #{res}" unless res == SchemeRational.new(1,1)
+
+    res = eval_input('(+ 1/2  1/4)')
+    raise "Result should be 3/4. Is #{res}" unless res == SchemeRational.new(3,4)
+
+    res = eval_input('(- 1/2 1/4)')
+    raise "Result should be 1/4. Is #{res}" unless res == SchemeRational.new(1,4)
+
+    res = eval_input('(- 1/2 1/1)')
+    raise "Result should be -1/2. Is #{res}" unless res == SchemeRational.new(-1,2)
+
+    res = eval_input('(* 1/2 1/2)')
+    raise "Result should be 1/4. Is #{res}" unless res == SchemeRational.new(1,4)
+
+    res = eval_input('(* 1/2 1/2 1/5)')
+    raise "Result should be 1/20. Is #{res}" unless res == SchemeRational.new(1,20)
+
+    res = eval_input('(/ 1/2 1/4)')
+    raise "Result should be 2/1. Is #{res}" unless res == SchemeRational.new(2,1)
+
+    res = eval_input('(+ 1/2 1/2 1/3)')
+    raise "Result should be 4/3. Is #{res}" unless res == SchemeRational.new(4,3)
+
+    res = eval_input('(- 1/2 1/2 1/7)')
+    raise "Result should be -1/7. Is #{res}" unless res == SchemeRational.new(-1,7)
+
+    res = eval_input('(+ (* 1/3 1/4) 1/2)')
+    raise "Result should be 7/12. Is #{res}" unless res == SchemeRational.new(7,12)
+
+    res = eval_input('(+ 1/5 (* 1/3 2/5))')
+    raise "Result should be 1/3. Is #{res}" unless res == SchemeRational.new(1,3)
+
+    res = eval_input('(/ (* 1/3 1/4) (/ 1/4 2/8))')
+    raise "Result should be 1/12. Is #{res}" unless res == SchemeRational.new(1,12)
+
+    res = eval_input('(abs (- 1/3 2/3 1/2))')
+    raise "Result should be 5/6. Is #{res}" unless res == SchemeRational.new(5,6)
+
     # Builtin functions
     res = eval_input('(eq? 1 1)')
     raise "Result should be True. Is #{res}" unless res.class == SchemeTrue

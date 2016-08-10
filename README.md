@@ -53,6 +53,12 @@ Floating numbers
     1.2
     1.
 
+#### Rationals
+Fractions
+
+    2/3
+    (/ 3 4)
+
 #### String
 Character Strings
 

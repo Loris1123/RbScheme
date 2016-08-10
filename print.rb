@@ -15,6 +15,8 @@ module SchemePrinter
         return  scheme_expression.value
       when SchemeInteger
         return  scheme_expression.value
+      when SchemeRational
+        return  scheme_expression.value
       when SchemeNil
         return 'nil'
       when SchemeCons

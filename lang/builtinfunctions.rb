@@ -108,15 +108,11 @@ module Functions
 
   def self.scheme_abs
     Proc.new{|environment, args|
-      if args[0].class != SchemeInteger and args[0].class != SchemeFloat
-        raise SchemeUserError.new("Invalid argument for abs. Need SchemeInteger . Got #{args[0].class}")
+      if args[0].class != SchemeInteger and args[0].class != SchemeFloat and args[0].class != SchemeRational
+        raise SchemeUserError.new("Cannot create an abs of #{args[0].class}")
       end
-      case args[0]
-      when SchemeInteger
-        SchemeInteger.new(args[0].value.abs)
-      when SchemeFloat
-        SchemeFloat.new(args[0].value.abs)
-      end
+      
+      args[0].class.new(args[0].value.abs)
     }
   end
 

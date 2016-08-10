@@ -62,3 +62,19 @@ class SchemeFloat < SchemeNumber
     @value = Float(value)
   end
 end
+
+class SchemeRational < SchemeNumber
+
+  # Creates a new SchemeRational.
+  # If one parameter is given, it must be possible to cast it to a Rational.
+  # If two parameters are given, we
+  def initialize(*args)
+    if args.size == 1
+      @value = Rational(args[0])
+    elsif args.size == 2
+      @value = Rational(args[0], args[1])
+    else
+      raise SchemeInternalError.new("Unknown parameters for SchemeRational: #{args.inpsect}")
+    end
+  end
+end

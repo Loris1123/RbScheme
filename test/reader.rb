@@ -24,6 +24,11 @@ module ReaderTest
     raise "Read input should be SchemeFloat, is #{r.class}" unless r.class == SchemeFloat
     raise "Read number should be 12.34, is #{r.value}" unless r.value == 12.34
 
+    u = UserInput.new("-12.34")
+    r = Reader.read_input u
+    raise "Read input should be SchemeFloat, is #{r.class}" unless r.class == SchemeFloat
+    raise "Read number should be -12.34, is #{r.value}" unless r.value == -12.34
+
     u = UserInput.new("12.")
     r = Reader.read_input u
     raise "Read input should be SchemeFloat, is #{r.class}" unless r.class == SchemeFloat
@@ -47,6 +52,21 @@ module ReaderTest
     r = Reader.read_input u
     raise "Read input should be SchemeFloat, is #{r.class}" unless r.class == SchemeFloat
     raise "Read number should be 14545634534234356576467564675675675682.34564564564534689086786782342335657867857356, is #{r.value}" unless r.value == 14545634534234356576467564675675675682.34564564564534689086786782342335657867857356
+
+    u = UserInput.new("12/34")
+    r = Reader.read_input u
+    raise "Read input should be SchemeRational, is #{r.class}" unless r.class == SchemeRational
+    raise "Read number should be 12/34, is #{r.value}" unless r.value == Rational(12,34)
+
+    u = UserInput.new("-12/34")
+    r = Reader.read_input u
+    raise "Read input should be SchemeRational, is #{r.class}" unless r.class == SchemeRational
+    raise "Read number should be -12/34, is #{r.value}" unless r.value == Rational(-12,34)
+
+    u = UserInput.new("-134345234534545645635452452/3456456345245423423454565678678657456435435345344")
+    r = Reader.read_input u
+    raise "Read input should be SchemeRational, is #{r.class}" unless r.class == SchemeRational
+    raise "Read number should be -134345234534545645635452452/3456456345245423423454565678678657456435435345344, is #{r.value}" unless r.value == Rational(-134345234534545645635452452,3456456345245423423454565678678657456435435345344)
 
     u = UserInput.new("\"abcd\"")
     r = Reader.read_input u
