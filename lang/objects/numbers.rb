@@ -10,37 +10,57 @@ class SchemeNumber < SchemeDataObject
   end
 
   def *(x)
-    case x
-    when self.class
-      return self.class.new(@value*x.value)
+    if x.class == self.class
+      return self.class.new(@value * x.value)
+    elsif (self.class == SchemeInteger and x.class == SchemeFloat) or (self.class == SchemeFloat and x.class == SchemeInteger)
+      return SchemeFloat.new(@value * x.value)
+    elsif (self.class == SchemeInteger and x.class == SchemeRational) or (self.class == SchemeRational and x.class == SchemeInteger)
+      return SchemeRational.new(@value * x.value)
+    elsif (self.class == SchemeFloat and x.class == SchemeRational) or (self.class == SchemeRational and x.class == SchemeFloat)
+      return SchemeFloat.new(@value * x.value)
     else
       raise "Can't do multiples of #{x.class} to #{self.class}"
     end
   end
 
   def +(x)
-    case x
-    when self.class
+    if x.class == self.class
       return self.class.new(@value+x.value)
+    elsif (self.class == SchemeInteger and x.class == SchemeFloat) or (self.class == SchemeFloat and x.class == SchemeInteger)
+      return SchemeFloat.new(@value+x.value)
+    elsif (self.class == SchemeInteger and x.class == SchemeRational) or (self.class == SchemeRational and x.class == SchemeInteger)
+      return SchemeRational.new(@value+x.value)
+    elsif (self.class == SchemeFloat and x.class == SchemeRational) or (self.class == SchemeRational and x.class == SchemeFloat)
+      return SchemeFloat.new(@value + x.value)
     else
       raise "Can't add #{x.class} to #{self.class}"
     end
   end
 
   def /(x)
-    case x
-    when self.class
-      raise SchemeUserError.new('Division by zero!') unless x.value != 0
+    raise SchemeUserError.new('Division by zero!') unless x.value != 0
+    if x.class == self.class
       return self.class.new(@value/x.value)
+    elsif (self.class == SchemeInteger and x.class == SchemeFloat) or (self.class == SchemeFloat and x.class == SchemeInteger)
+      return SchemeFloat.new(@value / x.value)
+    elsif (self.class == SchemeInteger and x.class == SchemeRational) or (self.class == SchemeRational and x.class == SchemeInteger)
+      return SchemeRational.new(@value / x.value)
+    elsif (self.class == SchemeFloat and x.class == SchemeRational) or (self.class == SchemeRational and x.class == SchemeFloat)
+      return SchemeFloat.new(@value / x.value)
     else
       raise "Can't divide #{x.class} through #{self.class}"
     end
   end
 
   def -(x)
-    case x
-    when self.class
-      return self.class.new(@value-x.value)
+    if x.class == self.class
+      return self.class.new(@value - x.value)
+    elsif (self.class == SchemeInteger and x.class == SchemeFloat) or (self.class == SchemeFloat and x.class == SchemeInteger)
+      return SchemeFloat.new(@value - x.value)
+    elsif (self.class == SchemeInteger and x.class == SchemeRational) or (self.class == SchemeRational and x.class == SchemeInteger)
+      return SchemeRational.new(@value - x.value)
+    elsif (self.class == SchemeFloat and x.class == SchemeRational) or (self.class == SchemeRational and x.class == SchemeFloat)
+      return SchemeFloat.new(@value - x.value)
     else
       raise "Can't substract #{x.class} from #{self.class}"
     end

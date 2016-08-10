@@ -9,7 +9,7 @@ Feel free to submit bugs or recommendations for improvements.
 ## Dependencies
 
 This is written in plain ruby. So it does not have any dependencies, beside the ruby language.  
-I tested it with Ruby 2.3.1. If you use another version, please tell me wether it works or not.
+I've tested it with Ruby 2.3.1 and 2.2.5. If you use another version, please tell me whether it works or not.
 
 ## How to use
 Start RbScheme with `ruby scheme.rb`  
@@ -88,6 +88,18 @@ You can to simple calculations in the known scheme-syntax.
 You can also do multiple calculations at once with nested lists:  
 
     (+ (* 13 37) (- 4 2))
+
+#### Conversion Rules
+When doing arithmetics with different datatypes, the following rules will be applied
+
+ - Integer + Integer = Integer
+ - Float + Float = Float
+ - Rational + Rational = Rational
+ - Integer + Float = Float
+ - Float + Rational = Float
+ - Integer + Rational = Rational
+
+The same rules are used vice versa and for the other arithmetics.
 
 ### Builtin-functions
 

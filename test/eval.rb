@@ -240,6 +240,91 @@ module EvalTest
     raise "Result should be 1, is  #{res}" unless res == SchemeInteger.new(1)
 
 
+    # Test calculations with mixed datatypes
+    # Integer + Float = Float
+    res = eval_input('(+ 2.1 2)')
+    raise "Result should be 4.1. Is #{res}" unless res == SchemeFloat.new(4.1)
+
+    res = eval_input('(+ 2 2.1)')
+    raise "Result should be 4.1. Is #{res}" unless res == SchemeFloat.new(4.1)
+
+    res = eval_input('(* 2.1 2)')
+    raise "Result should be 4.2. Is #{res}" unless res == SchemeFloat.new(4.2)
+
+    res = eval_input('(* 2 2.1)')
+    raise "Result should be 4.2. Is #{res}" unless res == SchemeFloat.new(4.2)
+
+    res = eval_input('(- 2.5 2)')
+    raise "Result should be 0.5. Is #{res}" unless res == SchemeFloat.new(0.5)
+
+    res = eval_input('(- 2 2.5)')
+    raise "Result should be -0.5. Is #{res}" unless res == SchemeFloat.new(-0.5)
+
+    res = eval_input('(- 2 2.0)')
+    raise "Result should be 0.0. Is #{res}" unless res == SchemeFloat.new(0.0)
+
+    res = eval_input('(/ 3 1.5)')
+    raise "Result should be 2.0. Is #{res}" unless res == SchemeFloat.new(2.0)
+
+    res = eval_input('(/ 1.5 3)')
+    raise "Result should be 0.5. Is #{res}" unless res == SchemeFloat.new(0.5)
+
+    # Integer + Rational = Rational
+    res = eval_input('(+ 2/3 2)')
+    raise "Result should be 8/3. Is #{res}" unless res == SchemeRational.new(8,3)
+
+    res = eval_input('(+ 2 2/3)')
+    raise "Result should be 8/3. Is #{res}" unless res == SchemeRational.new(8,3)
+
+    res = eval_input('(* 2/3 2)')
+    raise "Result should be 4/3. Is #{res}" unless res == SchemeRational.new(4,3)
+
+    res = eval_input('(* 2 2/3)')
+    raise "Result should be 4/3. Is #{res}" unless res == SchemeRational.new(4,3)
+
+    res = eval_input('(- 2/3 2)')
+    raise "Result should be -4/3. Is #{res}" unless res == SchemeRational.new(-4,3)
+
+    res = eval_input('(- 2 2/3)')
+    raise "Result should be 4/3. Is #{res}" unless res == SchemeRational.new(4,3)
+
+    res = eval_input('(- 2 8/3)')
+    raise "Result should be -2/3. Is #{res}" unless res == SchemeRational.new(-2,3)
+
+    res = eval_input('(/ 3 1/5)')
+    raise "Result should be 15. Is #{res}" unless res == SchemeRational.new(15,1)
+
+    res = eval_input('(/ 1/5 3)')
+    raise "Result should be 1/15. Is #{res}" unless res == SchemeRational.new(1,15)
+
+    # FLoat + Rational = Float
+    res = eval_input('(+ 2/4 2.0)')
+    raise "Result should be 2.5. Is #{res}" unless res == SchemeFloat.new(2.5)
+
+    res = eval_input('(+ 2.0 2/4)')
+    raise "Result should be 2.5. Is #{res}" unless res == SchemeFloat.new(2.5)
+
+    res = eval_input('(* 1/4 2.0)')
+    raise "Result should be 0.5. Is #{res}" unless res == SchemeFloat.new(0.5)
+
+    res = eval_input('(* 2.0 1/4)')
+    raise "Result should be 0.5. Is #{res}" unless res == SchemeFloat.new(0.5)
+
+    res = eval_input('(- 1/8 2.0)')
+    raise "Result should be -1.875. Is #{res}" unless res == SchemeFloat.new(-1.875)
+
+    res = eval_input('(- 2.0 1/8)')
+    raise "Result should be 1.875. Is #{res}" unless res == SchemeFloat.new(1.875)
+
+    res = eval_input('(- 2.0 8/4)')
+    raise "Result should be 0.0. Is #{res}" unless res == SchemeFloat.new(0.0)
+
+    res = eval_input('(/ 3.0 1/5)')
+    raise "Result should be 15. Is #{res}" unless res == SchemeFloat.new(15.0)
+
+    res = eval_input('(/ 1/5 2.0)')
+    raise "Result should be 0.1. Is #{res}" unless res == SchemeFloat.new(0.1)
+
   end
 
   private
