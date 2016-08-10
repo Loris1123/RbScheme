@@ -111,7 +111,7 @@ module Functions
       if args[0].class != SchemeInteger and args[0].class != SchemeFloat and args[0].class != SchemeRational
         raise SchemeUserError.new("Cannot create an abs of #{args[0].class}")
       end
-      
+
       args[0].class.new(args[0].value.abs)
     }
   end
@@ -141,6 +141,18 @@ module Functions
   def self.integer?
     Proc.new{|environment, args|
       args[0].class == SchemeInteger ? SchemeTrue.instance : SchemeFalse.instance
+    }
+  end
+
+  def self.rational?
+    Proc.new{|environment, args|
+      args[0].class == SchemeRational ? SchemeTrue.instance : SchemeFalse.instance
+    }
+  end
+
+  def self.float?
+    Proc.new{|environment, args|
+      args[0].class == SchemeFloat ? SchemeTrue.instance : SchemeFalse.instance
     }
   end
 
