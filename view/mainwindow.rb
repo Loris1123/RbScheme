@@ -1,40 +1,38 @@
-require 'Qt4'
+require 'green_shoes'
+require 'cgi'
+require 'pry'
 
-require_relative '../reader'
-require_relative '../lang/userinput'
+module Mainwindow
 
-module SchemeGui
+  def self.launch(global_env)
+    Shoes.app(title: "RbScheme", width: 800, height: 800, resizable: false) do
+      @list = nil
 
-  def self.launch
-    Qt::Application.new(ARGV) do
-      Qt::Widget.new do
-
-        self.window_title = 'RbScheme'
-        resize(1000, 800)
-
-        textedit = Qt::TextEdit.new('Hello Qt in the Ruby way!')
-
-        button = Qt::PushButton.new('Eval') do
-          connect(SIGNAL :clicked) { SchemeGui.read_eval(textedit.plainText) }
+      def refresh(global_env)
+        @list.clear
+        @list.append do
+          global_env.environment.table.each do |entry|
+            if entry != nil
+              para CGI.escapeHTML(entry.key), "\t\t\t", CGI.escapeHTML(entry.value.to_s)
+            end
+          end
         end
-
-        self.layout = Qt::GridLayout.new do
-          add_widget(textedit, 0, 0)
-          add_widget(button, 0, 1)
-        end
-
-        show
       end
-      exec
+
+      button "Refresh" do
+        refresh(global_env)
+      end
+
+      para "Key", "\t\t\t", "Value"
+
+      @list = stack do
+      end
+      refresh(global_env)
+
+      every 1 do
+        refresh(global_env)
+      end
+
     end
   end
-
-
-  def self.read_eval(input)
-    userinput = UserInput.new(input)
-    read = Reader.read_input(userinput)
-    evaled = Eval.eval(GlobalEnvironment.get, read)
-    puts evaled
-  end
-
 end

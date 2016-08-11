@@ -23,6 +23,8 @@ module SchemePrinter
         return scheme_print_list scheme_expression
       when BuiltinFunction
         return "<Builtin-Function: \##{scheme_expression.name}>"
+      when BuiltinSyntax
+        return "<Builtin-Syntax: \##{scheme_expression.name}>"
       when NilClass
         # When an input returns nothing. Like define
         return

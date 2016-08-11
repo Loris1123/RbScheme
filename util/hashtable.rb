@@ -7,7 +7,7 @@ require_relative '../lang/errors'
 # Closed hashtable. When a slot is not empty, use the next emtpy slot.
 # Entries will be stored with a Struct Entry(:key, :value)
 class Hashtable
-  attr_reader :fill_level
+  attr_reader :fill_level, :table
 
   Entry = Struct.new(:key, :value)
 

@@ -13,4 +13,8 @@ class SchemeString < SchemeDataObject
       super.==(x)
     end
   end
+
+  def to_s
+    @value
+  end
 end

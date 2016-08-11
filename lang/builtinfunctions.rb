@@ -21,6 +21,10 @@ class SchemeBuiltin
     @name
   end
 
+  def to_s
+    @name
+  end
+
   def number_of_arguments
     @number_of_arguments
   end

@@ -1,6 +1,5 @@
 require_relative '../../lang/errors'
 require 'singleton'
-require 'pry'
 
 # Baseclass of all objects
 class SchemeObject; end

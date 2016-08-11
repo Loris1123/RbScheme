@@ -11,6 +11,15 @@ Feel free to submit bugs or recommendations for improvements.
 This is written in plain ruby. So it does not have any dependencies, beside the ruby language.  
 I've tested it with Ruby 2.3.1 and 2.2.5. If you use another version, please tell me whether it works or not.
 
+### Optional Dependency
+
+You can start RbRuby with a GUI with the commandline argument `-g`.
+The GUI is written with [Shoes](http://shoesrb.com).
+
+I used the Gtk Framework of schoes. So green_shoes is required.
+
+    gem install green_shoes
+
 ## How to use
 Start RbScheme with `ruby scheme.rb`  
 This will bring you to the interactive mode.
@@ -19,9 +28,13 @@ You can also pass schemecode as a commandline argument
 
     ruby scheme.rb "(define a 10)"
 
-If you want to skip the tests you can use "skiptest" as the second argument. This is only available for non-interactive-mode. It is usefull for debugging the code.
+To skip tests (faster):
 
-    ruby scheme.rb "(define a 10)" skiptest
+    ruby scheme.rb -s
+
+To open the gui:
+
+    ruby scheme.rb -g
 
 ## What it can do (so far)
 
@@ -196,3 +209,11 @@ Example:
       => #f
     (cons? (cons 1 2))
       => #t
+
+
+## GUI
+
+The GUI is pretty simple at the moment. All it does is displaying the current global environment.
+When you define new stuff, the window updates its content.
+
+More to come soon!

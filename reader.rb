@@ -2,7 +2,6 @@ require_relative "lang/userinput"
 require_relative "lang/errors"
 require_relative "lang/objects"
 require_relative "lang/symboltable"
-require 'pry'
 
 module Reader
 

@@ -3,7 +3,6 @@ require_relative '../util/hashtable'
 
 # Normal hashtable for now...will implement my own later
 class Environment
-
   attr_reader :environment
 
   def initialize(parent=nil)

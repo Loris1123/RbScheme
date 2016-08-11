@@ -10,19 +10,21 @@ require_relative 'lang/builtinfunctions'
 require_relative 'lang/objects'
 require_relative 'lang/symboltable'
 require_relative 'lang/global_environment'
+require 'optparse'
 
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: scheme.rb [options]"
 
+  opts.on("-s", "--skip-test", "Skip Tests") do |v|
+    options[:skiptest] = v
+  end
+  opts.on("-g", "--gui", "Use RbScheme GUI instead of commandline") do |v|
+    options[:gui] = v
+  end
+end.parse!
 
-if ARGV[1] != "skiptest"
-  # Start tests
-  require_relative 'test/test'
-  Test.test
-end
-
-
-
-$global_env = GlobalEnvironment.get
-def repl
+def repl(global_env)
   puts 'Welcome to RbScheme'
   while TRUE
 
@@ -30,7 +32,7 @@ def repl
       print '> '
       input = UserInput.new(gets)
       read = Reader.read_input(input)
-      evaled = Eval.eval($global_env, read)
+      evaled = Eval.eval(global_env, read)
       puts SchemePrinter.scheme_print(evaled)
     rescue SchemeUserError => err
       puts err.message
@@ -38,4 +40,19 @@ def repl
   end
 end
 
-repl
+if options[:skiptest] == nil
+  require_relative 'test/test'
+  Test.test
+end
+
+env = GlobalEnvironment.get
+if options[:gui] == nil
+  repl(env)
+else
+  require_relative 'view/mainwindow'
+  t = Thread.new{Mainwindow.launch(env)}
+  t2 = Thread.new{repl(env)}
+
+  t.join
+  t2.join
+end
