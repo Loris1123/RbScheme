@@ -1,6 +1,7 @@
 require_relative 'lang/errors'
 require_relative 'lang/builtinfunctions'
 require_relative 'lang/environment'
+
 module Eval
 
   def self.eval(environment, userinput)

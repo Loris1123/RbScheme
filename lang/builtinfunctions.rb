@@ -156,6 +156,12 @@ module Functions
     }
   end
 
+  def self.number?
+    Proc.new{|environment, args|
+      args[0].kind_of?(SchemeNumber) ? SchemeTrue.instance : SchemeFalse.instance
+    }
+  end
+
   def self.symbol?
     Proc.new{|environment, args|
       args[0].class == SchemeSymbol ? SchemeTrue.instance : SchemeFalse.instance

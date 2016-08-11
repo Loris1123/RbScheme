@@ -129,6 +129,21 @@ module EvalTest
     res = eval_input('(eq? 1 +)')
     raise "Result should be False. Is #{res}" unless res.class == SchemeFalse
 
+    res = eval_input('(number? 2)')
+    raise "Result should be True. Is #{res}" unless res.class == SchemeTrue
+
+    res = eval_input('(number? 2.234)')
+    raise "Result should be True. Is #{res}" unless res.class == SchemeTrue
+
+    res = eval_input('(number? 2/5)')
+    raise "Result should be True. Is #{res}" unless res.class == SchemeTrue
+
+    res = eval_input('(number? "foobar")')
+    raise "Result should be False. Is #{res}" unless res.class == SchemeFalse
+
+    res = eval_input('(number? (cons 1 2))')
+    raise "Result should be False. Is #{res}" unless res.class == SchemeFalse
+
     res = eval_input('(integer? "foo")')
     raise "Result should be False. Is #{res}" unless res.class == SchemeFalse
 

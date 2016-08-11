@@ -15,6 +15,7 @@ module GlobalEnvironment
     global_env.put(Symboltable.get_or_add('abs'), BuiltinFunction.new('SchemeAbs', Functions.scheme_abs , 1, 1))
     global_env.put(Symboltable.get_or_add('eq?'), BuiltinFunction.new('SchemeEquals', Functions.scheme_equals ,2, 2))
 
+    global_env.put(Symboltable.get_or_add('number?'), BuiltinFunction.new('SchemeNumber?', Functions.number? ,1, 1))
     global_env.put(Symboltable.get_or_add('integer?'), BuiltinFunction.new('SchemeInteger?', Functions.integer? ,1, 1))
     global_env.put(Symboltable.get_or_add('rational?'), BuiltinFunction.new('SchemeRationalr?', Functions.rational? ,1, 1))
     global_env.put(Symboltable.get_or_add('float?'), BuiltinFunction.new('SchemeFLoat?', Functions.float? ,1, 1))
