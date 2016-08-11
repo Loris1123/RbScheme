@@ -5,7 +5,7 @@ require_relative '../util/hashtable'
 # Module for storing all known symbols in a table
 module Symboltable
   @@log = Logger.new(STDOUT)
-  @@log.level = Logger::DEBUG
+  @@log.level = Logger::INFO
 
   @@tablesize = 521
   @@symboltable = Array.new(521)

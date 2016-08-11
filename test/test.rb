@@ -1,7 +1,6 @@
 require_relative 'reader'
 require_relative 'userinput'
 require_relative 'objects'
-require_relative 'linkedlist'
 require_relative 'environment'
 require_relative 'symboltable'
 require_relative 'hashtable'
