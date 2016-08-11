@@ -20,6 +20,7 @@ module HashtableTest
       (1..150).each do |n|
         table.put("Foobar#{n}", n)
       end
+      # 152 because I putted 2 items before.
       raise "Filllevel should be 152. Is #{table.fill_level}" unless table.fill_level == 152
 
       (1..150).each do |n|

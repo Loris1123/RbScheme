@@ -10,7 +10,7 @@ class SchemeSymbol < SchemeDataObject
     return false
   end
 
-  def to_str
+  def to_s
     "SchemeSymbol: #{@value}"
   end
 end
