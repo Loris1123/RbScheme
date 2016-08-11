@@ -13,7 +13,7 @@ I've tested it with Ruby 2.3.1 and 2.2.5. If you use another version, please tel
 
 ### Optional Dependency
 
-You can start RbRuby with a GUI with the commandline argument `-g`.
+You can start RbScheme with a GUI with the commandline argument `-g`.
 The GUI is written with [Shoes](http://shoesrb.com).
 
 I used the Gtk Framework of schoes. So green_shoes is required.
