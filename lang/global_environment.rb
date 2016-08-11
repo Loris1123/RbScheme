@@ -8,7 +8,7 @@ module GlobalEnvironment
     global_env.put(Symboltable.get_or_add('+'), BuiltinFunction.new('SchemePlus', Functions.scheme_plus , 2, -1))
     global_env.put(Symboltable.get_or_add('-'), BuiltinFunction.new('SchemeSubstract', Functions.scheme_substract ,2, -1))
     global_env.put(Symboltable.get_or_add('*'), BuiltinFunction.new('SchemeTimes', Functions.scheme_times , 2, -1))
-    global_env.put(Symboltable.get_or_add('/'), BuiltinFunction.new('SchemeDivide', Functions.scheme_divide ,2, 2))
+    global_env.put(Symboltable.get_or_add('/'), BuiltinFunction.new('SchemeDivide', Functions.scheme_divide ,2, -1))
     global_env.put(Symboltable.get_or_add('<'), BuiltinFunction.new('SchemeLowerThan', Functions.lower_than,2, 2))
     global_env.put(Symboltable.get_or_add('>'), BuiltinFunction.new('SchemeGreaterThan', Functions.greater_than ,2, 2))
     global_env.put(Symboltable.get_or_add('modulo'), BuiltinFunction.new('SchemeModulo', Functions.scheme_modulo , 2, 2))

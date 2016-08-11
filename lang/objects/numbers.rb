@@ -75,6 +75,17 @@ class SchemeInteger < SchemeNumber
   def initialize(value)
     @value = Integer(value)
   end
+
+  def /(x)
+    raise SchemeUserError.new('Division by zero!') unless x.value != 0
+
+    if x.class == SchemeInteger and (@value % x.value != 0)
+      return SchemeRational.new(@value, x.value)
+    else
+      super(x)
+    end
+  end
+
 end
 
 class SchemeFloat < SchemeNumber

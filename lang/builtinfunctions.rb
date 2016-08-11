@@ -79,7 +79,13 @@ module Functions
   end
 
   def self.scheme_divide
-    Proc.new{|environment, args| args[0] / args[1]}
+    Proc.new{|environment, args|
+      res = args[0]
+      args = args.drop(1)
+      args.each do |a|
+        res /= a
+      end
+      res }
   end
 
   def self.scheme_modulo

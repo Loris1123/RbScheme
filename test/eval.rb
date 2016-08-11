@@ -21,6 +21,12 @@ module EvalTest
     res = eval_input('(/ 6 3)')
     raise "Result should be 2. Is #{res}" unless res == SchemeInteger.new(2)
 
+    res = eval_input('(/ 12 3 2)')
+    raise "Result should be 2. Is #{res}" unless res == SchemeInteger.new(2)
+
+    res = eval_input('(/ 43 4 2 5  3 4 6 2)')
+    raise "Result should be 43/5760. Is #{res}" unless res == SchemeRational.new(43, 5760)
+
     res = eval_input('(+ 1 2 3)')
     raise "Result should be 6. Is #{res}" unless res == SchemeInteger.new(6)
 
@@ -57,6 +63,9 @@ module EvalTest
 
     res = eval_input('(/ 6.2 3.1)')
     raise "Result should be 2.0. Is #{res}" unless res == SchemeFloat.new(2.0)
+
+    res = eval_input('(/ 3.22 5.23 23.654)')
+    raise "Result should be 0.026028526942192903. Is #{res}" unless res == SchemeFloat.new(0.026028526942192903)
 
     res = eval_input('(+ 1.1 2.2 3.3)')
     raise "Result should be 6.6. Is #{res}" unless res == SchemeFloat.new(6.6)
@@ -97,6 +106,9 @@ module EvalTest
 
     res = eval_input('(/ 1/2 1/4)')
     raise "Result should be 2/1. Is #{res}" unless res == SchemeRational.new(2,1)
+
+    res = eval_input('(/ 2/3 5/2 5/1 54/23)')
+    raise "Result should be 46/2025. Is #{res}" unless res == SchemeRational.new(46,2025)
 
     res = eval_input('(+ 1/2 1/2 1/3)')
     raise "Result should be 4/3. Is #{res}" unless res == SchemeRational.new(4,3)
