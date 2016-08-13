@@ -50,9 +50,6 @@ if options[:gui] == nil
   repl(env)
 else
   require_relative 'view/mainwindow'
-  t = Thread.new{Mainwindow.launch(env)}
-  t2 = Thread.new{repl(env)}
-
-  t.join
-  t2.join
+  window = Mainwindow.new
+  window.show
 end

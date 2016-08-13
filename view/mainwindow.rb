@@ -1,38 +1,36 @@
-require 'green_shoes'
-require 'cgi'
-require 'pry'
+require "gtk3"
+require_relative 'iopanel'
+require_relative 'environmentpanel'
+require_relative '../lang/global_environment'
 
-module Mainwindow
+class Mainwindow
 
-  def self.launch(global_env)
-    Shoes.app(title: "RbScheme", width: 800, height: 800, resizable: false) do
-      @list = nil
-
-      def refresh(global_env)
-        @list.clear
-        @list.append do
-          global_env.environment.table.each do |entry|
-            if entry != nil
-              para CGI.escapeHTML(entry.key), "\t\t\t", CGI.escapeHTML(entry.value.to_s)
-            end
-          end
-        end
-      end
-
-      button "Refresh" do
-        refresh(global_env)
-      end
-
-      para "Key", "\t\t\t", "Value"
-
-      @list = stack do
-      end
-      refresh(global_env)
-
-      every 1 do
-        refresh(global_env)
-      end
-
-    end
+  def initialize
+    init_ui
   end
+
+  def init_ui
+    @window = Gtk::Window.new("RbScheme")
+    @window.set_size_request(800, 800)
+    @window.set_border_width(10)
+    @window.signal_connect("delete-event") { |_widget| Gtk.main_quit }
+    @iopanel = IOPanel.new
+
+    @environment = EnvironmentPanel.new
+
+    @paned = Gtk::Paned.new(Gtk::Orientation::HORIZONTAL)
+    @paned.add1(@environment)
+    @paned.add2(@iopanel)
+
+    @window.add(@paned)
+
+
+
+  end
+
+  def show
+    @window.show_all
+    Gtk.main
+  end
+
 end

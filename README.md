@@ -14,11 +14,9 @@ I've tested it with Ruby 2.3.1 and 2.2.5. If you use another version, please tel
 ### Optional Dependency
 
 You can start RbScheme with a GUI with the commandline argument `-g`.
-The GUI is written with [Shoes](http://shoesrb.com).
+The GUI is implemented with the GTK Implementation [ruby-gnome2](https://ruby-gnome2.osdn.jp/)
 
-I used the Gtk Framework of schoes. So green_shoes is required.
-
-    gem install green_shoes
+    gem install gtk3
 
 ## How to use
 Start RbScheme with `ruby scheme.rb`  
@@ -213,7 +211,8 @@ Example:
 
 ## GUI
 
-The GUI is pretty simple at the moment. All it does is displaying the current global environment.
-When you define new stuff, the window updates its content.
+The GUI is pretty simple at the moment. You can insert SchemeCode in the Textbox
+and evaluate it.   
+On the left side, the enviroment is displayed.  
 
 More to come soon!
