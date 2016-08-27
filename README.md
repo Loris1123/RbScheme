@@ -34,6 +34,10 @@ To open the gui:
 
     ruby scheme.rb -g
 
+To open the gui and skip tests:
+
+    ruby scheme.rb -g -s
+
 ## What it can do (so far)
 
 ### Types

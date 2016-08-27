@@ -1,17 +1,7 @@
 require_relative "lang/objects"
 
 module SchemePrinter
-  def self.scheme_print(evaluated_result)
-    if evaluated_result.class == Array
-      evaluated_result.each do |expression|
-        puts(print_expression(expression))
-      end
-    else
-      puts print_expression(evaluated_result)
-    end
-  end
-
-  def self.print_expression(scheme_expression)
+  def self.scheme_print(scheme_expression)
     case scheme_expression
       when SchemeString
         return "\"#{scheme_expression.value}\""

@@ -6,10 +6,15 @@ require_relative "lang/symboltable"
 module Reader
 
   def self.read_input(input)
-    result = Array.new
     if input.class != UserInput
       raise WrongInputError, input
     end
+
+    # Needed for multiple input. You can do (cons 1 2)(cons 2 3) and (cons 1 2) (cons 2 3)  (See the space)
+    if input.current == ' '
+      input.next
+    end
+
     if is_digit input.current or ((input.current == '+' or input.current=='-') and is_digit(input.get_next))
       #read a number
       number = read_number input
@@ -21,7 +26,7 @@ module Reader
           # There must be a space, end of cons, or EOF now
           raise SchemeSyntaxError.new("Expected Space, ) or EOF. Got #{input.current}", input)
         end
-        result << SchemeFloat.new("#{number.value}.#{float_part.value}")
+        return SchemeFloat.new("#{number.value}.#{float_part.value}")
 
       elsif input.current == "/"
         # read a rational. Next must be a number again.
@@ -31,26 +36,18 @@ module Reader
           # There must be a space, end of cons, or EOF now
           raise SchemeSyntaxError.new("Expected Space, ) or EOF. Got #{input.current}", input)
         end
-        result << SchemeRational.new(number.value ,denominator.value)
+        return SchemeRational.new(number.value ,denominator.value)
 
       else
         # Just a normal number
-        result << number
+        return number
       end
     elsif input.current == "\""
-      result << read_string(input)
+      return read_string(input)
     elsif input.current == "("
-      result << read_list(input)
+      return read_list(input)
     else
-      result << read_symbol(input)
-    end
-
-    # If there was only one expression given, return the result directly
-    if result.size == 1
-      return result[0]
-    else
-      # If there were multiple expressions given, return an array containing the results.
-      return result
+      return read_symbol(input)
     end
   end
 

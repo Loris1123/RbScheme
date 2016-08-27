@@ -31,9 +31,12 @@ def repl(global_env)
     begin
       print '> '
       input = UserInput.new(gets)
-      read = Reader.read_input(input)
-      evaled = Eval.eval(global_env, read)
-      puts SchemePrinter.scheme_print(evaled)
+      while input.index < input.input.size
+        read = Reader.read_input(input)
+        evaled = Eval.eval(global_env, read)
+        puts SchemePrinter.scheme_print(evaled)
+      end
+
     rescue SchemeUserError => err
       puts err.message
     end
