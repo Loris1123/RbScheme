@@ -5,7 +5,10 @@ require_relative '../print'
 # Interface for accessing the RbScheme backend
 module Backend
 
-  @@environment = GlobalEnvironment.get
+  # Set an environment
+  def self.environment=(environment)
+    @@environment = environment
+  end
 
   # Reads and evaluates an input. Returns the evaled result.
   def self.read_eval(input)

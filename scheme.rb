@@ -16,11 +16,19 @@ options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: scheme.rb [options]"
 
-  opts.on("-s", "--skip-test", "Skip Tests") do |v|
-    options[:skiptest] = v
+  opts.on("-t", "--test", "Run Tests") do |v|
+    options[:test] = v
   end
   opts.on("-g", "--gui", "Use RbScheme GUI instead of commandline") do |v|
     options[:gui] = v
+  end
+
+  opts.on("-fFILE", "--file=FILE", "Speficy an inputfile to run") do |f|
+    options[:inputfile] = f
+  end
+
+  opts.on("-i", "--interactive", "Start interactive mode") do |i|
+    options[:interactive] = i
   end
 end.parse!
 
@@ -31,6 +39,7 @@ def repl(global_env)
     begin
       print '> '
       input = UserInput.new(gets)
+      # Muliple expressions
       while input.index < input.input.size
         read = Reader.read_input(input)
         evaled = Eval.eval(global_env, read)
@@ -43,16 +52,40 @@ def repl(global_env)
   end
 end
 
-if options[:skiptest] == nil
+# Running tests is always allowed
+if options[:test] != nil
   require_relative 'test/test'
   Test.test
 end
 
 env = GlobalEnvironment.get
-if options[:gui] == nil
-  repl(env)
-else
+
+# Specify an inputfile is always allowed
+if options[:inputfile] != nil
+  # Open the file for readning
+  inputfile = File.open(options[:inputfile], 'r')
+  inputfile.each_line do |line|
+    # Evaluate each line
+    input = UserInput.new(line)
+    # Maybe there are multiple expressions in this line
+    while input.index < input.input.size
+      read = Reader.read_input(input)
+      evaled = Eval.eval(env, read)
+      puts SchemePrinter.scheme_print(evaled)
+    end
+  end
+end
+
+# Only GUI or Interactive are allowed. Not both
+if options[:gui] != nil
   require_relative 'view/mainwindow'
+  require_relative 'view/backend'
+  Backend.environment = env
   window = Mainwindow.new
   window.show
+elsif options[:interactive] != nil
+  repl(env)
+else
+  # Interactive as default
+  repl(env)
 end

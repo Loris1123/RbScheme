@@ -19,6 +19,9 @@ The GUI is implemented with the GTK Implementation [ruby-gnome2](https://ruby-gn
     gem install gtk3
 
 ## How to use
+
+`ruby scheme.rb --help` to print helptext
+
 Start RbScheme with `ruby scheme.rb`  
 This will bring you to the interactive mode.
 
@@ -26,17 +29,27 @@ You can also pass schemecode as a commandline argument
 
     ruby scheme.rb "(define a 10)"
 
-To skip tests (faster):
+Some other examples:
 
-    ruby scheme.rb -s
+To run tests:
+
+    ruby scheme.rb -t
 
 To open the gui:
 
     ruby scheme.rb -g
 
-To open the gui and skip tests:
+To open the gui and run tests:
 
-    ruby scheme.rb -g -s
+    ruby scheme.rb -g -t
+
+Specify a file to run:
+
+    ruby scheme.rb -f FILENAME
+
+Run a file and then start GUI (also possible with interactive mode):
+
+    ruby scheme.rb -f FILENAME -g
 
 ## What it can do (so far)
 
