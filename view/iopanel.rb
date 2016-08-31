@@ -20,13 +20,10 @@ class IOPanel < Gtk::Grid
 
     @button_eval = Gtk::Button.new(label: "Eval")
     @button_eval.signal_connect "clicked" do
-      @eval_result.buffer.text = Backend.read_eval(@inputfield.text)
+      #@eval_result.buffer.text = Backend.read_eval(@inputfield.text)
+      @eval_result.buffer.insert(@eval_result.buffer.end_iter, "#{@inputfield.text}\n")
     end
     attach(@button_eval, 1, 0, 1, 1)
-
-  def signal_do_foo
-    puts "Do Foo"
-  end
 
   end
 end
