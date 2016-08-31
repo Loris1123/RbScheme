@@ -5,7 +5,7 @@ require_relative 'backend'
 class EnvironmentPanel < Gtk::Grid
   def initialize(*args)
     super
-
+    set_property "hexpand", true
     label = Gtk::Label.new("Environment")
     attach(label, 0, 0, 1, 1)
 
@@ -17,6 +17,7 @@ class EnvironmentPanel < Gtk::Grid
 
     @treestore = Gtk::TreeStore.new(String, String)
     @treeview = Gtk::TreeView.new(@treestore)
+    @treeview.set_property "hexpand", true
     @treeview.selection.mode = Gtk::SelectionMode::NONE
     attach(@treeview, 0, 1, 2, 1)
 
