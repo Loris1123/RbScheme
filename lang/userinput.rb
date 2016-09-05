@@ -13,6 +13,18 @@ class UserInput
     "Userinput: #{@input}"
   end
 
+  def require_input(allow_newline=false)
+    # Calles when the reader reaches the end of input, but still
+    # needs some characters for the current statement.
+    # newlines are only allowed when reading strings.
+    if allow_newline
+      @input << "\n"
+    else
+      @input << " "
+    end
+    @input << gets.strip
+  end
+
   def next
     # Do not skip spaces here!
     # Arguments would be moved together! (+ 1 2) -> (+12)
@@ -27,5 +39,12 @@ class UserInput
 
   def current
     @input[@index]
+  end
+
+  def skip_spaces
+    # Skips til the next none-whitespace character
+    while current != nil && current.strip.empty?
+      @index = @index.next
+    end
   end
 end

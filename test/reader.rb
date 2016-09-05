@@ -73,12 +73,12 @@ module ReaderTest
     raise "Read input should be SchemeString, is #{r.class}" unless r.class == SchemeString
     raise "Read string should be \"abcd\", is #{r.get_value}" unless r.value == "abcd"
 
-    u = UserInput.new("\"abcd")
-    begin
-      r = Reader.read_input u
-      raise "Should raise an UnterminatedStringError"
-    rescue UnterminatedStringError
-    end
+    # Removed test for unterminated string, because there is no unterminated string anymore.
+
+    u = UserInput.new("\"ab\n\ncd\"")
+    r = Reader.read_input u
+    raise "Read input should be SchemeString, is #{r.class}" unless r.class == SchemeString
+    raise "Read string should be \"abcd\", is #{r.get_value}" unless r.value == "ab\n\ncd"
 
     u = UserInput.new("(cons 1 4)")
     r = Reader.read_input u
@@ -90,12 +90,159 @@ module ReaderTest
     raise "Cdr.cdr.car should be Integer, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
     raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
 
-    u = UserInput.new("(cons 1 4")
-    begin
-      r = Reader.read_input u
-      raise "Should raise an UnterminatedConsError"
-    rescue UnterminatedConsError
-    end
+    # NOTE: Removed UnterminatedConsError-Test, because there are no unterminated Cons anymore
 
+    # Test new-lines in strings and lists
+    u = UserInput.new("\"\nabcd\"")
+    r = Reader.read_input u
+    raise "Read input should be SchemeString, is #{r.class}" unless r.class == SchemeString
+    raise "Read string should be \"abcd\", is #{r.get_value}" unless r.value == "\nabcd"
+
+    u = UserInput.new("\"abcd\n\"")
+    r = Reader.read_input u
+    raise "Read input should be SchemeString, is #{r.class}" unless r.class == SchemeString
+    raise "Read string should be \"abcd\", is #{r.get_value}" unless r.value == "abcd\n"
+
+    u = UserInput.new("\"\nabcd\n\"")
+    r = Reader.read_input u
+    raise "Read input should be SchemeString, is #{r.class}" unless r.class == SchemeString
+    raise "Read string should be \"abcd\", is #{r.get_value}" unless r.value == "\nabcd\n"
+
+    u = UserInput.new("\"\nab\ncd\n\"")
+    r = Reader.read_input u
+    raise "Read input should be SchemeString, is #{r.class}" unless r.class == SchemeString
+    raise "Read string should be \"abcd\", is #{r.get_value}" unless r.value == "\nab\ncd\n"
+
+    u = UserInput.new("(+ 1 2)")
+    r = Reader.read_input u
+    raise "Reader should create a cons, is #{r.class}" unless r.class == SchemeCons
+    raise "Car should be Symbol, is #{r.car.class}" unless r.car.class == SchemeSymbol
+    raise "Car should be SchemePlus, is #{r.car.value}" unless r.car.value == "+"
+    raise "Cdr should cd a cons, is #{r.cdr.class}" unless r.cdr.class == SchemeCons
+    raise "Cdr.car should be SchemeInteger, is #{r.cdr.car.class}" unless r.cdr.car.class == SchemeInteger
+    raise "Cdr.car should be 1, is #{r.cdr.car}" unless r.cdr.car == SchemeInteger.new(1)
+    raise "Cdr.cdr should cd a cons, is #{r.cdr.cdr.class}" unless r.cdr.cdr.class == SchemeCons
+    raise "Cdr.cdr.car should be SchemeInteger, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr.car should be 2, is #{r.cdr.cdr.car}" unless r.cdr.cdr.car == SchemeInteger.new(2)
+    raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
+
+    u = UserInput.new("\n(+ 1 2)")
+    r = Reader.read_input u
+    raise "Reader should create a cons, is #{r.class}" unless r.class == SchemeCons
+    raise "Car should be Symbol, is #{r.car.class}" unless r.car.class == SchemeSymbol
+    raise "Car should be SchemePlus, is #{r.car.value}" unless r.car.value == "+"
+    raise "Cdr should cd a cons, is #{r.cdr.class}" unless r.cdr.class == SchemeCons
+    raise "Cdr.car should be SchemeInteger, is #{r.cdr.car.class}" unless r.cdr.car.class == SchemeInteger
+    raise "Cdr.car should be 1, is #{r.cdr.car}" unless r.cdr.car == SchemeInteger.new(1)
+    raise "Cdr.cdr should cd a cons, is #{r.cdr.cdr.class}" unless r.cdr.cdr.class == SchemeCons
+    raise "Cdr.cdr.car should be SchemeInteger, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr.car should be 2, is #{r.cdr.cdr.car}" unless r.cdr.cdr.car == SchemeInteger.new(2)
+    raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
+
+    u = UserInput.new("(\n+ 1 2)")
+    r = Reader.read_input u
+    raise "Reader should create a cons, is #{r.class}" unless r.class == SchemeCons
+    raise "Car should be Symbol, is #{r.car.class}" unless r.car.class == SchemeSymbol
+    raise "Car should be SchemePlus, is #{r.car.value}" unless r.car.value == "+"
+    raise "Cdr should cd a cons, is #{r.cdr.class}" unless r.cdr.class == SchemeCons
+    raise "Cdr.car should be SchemeInteger, is #{r.cdr.car.class}" unless r.cdr.car.class == SchemeInteger
+    raise "Cdr.car should be 1, is #{r.cdr.car}" unless r.cdr.car == SchemeInteger.new(1)
+    raise "Cdr.cdr should cd a cons, is #{r.cdr.cdr.class}" unless r.cdr.cdr.class == SchemeCons
+    raise "Cdr.cdr.car should be SchemeInteger, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr.car should be 2, is #{r.cdr.cdr.car}" unless r.cdr.cdr.car == SchemeInteger.new(2)
+    raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
+
+    u = UserInput.new("(+\n 1 2)")
+    r = Reader.read_input u
+    raise "Reader should create a cons, is #{r.class}" unless r.class == SchemeCons
+    raise "Car should be Symbol, is #{r.car.class}" unless r.car.class == SchemeSymbol
+    raise "Car should be SchemePlus, is #{r.car.value}" unless r.car.value == "+"
+    raise "Cdr should cd a cons, is #{r.cdr.class}" unless r.cdr.class == SchemeCons
+    raise "Cdr.car should be SchemeInteger, is #{r.cdr.car.class}" unless r.cdr.car.class == SchemeInteger
+    raise "Cdr.car should be 1, is #{r.cdr.car}" unless r.cdr.car == SchemeInteger.new(1)
+    raise "Cdr.cdr should cd a cons, is #{r.cdr.cdr.class}" unless r.cdr.cdr.class == SchemeCons
+    raise "Cdr.cdr.car should be SchemeInteger, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr.car should be 2, is #{r.cdr.cdr.car}" unless r.cdr.cdr.car == SchemeInteger.new(2)
+    raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
+
+    u = UserInput.new("(+ 1\n 2)")
+    r = Reader.read_input u
+    raise "Reader should create a cons, is #{r.class}" unless r.class == SchemeCons
+    raise "Car should be Symbol, is #{r.car.class}" unless r.car.class == SchemeSymbol
+    raise "Car should be SchemePlus, is #{r.car.value}" unless r.car.value == "+"
+    raise "Cdr should cd a cons, is #{r.cdr.class}" unless r.cdr.class == SchemeCons
+    raise "Cdr.car should be SchemeInteger, is #{r.cdr.car.class}" unless r.cdr.car.class == SchemeInteger
+    raise "Cdr.car should be 1, is #{r.cdr.car}" unless r.cdr.car == SchemeInteger.new(1)
+    raise "Cdr.cdr should cd a cons, is #{r.cdr.cdr.class}" unless r.cdr.cdr.class == SchemeCons
+    raise "Cdr.cdr.car should be SchemeInteger, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr.car should be 2, is #{r.cdr.cdr.car}" unless r.cdr.cdr.car == SchemeInteger.new(2)
+    raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
+
+    u = UserInput.new("(+ 1 2\n )")
+    r = Reader.read_input u
+    raise "Reader should create a cons, is #{r.class}" unless r.class == SchemeCons
+    raise "Car should be Symbol, is #{r.car.class}" unless r.car.class == SchemeSymbol
+    raise "Car should be SchemePlus, is #{r.car.value}" unless r.car.value == "+"
+    raise "Cdr should cd a cons, is #{r.cdr.class}" unless r.cdr.class == SchemeCons
+    raise "Cdr.car should be SchemeInteger, is #{r.cdr.car.class}" unless r.cdr.car.class == SchemeInteger
+    raise "Cdr.car should be 1, is #{r.cdr.car}" unless r.cdr.car == SchemeInteger.new(1)
+    raise "Cdr.cdr should cd a cons, is #{r.cdr.cdr.class}" unless r.cdr.cdr.class == SchemeCons
+    raise "Cdr.cdr.car should be SchemeInteger, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr.car should be 2, is #{r.cdr.cdr.car}" unless r.cdr.cdr.car == SchemeInteger.new(2)
+    raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
+
+    u = UserInput.new("(\n+ 1 2\n )")
+    r = Reader.read_input u
+    raise "Reader should create a cons, is #{r.class}" unless r.class == SchemeCons
+    raise "Car should be Symbol, is #{r.car.class}" unless r.car.class == SchemeSymbol
+    raise "Car should be SchemePlus, is #{r.car.value}" unless r.car.value == "+"
+    raise "Cdr should cd a cons, is #{r.cdr.class}" unless r.cdr.class == SchemeCons
+    raise "Cdr.car should be SchemeInteger, is #{r.cdr.car.class}" unless r.cdr.car.class == SchemeInteger
+    raise "Cdr.car should be 1, is #{r.cdr.car}" unless r.cdr.car == SchemeInteger.new(1)
+    raise "Cdr.cdr should cd a cons, is #{r.cdr.cdr.class}" unless r.cdr.cdr.class == SchemeCons
+    raise "Cdr.cdr.car should be SchemeInteger, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr.car should be 2, is #{r.cdr.cdr.car}" unless r.cdr.cdr.car == SchemeInteger.new(2)
+    raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
+
+    u = UserInput.new("(\n+ 1\n\n 2\n )")
+    r = Reader.read_input u
+    raise "Reader should create a cons, is #{r.class}" unless r.class == SchemeCons
+    raise "Car should be Symbol, is #{r.car.class}" unless r.car.class == SchemeSymbol
+    raise "Car should be SchemePlus, is #{r.car.value}" unless r.car.value == "+"
+    raise "Cdr should cd a cons, is #{r.cdr.class}" unless r.cdr.class == SchemeCons
+    raise "Cdr.car should be SchemeInteger, is #{r.cdr.car.class}" unless r.cdr.car.class == SchemeInteger
+    raise "Cdr.car should be 1, is #{r.cdr.car}" unless r.cdr.car == SchemeInteger.new(1)
+    raise "Cdr.cdr should cd a cons, is #{r.cdr.cdr.class}" unless r.cdr.cdr.class == SchemeCons
+    raise "Cdr.cdr.car should be SchemeInteger, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr.car should be 2, is #{r.cdr.cdr.car}" unless r.cdr.cdr.car == SchemeInteger.new(2)
+    raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
+
+    u = UserInput.new("(\n\n+ 1 2\n )")
+    r = Reader.read_input u
+    raise "Reader should create a cons, is #{r.class}" unless r.class == SchemeCons
+    raise "Car should be Symbol, is #{r.car.class}" unless r.car.class == SchemeSymbol
+    raise "Car should be SchemePlus, is #{r.car.value}" unless r.car.value == "+"
+    raise "Cdr should cd a cons, is #{r.cdr.class}" unless r.cdr.class == SchemeCons
+    raise "Cdr.car should be SchemeInteger, is #{r.cdr.car.class}" unless r.cdr.car.class == SchemeInteger
+    raise "Cdr.car should be 1, is #{r.cdr.car}" unless r.cdr.car == SchemeInteger.new(1)
+    raise "Cdr.cdr should cd a cons, is #{r.cdr.cdr.class}" unless r.cdr.cdr.class == SchemeCons
+    raise "Cdr.cdr.car should be SchemeInteger, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr.car should be 2, is #{r.cdr.cdr.car}" unless r.cdr.cdr.car == SchemeInteger.new(2)
+    raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
+
+    u = UserInput.new("(\n+ 1 2\n\n )")
+    r = Reader.read_input u
+    raise "Reader should create a cons, is #{r.class}" unless r.class == SchemeCons
+    raise "Car should be Symbol, is #{r.car.class}" unless r.car.class == SchemeSymbol
+    raise "Car should be SchemePlus, is #{r.car.value}" unless r.car.value == "+"
+    raise "Cdr should cd a cons, is #{r.cdr.class}" unless r.cdr.class == SchemeCons
+    raise "Cdr.car should be SchemeInteger, is #{r.cdr.car.class}" unless r.cdr.car.class == SchemeInteger
+    raise "Cdr.car should be 1, is #{r.cdr.car}" unless r.cdr.car == SchemeInteger.new(1)
+    raise "Cdr.cdr should cd a cons, is #{r.cdr.cdr.class}" unless r.cdr.cdr.class == SchemeCons
+    raise "Cdr.cdr.car should be SchemeInteger, is #{r.cdr.cdr.car.class}" unless r.cdr.cdr.car.class == SchemeInteger
+    raise "Cdr.cdr.car should be 2, is #{r.cdr.cdr.car}" unless r.cdr.cdr.car == SchemeInteger.new(2)
+    raise "Cdr.cdr.cdr should be SchemeNil, is #{r.cdr.cdr.cdr.class}" unless r.cdr.cdr.cdr.class == SchemeNil
   end
+
+
 end

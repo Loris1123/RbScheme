@@ -10,8 +10,6 @@ module UserInputTest
     raise "Current char should be s. Is #{u.current}" unless u.current == "s"
     u.next
     raise "Current char should be t. Is #{u.current}" unless u.current == "t"
-    u.next
-    raise "Current char should be nil. Is #{u.current}" unless u.current == nil
     #c = u.read_char
     #raise "Next char should be e. Is #{c}" unless c == "e"
     #c = u.read_char

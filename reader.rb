@@ -10,6 +10,11 @@ module Reader
       raise WrongInputError, input
     end
 
+    while input.current == nil
+      input.require_input
+      input.skip_spaces
+    end
+
     # Needed for multiple input. You can do (cons 1 2)(cons 2 3) and (cons 1 2) (cons 2 3)  (See the space)
     if input.current == ' '
       input.next
@@ -22,9 +27,9 @@ module Reader
         # read a float. Next must be a number again.
         input.next
         float_part = read_number input
-        if input.current != " " && input.current != nil && input.current != ")"
+        if input.current != " " && input.current != nil && input.current != ")" && input.current != "\n"
           # There must be a space, end of cons, or EOF now
-          raise SchemeSyntaxError.new("Expected Space, ) or EOF. Got #{input.current}", input)
+          raise SchemeSyntaxError.new("Expected Space, ), \\n or EOF. Got #{input.current}", input)
         end
         return SchemeFloat.new("#{number.value}.#{float_part.value}")
 
@@ -32,9 +37,9 @@ module Reader
         # read a rational. Next must be a number again.
         input.next
         denominator = read_number input
-        if input.current != " " && input.current != nil && input.current != ")"
+        if input.current != " " && input.current != nil && input.current != ")" && input.current != "\n"
           # There must be a space, end of cons, or EOF now
-          raise SchemeSyntaxError.new("Expected Space, ) or EOF. Got #{input.current}", input)
+          raise SchemeSyntaxError.new("Expected Space, ), \\n or EOF. Got #{input.current}", input)
         end
         return SchemeRational.new(number.value ,denominator.value)
 
@@ -45,6 +50,7 @@ module Reader
     elsif input.current == "\""
       return read_string(input)
     elsif input.current == "("
+      input.next
       return read_list(input)
     else
       return read_symbol(input)
@@ -53,17 +59,23 @@ module Reader
 
   # Reads a list and returns Cons
   def self.read_list(input)
+    #require 'pry'
+    #binding.pry
+    #input.skip_spaces
+    while input.current == nil
+      input.require_input
+      input.skip_spaces
+    end
+
+    input.skip_spaces
     if input.current == ")"
       input.next # Recursion will always return SchemeNil, if we do not do this.
       return SchemeNil.instance
     end
-    skip_spaces(input)
-    if input.current == nil
-      raise UnterminatedConsError.new(input.input)
-    end
+
     car = read_input(input)
     cdr = read_list(input)
-    SchemeCons.new(car, cdr)
+    SchemeCons.new(car,cdr)
   end
 
   # Reads a symbol and returns the corresponding value from environment.
@@ -72,7 +84,8 @@ module Reader
     while input.current != "(" &&
       input.current != ")" &&
       input.current != " " &&
-      input.current != nil
+      input.current != nil &&
+      input.current != "\n"
       symbol += input.current
       input.next
     end
@@ -105,9 +118,9 @@ module Reader
       number += input.current
       input.next
     end
-    if input.current != ' ' && input.current != nil && input.current != ')' && input.current != '.' && input.current != '/'
+    if input.current != ' ' && input.current != nil && input.current != ')' && input.current != '.' && input.current != '/' && input.current != "\n"
       # There must be a space, end of cons, dot (for floats), slash(for reationals), or EOF now
-      raise SchemeSyntaxError.new("Expected Space, ), dot, slash or EOF. Got #{input.current}", input)
+      raise SchemeSyntaxError.new("Expected Space, ), dot, slash, \\n or EOF. Got #{input.current}", input)
     end
     if is_negative
       return SchemeInteger.new(number.to_i * -1)
@@ -120,7 +133,10 @@ module Reader
   def self.read_string(input)
     input.next # Skip "
     string = ""
-    while input.current != "\"" && input.current != nil
+    while input.current != "\""
+      if input.current == nil
+        input.require_input(true)
+      end
       string += input.current
       input.next
     end
@@ -139,13 +155,6 @@ module Reader
       return true
     rescue ArgumentError, TypeError
       return false
-    end
-  end
-
-  def self.skip_spaces(input)
-    loop do
-      input.next
-      break if input.current != ' '
     end
   end
 end

@@ -24,6 +24,11 @@ class UserspaceFunction
   def number_of_arguments
     @number_of_arguments
   end
+
+  def to_s
+    "<Function: #{@name.value}(#{@parameter.each{|p| p.value }})>"
+  end
+
 end
 
 class UserdefinedFunction < UserspaceFunction
@@ -33,4 +38,3 @@ end
 class UserdefinedSyntax < UserspaceFunction
 
 end
-
