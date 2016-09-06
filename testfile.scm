@@ -20,3 +20,11 @@
    (if (eq? l '())
 	0
 	(+ 1 (length-recursive (cdr l)))))
+
+
+(define (fac n)
+    (define (fac-helper accu n)
+	(if (eq? n 1)
+	    accu
+	    (fac-helper (* accu n) (- n 1))))
+    (fac-helper 1 n))

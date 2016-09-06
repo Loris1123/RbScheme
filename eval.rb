@@ -81,6 +81,13 @@ module Eval
       local_env.put(function.parameter[i], args[i])
       i+=1
     end
-    self.eval(local_env, function.function)
+    result = nil
+    # Eval each function in UDF
+    function.function.each do |f|
+      result = self.eval(local_env, f)
+    end
+    # Return the last evaled result of the function
+    return result
+
   end
 end

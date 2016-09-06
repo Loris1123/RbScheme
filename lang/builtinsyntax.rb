@@ -37,7 +37,7 @@ module Syntaxes
           # Userdefined Function
 
           lambda_header = args[0]
-          lambda_body = args[1]
+          lambda_body = args[1..-1]
 
           lambda_name = lambda_header.car
           raise SchemeSyntaxError.new("Wrong define-Syntax. Need a Symbol as function identifier. Got #{lambda_name.class}") unless lambda_name.class == SchemeSymbol
