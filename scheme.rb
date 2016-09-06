@@ -43,7 +43,9 @@ def repl(global_env)
       while input.index < input.input.size
         read = Reader.read_input(input)
         evaled = Eval.eval(global_env, read)
-        puts SchemePrinter.scheme_print(evaled)
+        print "=> "
+        SchemePrinter.scheme_print(evaled)
+        print "\n"
       end
 
     rescue SchemeUserError => err
@@ -67,8 +69,7 @@ if options[:inputfile] != nil
   input = UserInput.new(inputfile.read)
   while input.index < input.input.size
     read = Reader.read_input(input)
-    evaled = Eval.eval(env, read)
-    puts SchemePrinter.scheme_print(evaled)
+    Eval.eval(env, read)
   end
 
 #  inputfile.each_line do |line|
