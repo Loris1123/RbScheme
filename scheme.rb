@@ -64,16 +64,23 @@ env = GlobalEnvironment.get
 if options[:inputfile] != nil
   # Open the file for readning
   inputfile = File.open(options[:inputfile], 'r')
-  inputfile.each_line do |line|
-    # Evaluate each line
-    input = UserInput.new(line)
-    # Maybe there are multiple expressions in this line
-    while input.index < input.input.size
-      read = Reader.read_input(input)
-      evaled = Eval.eval(env, read)
-      puts SchemePrinter.scheme_print(evaled)
-    end
+  input = UserInput.new(inputfile.read)
+  while input.index < input.input.size
+    read = Reader.read_input(input)
+    evaled = Eval.eval(env, read)
+    puts SchemePrinter.scheme_print(evaled)
   end
+
+#  inputfile.each_line do |line|
+#    # Evaluate each line
+#    input = UserInput.new(line)
+#    # Maybe there are multiple expressions in this line
+#    while input.index < input.input.size
+#      read = Reader.read_input(input)
+#      evaled = Eval.eval(env, read)
+#      puts SchemePrinter.scheme_print(evaled)
+#    end
+#  end
 end
 
 # Only GUI or Interactive are allowed. Not both

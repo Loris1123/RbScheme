@@ -41,7 +41,7 @@ class UserInput
     @input[@index]
   end
 
-  def skip_spaces
+  def skip_whitespace
     # Skips til the next none-whitespace character
     while current != nil && current.strip.empty?
       @index = @index.next

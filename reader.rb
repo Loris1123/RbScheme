@@ -12,13 +12,14 @@ module Reader
 
     while input.current == nil
       input.require_input
-      input.skip_spaces
+      input.skip_whitespace
     end
 
     # Needed for multiple input. You can do (cons 1 2)(cons 2 3) and (cons 1 2) (cons 2 3)  (See the space)
-    if input.current == ' '
-      input.next
-    end
+    #if input.current == ' '
+      #input.next
+    #end
+    input.skip_whitespace
 
     if is_digit input.current or ((input.current == '+' or input.current=='-') and is_digit(input.get_next))
       #read a number
@@ -59,15 +60,12 @@ module Reader
 
   # Reads a list and returns Cons
   def self.read_list(input)
-    #require 'pry'
-    #binding.pry
-    #input.skip_spaces
     while input.current == nil
       input.require_input
-      input.skip_spaces
+      input.skip_whitespace
     end
 
-    input.skip_spaces
+    input.skip_whitespace
     if input.current == ")"
       input.next # Recursion will always return SchemeNil, if we do not do this.
       return SchemeNil.instance
