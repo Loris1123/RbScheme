@@ -38,7 +38,6 @@ module Syntaxes
 
           lambda_header = args[0]
           lambda_body = args[1]
-          raise SchemeSyntaxError.new("Wrong define-Syntax. Need a cons as functionbody. Got #{lambda_body.class}") unless lambda_body.class == SchemeCons
 
           lambda_name = lambda_header.car
           raise SchemeSyntaxError.new("Wrong define-Syntax. Need a Symbol as function identifier. Got #{lambda_name.class}") unless lambda_name.class == SchemeSymbol
