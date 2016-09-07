@@ -40,8 +40,39 @@ class EnvironmentPanel < Gtk::Grid
       if entry != nil
         parent = @treestore.append(nil)
         parent[0] = entry.key.to_s
-        parent[1] = entry.value.to_s
+        if entry.value.class == SchemeCons or entry.value.class == UserdefinedFunction
+          # Add the content of the Cons or function as a child
+          parent[1] = entry.value.class.to_s
+          add_child(parent, entry.value)
+        else
+          parent[1] = entry.value.to_s
+        end
       end
     end
+  end
+
+  def add_child(parent, entry)
+    if entry.class == SchemeCons
+      child = @treestore.append(parent)
+      child[0] = "Car"
+      if entry.car.class == SchemeCons
+        child[1] = entry.car.class.to_s
+        # Recusion, if the car is a cons again
+        add_child(child, entry.car)
+      else
+        child[1] = entry.car.to_s
+      end
+
+      child = @treestore.append(parent)
+      child[0] = "Cdr"
+      if entry.cdr.class == SchemeCons
+        child[1] = entry.cdr.class.to_s
+        # Recursion if the cdr is a cons again
+        add_child(child, entry.cdr)
+      else
+        child[1] = entry.cdr.to_s
+      end
+    end
+
   end
 end
