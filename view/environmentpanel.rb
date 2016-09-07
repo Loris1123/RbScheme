@@ -40,10 +40,11 @@ class EnvironmentPanel < Gtk::Grid
       if entry != nil
         parent = @treestore.append(nil)
         parent[0] = entry.key.to_s
-        if entry.value.class == SchemeCons or entry.value.class == UserdefinedFunction
+        case entry.value
+        when SchemeCons
           # Add the content of the Cons or function as a child
           parent[1] = entry.value.class.to_s
-          add_child(parent, entry.value)
+          add_child_cons(parent, entry.value)
         else
           parent[1] = entry.value.to_s
         end
@@ -51,27 +52,43 @@ class EnvironmentPanel < Gtk::Grid
     end
   end
 
-  def add_child(parent, entry)
-    if entry.class == SchemeCons
-      child = @treestore.append(parent)
-      child[0] = "Car"
-      if entry.car.class == SchemeCons
-        child[1] = entry.car.class.to_s
-        # Recusion, if the car is a cons again
-        add_child(child, entry.car)
-      else
-        child[1] = entry.car.to_s
-      end
+  def add_child_cons(parent, entry)
+    # Create car
+    child = @treestore.append(parent)
+    child[0] = "Car"
+    if entry.car.class == SchemeCons and entry.cdr.class != SchemeNil
+      # Recursion if car is a cons again
+      child[1] = "SchemeCons"
+      add_child_cons(child, entry.car)
+    elsif entry.car.class == SchemeCons && entry.cdr.class == SchemeNil && entry.car.cdr.class == SchemeCons && entry.car.cdr.cdr.class == SchemeNil
+      # Handling Special case: (1 . (2 . 3))
+      # Draw the tree and you'll see the problem. There are two nil-children
+      child[1] = entry.car.car.to_s
 
       child = @treestore.append(parent)
       child[0] = "Cdr"
-      if entry.cdr.class == SchemeCons
-        child[1] = entry.cdr.class.to_s
-        # Recursion if the cdr is a cons again
-        add_child(child, entry.cdr)
+      child[1] = entry.car.cdr.car.to_s
+      return
+    else
+      child[1] = entry.car.to_s
+    end
+
+    # Create cdr
+    child = @treestore.append(parent)
+    child[0] = "Cdr"
+    if entry.cdr.class == SchemeCons
+      # Recursion if car is a cons again
+      if entry.cdr.cdr.class == SchemeNil and entry.cdr.car.class != SchemeCons
+        # Last element in row. Don't create a new cons. Just dislay it here.
+        # Case: ((1 .2) . 3)
+        child[1] = entry.cdr.car.to_s
       else
-        child[1] = entry.cdr.to_s
+        child[1] = "SchemeCons"
+        add_child_cons(child, entry.cdr)
       end
+
+    else
+      child[1] = entry.cdr.to_s
     end
 
   end
