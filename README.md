@@ -110,7 +110,7 @@ You can to simple calculations in the known scheme-syntax.
       => 8
     (modulo 6 4)
       => 2
-    (abs -6)     # Warning. See #5
+    (abs -6)
       => 6
 
 You can also do multiple calculations at once with nested lists:  
@@ -159,6 +159,15 @@ You can also access outside variables inside  a function.
     (define (myfunc b) (+ a b)
     (myfunc 10)
       => 20
+
+For a better readability you can define function in multiple row lines.
+Also you can run multiple commands inside a function
+
+    (define (simple-plus a b)
+      (define result (+ a b))
+      result)
+    (simple-plus 1 2)
+      => 3
 
 #### if
     (if expression true false)
@@ -233,3 +242,5 @@ and evaluate it.
 On the left side, the enviroment is displayed.  
 
 More to come soon!
+
+![current state](gui/2016-09-09.png)
