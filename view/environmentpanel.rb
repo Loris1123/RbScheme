@@ -57,9 +57,7 @@ class EnvironmentPanel < Gtk::Grid
 
   def add_child_udf(parent, function)
     # Display a user-define-function in the table.
-    require 'pry'
-    binding.pry
-
+    
     # Display parameters
     child = @treestore.append(parent)
     child[0] = "Parameter"
@@ -90,10 +88,6 @@ class EnvironmentPanel < Gtk::Grid
       end
 
     end
-
-
-
-
   end
 
 
