@@ -54,42 +54,39 @@ class EnvironmentPanel < Gtk::Grid
 
   def add_child_cons(parent, entry)
     # Create car
-    child = @treestore.append(parent)
-    child[0] = "Car"
-    if entry.car.class == SchemeCons and entry.cdr.class != SchemeNil
-      # Recursion if car is a cons again
-      child[1] = "SchemeCons"
-      add_child_cons(child, entry.car)
-    elsif entry.car.class == SchemeCons && entry.cdr.class == SchemeNil && entry.car.cdr.class == SchemeCons && entry.car.cdr.cdr.class == SchemeNil
-      # Handling Special case: (1 . (2 . 3))
-      # Draw the tree and you'll see the problem. There are two nil-children
-      child[1] = entry.car.car.to_s
-
+    if entry.car.class != SchemeCons
       child = @treestore.append(parent)
-      child[0] = "Cdr"
-      child[1] = entry.car.cdr.car.to_s
-      return
-    else
+      child[0] = "Car"
       child[1] = entry.car.to_s
+    else
+      child = @treestore.append(parent)
+      child[0] = "car"
+      child[1] = entry.car.class.to_s
+      add_child_cons(child, entry.car)
     end
+
 
     # Create cdr
-    child = @treestore.append(parent)
-    child[0] = "Cdr"
-    if entry.cdr.class == SchemeCons
-      # Recursion if car is a cons again
-      if entry.cdr.cdr.class == SchemeNil and entry.cdr.car.class != SchemeCons
-        # Last element in row. Don't create a new cons. Just dislay it here.
-        # Case: ((1 .2) . 3)
-        child[1] = entry.cdr.car.to_s
-      else
-        child[1] = "SchemeCons"
-        add_child_cons(child, entry.cdr)
-      end
-
-    else
+    if entry.cdr.class != SchemeCons
+      child = @treestore.append(parent)
+      child[0] = "Cdr"
       child[1] = entry.cdr.to_s
+    elsif entry.cdr.cdr.class == SchemeNil
+      if entry.cdr.car.class == SchemeCons
+        child = @treestore.append(parent)
+        child[0] = "Cdr"
+        child[1] = "SchemeCons"
+        add_child_cons(child, entry.cdr.car)
+      else
+        child = @treestore.append(parent)
+        child[0] = "Cdr"
+        child[1] = entry.cdr.car.to_s
+      end
+    else
+      child = @treestore.append(parent)
+      child[0] = "cdr"
+      child[1] = entry.cdr.class.to_s
+      add_child_cons(child, entry.cdr)
     end
-
   end
 end
