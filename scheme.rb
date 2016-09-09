@@ -43,9 +43,10 @@ def repl(global_env)
       while input.index < input.input.size
         read = Reader.read_input(input)
         evaled = Eval.eval(global_env, read)
-        print "=> "
-        SchemePrinter.scheme_print(evaled)
-        print "\n"
+        if evaled != nil
+          print "=> "
+          puts SchemePrinter.scheme_print(evaled)
+        end
       end
 
     rescue SchemeUserError => err
@@ -71,17 +72,6 @@ if options[:inputfile] != nil
     read = Reader.read_input(input)
     Eval.eval(env, read)
   end
-
-#  inputfile.each_line do |line|
-#    # Evaluate each line
-#    input = UserInput.new(line)
-#    # Maybe there are multiple expressions in this line
-#    while input.index < input.input.size
-#      read = Reader.read_input(input)
-#      evaled = Eval.eval(env, read)
-#      puts SchemePrinter.scheme_print(evaled)
-#    end
-#  end
 end
 
 # Only GUI or Interactive are allowed. Not both
