@@ -16,10 +16,13 @@ class EnvironmentPanel < Gtk::Grid
     attach(button_refresh, 1, 0, 1, 1)
 
     @treestore = Gtk::TreeStore.new(String, String)
+    scroll = Gtk::ScrolledWindow.new
     @treeview = Gtk::TreeView.new(@treestore)
+    @treeview.set_property "vexpand", true
     @treeview.set_property "hexpand", true
     @treeview.selection.mode = Gtk::SelectionMode::NONE
-    attach(@treeview, 0, 1, 2, 1)
+    scroll.add_with_viewport(@treeview)
+    attach(scroll, 0, 1, 2, 1)
 
     # Key Column
     renderer = Gtk::CellRendererText.new
@@ -57,7 +60,7 @@ class EnvironmentPanel < Gtk::Grid
 
   def add_child_udf(parent, function)
     # Display a user-define-function in the table.
-    
+
     # Display parameters
     child = @treestore.append(parent)
     child[0] = "Parameter"
@@ -102,7 +105,7 @@ class EnvironmentPanel < Gtk::Grid
       child[1] = entry.car.to_s
     else
       child = @treestore.append(parent)
-      child[0] = "car"
+      child[0] = "Car"
       child[1] = entry.car.class.to_s
       add_child_cons(child, entry.car)
     end

@@ -15,8 +15,10 @@ class Mainwindow
     @window.set_border_width(10)
     @window.signal_connect("delete-event") { |_widget| Gtk.main_quit }
     @iopanel = IOPanel.new
+    @iopanel.set_size_request(400,800)
 
     @environment = EnvironmentPanel.new
+    @environment.set_size_request(400,800)
 
     @paned = Gtk::Paned.new(Gtk::Orientation::HORIZONTAL)
     @paned.add1(@environment)
