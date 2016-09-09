@@ -45,6 +45,9 @@ class EnvironmentPanel < Gtk::Grid
           # Add the content of the Cons or function as a child
           parent[1] = entry.value.class.to_s
           add_child_cons(parent, entry.value)
+        when UserdefinedFunction
+          parent[1] = entry.value.class.to_s
+          add_child_udf(parent, entry.value)
         else
           parent[1] = entry.value.to_s
         end
@@ -52,7 +55,52 @@ class EnvironmentPanel < Gtk::Grid
     end
   end
 
+  def add_child_udf(parent, function)
+    # Display a user-define-function in the table.
+    require 'pry'
+    binding.pry
+
+    # Display parameters
+    child = @treestore.append(parent)
+    child[0] = "Parameter"
+    parameterlist = "("
+    function.parameter.each do |param|
+      parameterlist << param.value.to_s
+      parameterlist << ", "
+    end
+    parameterlist = parameterlist[0..-3]  # Cut the last ,
+    parameterlist << ")"
+    child[1] = parameterlist
+
+    # Display function-body
+    child = @treestore.append(parent)
+    child[0] = "Body"
+    child[1] = ""
+
+    function.function.each do |func|
+      # Iterate over each statement of the function
+      statement = @treestore.append(child)
+      case func
+      when SchemeCons
+        statement[0] = func.class.to_s
+        add_child_cons(statement, func)
+      else
+        statement[0] = func.class.to_s
+        statement[1] = func.to_s
+      end
+
+    end
+
+
+
+
+  end
+
+
   def add_child_cons(parent, entry)
+    # Display Cons as children in the treeview.
+    # Will be called recursively, when car/cdr is a cons again.
+
     # Create car
     if entry.car.class != SchemeCons
       child = @treestore.append(parent)
@@ -65,13 +113,13 @@ class EnvironmentPanel < Gtk::Grid
       add_child_cons(child, entry.car)
     end
 
-
     # Create cdr
     if entry.cdr.class != SchemeCons
       child = @treestore.append(parent)
       child[0] = "Cdr"
       child[1] = entry.cdr.to_s
     elsif entry.cdr.cdr.class == SchemeNil
+      # Special case, for the end of the tree
       if entry.cdr.car.class == SchemeCons
         child = @treestore.append(parent)
         child[0] = "Cdr"
@@ -84,7 +132,7 @@ class EnvironmentPanel < Gtk::Grid
       end
     else
       child = @treestore.append(parent)
-      child[0] = "cdr"
+      child[0] = "Cdr"
       child[1] = entry.cdr.class.to_s
       add_child_cons(child, entry.cdr)
     end

@@ -14,6 +14,6 @@ class SchemeSymbol < SchemeDataObject
   end
 
   def to_s
-    "SchemeSymbol: #{@value}"
+    "#{@value}"
   end
 end

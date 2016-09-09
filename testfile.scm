@@ -28,3 +28,5 @@
 	    accu
 	    (fac-helper (* accu n) (- n 1))))
     (fac-helper 1 n))
+
+(define a (cons (cons "foo" (cons "1" 1)) (cons "a" "b")))
