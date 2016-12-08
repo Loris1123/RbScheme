@@ -1,11 +1,11 @@
 require_relative "../lang/errors"
 
 class UserInput
-  attr_reader :index, :input
-
+  attr_reader :index, :input, :line_counter
 
   def initialize(input)
     @input = input.strip  # Remove beginning and ending whitespace.
+    @line_counter = 1 # Counts the lines of the currently read input.
     @index = 0
   end
 
@@ -44,6 +44,9 @@ class UserInput
   def skip_whitespace
     # Skips til the next none-whitespace character
     while current != nil && current.strip.empty?
+      if current == '\n'
+        @line_counter += 1
+      end
       @index = @index.next
     end
   end

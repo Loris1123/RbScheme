@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require_relative 'reader'
-require_relative 'lang/userinput'
+require_relative 'util/userinput'
 require_relative 'print'
 require_relative 'lang/errors'
 require_relative 'eval'
@@ -10,6 +10,7 @@ require_relative 'lang/builtinfunctions'
 require_relative 'lang/objects'
 require_relative 'lang/symboltable'
 require_relative 'lang/global_environment'
+require_relative 'util/history'
 require 'optparse'
 
 options = {}
@@ -34,11 +35,15 @@ end.parse!
 
 def repl(global_env)
   puts 'Welcome to RbScheme'
-  while TRUE
+  history = History.new
 
+
+  while TRUE
     begin
       print '> '
-      input = UserInput.new(gets)
+      raw_input = gets
+      history.append(raw_input)
+      input = UserInput.new(raw_input)
       # Muliple expressions
       while input.index < input.input.size
         read = Reader.read_input(input)
