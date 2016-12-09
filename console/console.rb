@@ -6,13 +6,16 @@ module SchemeConsole
   HISTORY = History.new
 
   def self.get_input
+    print "> \033[s"  # Promt and store position
+
     input = ""
     loop do
       char = SchemeConsole::read_char
-
       # Handle keys and special keys now
       case char
       when "\177"
+        # Backspace
+        input = input[0, input.length-1]
         print "\b"
         print "\033[K"  # Erase the rest of the line
       when "\e[A"
@@ -63,9 +66,7 @@ module SchemeConsole
   end
 end
 
-
 # Test Console standalone:
 while true
-  print "> \033[s"  # Promt and store position
   puts "Input: #{SchemeConsole::get_input}"
 end
