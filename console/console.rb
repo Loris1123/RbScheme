@@ -1,0 +1,72 @@
+require "io/console"
+require_relative "history"
+
+module SchemeConsole
+
+  SPECIAL_KEYS = ["\t", "\r", "\n", "\e", "\e[A", "\e[B", "\e[C", "\e[D", "\177", "\004", "\e[3~", "\u0003"]
+  HISTORY = History.new
+
+  def self.get_input
+    input = ""
+    loop do
+      char = SchemeConsole::read_char
+
+      # Handle keys and special keys now
+      case char
+      when "\177"
+        print "\b"
+        print "\033[K"  # Erase the rest of the line
+      when "\e[A"
+        print "\033[u" # Restore position
+        print "\033[K"  # Erase the rest of the line
+        up = SchemeConsole::HISTORY.up
+        print up
+        input = up
+      when "\e[B"
+        print "\033[u" # Restore position
+        print "\033[K"  # Erase the rest of the line
+        down SchemeConsole::HISTORY.down
+        print down
+        input = down
+      when "\u0003"
+        # Ctrl-C
+        puts "Okay, bye"
+        exit 0
+      when "\r"
+        # Return
+        print "\r\n"
+        break
+      else
+        print char
+        input << char
+      end
+    end
+    SchemeConsole::HISTORY.append(input)
+    return input
+  end
+
+  # Reads keypresses from the user including 2 and 3 escape character sequences.
+  # Taken from https://gist.github.com/acook/4190379
+  def self.read_char
+    STDIN.echo = false
+    STDIN.raw!
+
+    input = STDIN.getc.chr
+    if input == "\e" then
+      input << STDIN.read_nonblock(3) rescue nil
+      input << STDIN.read_nonblock(2) rescue nil
+    end
+  ensure
+    STDIN.echo = true
+    STDIN.cooked!
+
+    return input
+  end
+end
+
+
+# Test Console standalone:
+#while true
+#  print "> \033[s"  # Promt and store position
+#  puts "Input: #{SchemeConsole::get_input}"
+#end

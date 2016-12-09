@@ -13,14 +13,16 @@ class History
   end
 
   def up
-    if current_index > 0
-      current_index -= 1
+    if @current_index > 0
+      @current_index -= 1
     end
+    return @history[@current_index]
   end
 
   def down
-    if current_index > history.length-1
-      current_index += 1
+    if @current_index < @history.length-1
+      @current_index += 1
     end
+    return @history[@current_index]
   end
 end

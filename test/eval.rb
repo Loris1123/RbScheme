@@ -1,4 +1,4 @@
-require_relative '../lang/userinput'
+require_relative '../util/userinput'
 require_relative '../lang/global_environment'
 require_relative '../lang/objects'
 module EvalTest

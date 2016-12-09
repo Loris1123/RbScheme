@@ -26,15 +26,27 @@ class EnvironmentPanel < Gtk::Grid
 
     # Key Column
     renderer = Gtk::CellRendererText.new
+
+    renderer.signal_connect "edited" do
+      cell_edited
+    end
     col = Gtk::TreeViewColumn.new("Key", renderer, :text => 0)
     @treeview.append_column(col)
 
     # Value Column
     renderer = Gtk::CellRendererText.new
+    renderer.set_property "editable", true;
+    renderer.signal_connect "edited" do
+      cell_edited
+    end
     col = Gtk::TreeViewColumn.new("Value", renderer, :text => 1)
     @treeview.append_column(col)
 
     update_environment
+  end
+
+  def cell_edited
+    puts "Yooooo"
   end
 
   def update_environment

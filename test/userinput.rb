@@ -1,4 +1,4 @@
-require_relative "../lang/userinput"
+require_relative "../util/userinput"
 
 module UserInputTest
   def self.test

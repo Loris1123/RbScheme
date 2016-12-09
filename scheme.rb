@@ -10,8 +10,8 @@ require_relative 'lang/builtinfunctions'
 require_relative 'lang/objects'
 require_relative 'lang/symboltable'
 require_relative 'lang/global_environment'
-require_relative 'util/history'
 require 'optparse'
+require 'io/console'
 
 options = {}
 OptionParser.new do |opts|
@@ -35,14 +35,12 @@ end.parse!
 
 def repl(global_env)
   puts 'Welcome to RbScheme'
-  history = History.new
-
 
   while TRUE
     begin
       print '> '
       raw_input = gets
-      history.append(raw_input)
+      puts raw_input
       input = UserInput.new(raw_input)
       # Muliple expressions
       while input.index < input.input.size

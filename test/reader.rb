@@ -1,5 +1,5 @@
 require_relative '../reader'
-require_relative '../lang/userinput'
+require_relative '../util/userinput'
 require_relative '../lang/builtinfunctions'
 
 module ReaderTest
