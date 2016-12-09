@@ -3,7 +3,6 @@ require_relative "history"
 
 module SchemeConsole
 
-  SPECIAL_KEYS = ["\t", "\r", "\n", "\e", "\e[A", "\e[B", "\e[C", "\e[D", "\177", "\004", "\e[3~", "\u0003"]
   HISTORY = History.new
 
   def self.get_input
@@ -25,7 +24,7 @@ module SchemeConsole
       when "\e[B"
         print "\033[u" # Restore position
         print "\033[K"  # Erase the rest of the line
-        down SchemeConsole::HISTORY.down
+        down = SchemeConsole::HISTORY.down
         print down
         input = down
       when "\u0003"
@@ -66,7 +65,7 @@ end
 
 
 # Test Console standalone:
-#while true
-#  print "> \033[s"  # Promt and store position
-#  puts "Input: #{SchemeConsole::get_input}"
-#end
+while true
+  print "> \033[s"  # Promt and store position
+  puts "Input: #{SchemeConsole::get_input}"
+end
